@@ -9,25 +9,53 @@ import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 
+import scoresPackage.ScoreEnd;
+
 
 public class SingleActivity extends BaseActivity {
 
     int ARROWS_IN_END = 6;
-    TextView[] arrTextViews = new TextView[ARROWS_IN_END];
-    int[] arrScores = new int[ARROWS_IN_END];
-    int cellIndex = 0;
+    int NUMBER_OF_ENDS = 6;
+    TextView[] arrTextViews = new TextView[ARROWS_IN_END+1];
+//    int[] arrScores = new int[ARROWS_IN_END];
+//    int arrowIndex = 0;
+    int endIndex = 0;
+    ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
-        initViews();
+        initEnds();
+        initButtons();
     }
 
 
 
-    void initViews(){
+
+
+    void initEnds(){
+        // wpisuję wszystkie 6 TextView do tablicy
+        String viewId;
+        int resId;
+        for(int j=0; j<NUMBER_OF_ENDS; j++){
+            for(int i=0; i<ARROWS_IN_END+1;i++){
+                if(i<ARROWS_IN_END){
+                    viewId = "tv"+j+i;
+                }else{
+                    viewId = "tv_sum_end_"+j;
+                }
+                resId = getResources().getIdentifier(viewId,"id", getPackageName());
+                arrTextViews[i] = findViewById(resId);
+            }
+            scoreEnd[j] = new ScoreEnd(j, arrTextViews);
+        }
+
+    }
+
+
+    void initButtons(){
         Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, bX, bM;
 
         bX=findViewById(R.id.bX);
@@ -46,111 +74,115 @@ public class SingleActivity extends BaseActivity {
         bX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(10); //getApplicationContext().deleteDatabase("mojaDB");
+                scoreEnd[endIndex].enterScore(10);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         bM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(0);
+                scoreEnd[endIndex].enterScore(0);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(1);
+                scoreEnd[endIndex].enterScore(1);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(2);
+                scoreEnd[endIndex].enterScore(2);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(3);;
+                scoreEnd[endIndex].enterScore(3);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(4);
+                scoreEnd[endIndex].enterScore(4);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(5);
+                scoreEnd[endIndex].enterScore(5);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(6);
+                scoreEnd[endIndex].enterScore(6);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(7);
+                scoreEnd[endIndex].enterScore(7);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(8);
+                scoreEnd[endIndex].enterScore(8);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(9);
+                scoreEnd[endIndex].enterScore(9);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
         b10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(10);
+                scoreEnd[endIndex].enterScore(10);
+                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
+    } // initButtons
 
-
-        //-----------------------------------------------------------
-        // wpisuję wszystkie 6 TextView do tablicy
-        String viewId;
-        int resId;
-        for(int i=0; i<ARROWS_IN_END;i++){
-            viewId = "tv"+"0"+i;
-            resId = getResources().getIdentifier(viewId,"id", getPackageName());
-            arrTextViews[i] = findViewById(resId);
-        }
-
-    }
-
-
-    void enterScore(int score){
-        if(cellIndex<6){
-            arrScores[cellIndex] = score;
-            if (cellIndex > 0) prepareArray(arrScores);
-            for(int i=0; i<cellIndex+1; i++){
-                arrTextViews[i].setText(String.valueOf(arrScores[i]));
-            }
-            cellIndex++;
-        }
-    }
+//    void enterScore(int score){
+//        if(arrowIndex <6){
+//            arrScores[endIndex*6+arrowIndex] = score;
+//            if (arrowIndex > 0) prepareArray(arrScores);
+//            for(int i = 0; i< arrowIndex +1; i++){
+//                arrTextViews[i].setText(String.valueOf(arrScores[i]));
+//            }
+//            arrowIndex++;
+//            if (arrowIndex==6){
+//                arrowIndex = 0;
+//                endIndex++;
+//            }
+//
+//        }
+//    }
 
     void prepareArray(int[] array){
         if (array == null) return;
