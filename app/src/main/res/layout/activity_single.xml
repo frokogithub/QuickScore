@@ -1,14 +1,863 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll_all_ends"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="SINGLE"
-        android:textSize="30sp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_end_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv00"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv01"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv02"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv03"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv04"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv05"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_0"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_0"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_end_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv10"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv11"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv12"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv13"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv14"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv15"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_1"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_end_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv20"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv21"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv22"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv23"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv24"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv25"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_2"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_end_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv30"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv31"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv32"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv33"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv34"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv35"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_3"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_end_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv40"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv41"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv42"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv43"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv44"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv45"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_4"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_end_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey_1"
+            android:orientation="horizontal">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gl_end_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey_1"
+                app:columnCount="6">
+
+                <TextView
+                    android:id="@+id/tv50"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv51"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv52"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv53"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv54"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv55"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/cells_margin"
+                    android:layout_marginTop="@dimen/cells_margin"
+                    android:layout_marginBottom="@dimen/cells_margin"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <LinearLayout
+                android:id="@+id/space_5"
+                android:layout_width="7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="1dp"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sum_end_5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/cells_margin"
+                android:layout_marginTop="@dimen/cells_margin"
+                android:layout_marginEnd="@dimen/cells_margin"
+                android:layout_marginBottom="@dimen/cells_margin"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gl_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        app:columnCount="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_all_ends"
+        app:layout_constraintVertical_bias="0.59000003">
+
+        <Button
+            android:id="@+id/bX"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="X"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b10"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="10"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b9"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="9"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b8"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="8"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b7"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="7"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b6"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="6"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b5"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="5"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b4"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="4"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b3"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="3"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b2"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="2"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/b1"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="1"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/bM"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/points_button_background"
+            android:fontFamily="monospace"
+            android:text="M"
+            android:textColor="@color/dark_grey_1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+    </androidx.gridlayout.widget.GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

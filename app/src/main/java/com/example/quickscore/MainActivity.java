@@ -1,7 +1,5 @@
 package com.example.quickscore;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +13,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button b_Single = (Button)findViewById(R.id.b_Single);
-        Button b_Match = (Button)findViewById(R.id.b_Match);
+        Button b_Single = findViewById(R.id.b_Single);
+        Button b_Match = findViewById(R.id.b_Match);
+
+
 
         b_Single.setOnClickListener(new View.OnClickListener() {
             @Override
