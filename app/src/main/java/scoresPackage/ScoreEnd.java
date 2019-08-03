@@ -1,42 +1,70 @@
 package scoresPackage;
 
 
+import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.quickscore.R;
+
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ScoreEnd {
 
-    private int ARROWS_IN_END = 6;
-    private int arrowIndex = 0;
-    private TextView[] arrTextV = new TextView[ARROWS_IN_END];
+    private int arrowsInEnd;
+    private int cellIndex = 0;
+    TextView[] cellArray;// = new TextView[];
     private TextView sumTextV;
-    private int[] arrScores = new int[ARROWS_IN_END];
+    private int[] scoreArray;// = new int[arrowsInEnd];
+    private View view;
+    private int index;
 
-    public ScoreEnd(int index, TextView[] arrTextV) {
-        //this.arrTextV = arrTextV;
-        for(int i=0; i<ARROWS_IN_END+1; i++){
-            if(i<ARROWS_IN_END){
-                this.arrTextV[i] = arrTextV[i];
-            }else{
-                sumTextV = arrTextV[i];
-            }
 
+
+    public ScoreEnd(Context context, int index, View view, int arrowsInEnd) {
+        this.view = view;
+        this.index = index;
+        this.arrowsInEnd = arrowsInEnd;
+        cellArray =  new TextView[arrowsInEnd];
+        scoreArray = new int[arrowsInEnd];
+
+        TextView tv_index = view.findViewById(R.id.tv_index);
+        tv_index.setText(String.valueOf(index+1));
+
+        cellArray =  new TextView[arrowsInEnd];
+        String viewId;
+        int resId;
+        for(int i=0; i<arrowsInEnd; i++){
+            viewId = "tv"+i;
+            resId = context.getResources().getIdentifier(viewId,"id", context.getPackageName());
+//                arrTextViews[i] = findViewById(resId);
+            cellArray[i] = view.findViewById(resId);
         }
+
+        sumTextV = view.findViewById(R.id.tv_sum);
+
+    }
+
+    public void doit(){
+//        TextView t = view.findViewById(R.id.tv_index);
+//        t.setText(String.valueOf(index+1));
     }
 
     public void setTextViews(int index, TextView textView){
 
     }
     public void enterScore(int score){
-        if(arrowIndex <6){
-            arrScores[arrowIndex] = score;
-            if (arrowIndex > 0) prepareArray(arrScores);
-            for(int i = 0; i< arrowIndex +1; i++){
-                arrTextV[i].setText(String.valueOf(arrScores[i]));
+
+        if(cellIndex <arrowsInEnd){
+            scoreArray[cellIndex] = score;
+
+            if (cellIndex > 0) prepareArray(scoreArray);
+            for(int i = 0; i< cellIndex +1; i++){
+                cellArray[i].setText(String.valueOf(scoreArray[i]));
             }
-            arrowIndex++;
-            if (arrowIndex==6){
+            cellIndex++;
+            if (cellIndex ==arrowsInEnd){
                 showSum();
             }
 
@@ -44,11 +72,13 @@ public class ScoreEnd {
     }
 
     private void prepareArray(int[] array){
+
         if (array == null) return;
+        Arrays.sort(array);
+
         int i = 0;
         int j = array.length - 1;
         int tmp;
-        Arrays.sort(array);
         while (j > i) {
             tmp = array[j];
             array[j] = array[i];
@@ -59,7 +89,7 @@ public class ScoreEnd {
     }
 
     public boolean isFull(){
-        if(arrowIndex < 6){
+        if(cellIndex < arrowsInEnd){
             return false;
         }else {
             return true;
@@ -69,8 +99,8 @@ public class ScoreEnd {
     private void showSum(){
 
         int s=0;
-        for(int i=0; i<ARROWS_IN_END;i++){
-            s+=Integer.parseInt(arrTextV[i].getText().toString());
+        for(int i=0; i<arrowsInEnd;i++){
+            s+=Integer.parseInt(cellArray[i].getText().toString());
         }
         sumTextV.setText(String.valueOf(s));
         int x=0;

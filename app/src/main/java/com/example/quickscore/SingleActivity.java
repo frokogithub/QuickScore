@@ -1,7 +1,9 @@
 package com.example.quickscore;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,13 +16,12 @@ import scoresPackage.ScoreEnd;
 
 public class SingleActivity extends BaseActivity {
 
-    int ARROWS_IN_END = 6;
-    int NUMBER_OF_ENDS = 6;
+    int ARROWS_IN_END = 3;
+    int NUMBER_OF_ENDS = 10;
     TextView[] arrTextViews = new TextView[ARROWS_IN_END+1];
-//    int[] arrScores = new int[ARROWS_IN_END];
-//    int arrowIndex = 0;
     int endIndex = 0;
     ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS];
+    private ViewGroup endsDummy;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,28 +32,29 @@ public class SingleActivity extends BaseActivity {
         initButtons();
     }
 
-
-
-
-
     void initEnds(){
-        // wpisuję wszystkie 6 TextView do tablicy
-        String viewId;
-        int resId;
-        for(int j=0; j<NUMBER_OF_ENDS; j++){
-            for(int i=0; i<ARROWS_IN_END+1;i++){
-                if(i<ARROWS_IN_END){
-                    viewId = "tv"+j+i;
-                }else{
-                    viewId = "tv_sum_end_"+j;
-                }
-                resId = getResources().getIdentifier(viewId,"id", getPackageName());
-                arrTextViews[i] = findViewById(resId);
-            }
-            scoreEnd[j] = new ScoreEnd(j, arrTextViews);
-        }
+        endsDummy = findViewById(R.id.ends_dummy);
 
+        for(int i=0; i<NUMBER_OF_ENDS; i++){
+
+
+            if(i<NUMBER_OF_ENDS-1){
+                View indoorEndView = new View(this);
+                indoorEndView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
+                endsDummy.addView(indoorEndView);
+
+                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, ARROWS_IN_END);
+            }else{
+                View indoorEndViewBttm = new View(this);
+                indoorEndViewBttm = LayoutInflater.from(this).inflate(R.layout.end_3arrows_bttm, null);
+                endsDummy.addView(indoorEndViewBttm);
+
+                scoreEnd[i] = new ScoreEnd(this, i, indoorEndViewBttm, ARROWS_IN_END);
+            }
+        }
+//
     }
+
 
 
     void initButtons(){
@@ -168,21 +170,6 @@ public class SingleActivity extends BaseActivity {
         });
     } // initButtons
 
-//    void enterScore(int score){
-//        if(arrowIndex <6){
-//            arrScores[endIndex*6+arrowIndex] = score;
-//            if (arrowIndex > 0) prepareArray(arrScores);
-//            for(int i = 0; i< arrowIndex +1; i++){
-//                arrTextViews[i].setText(String.valueOf(arrScores[i]));
-//            }
-//            arrowIndex++;
-//            if (arrowIndex==6){
-//                arrowIndex = 0;
-//                endIndex++;
-//            }
-//
-//        }
-//    }
 
     void prepareArray(int[] array){
         if (array == null) return;

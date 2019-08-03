@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_end_3arr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/black"
+        app:columnCount="6"
+        app:rowCount="1">
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="16dp"
+            android:layout_height="31dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="8"
+            android:textSize="10sp"
+            app:layout_gravity="clip_vertical|fill_vertical"
+            app:layout_row="0" />
+
+        <TextView
+            android:id="@+id/tv0"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/space"
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_gravity="fill_vertical"></LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sum"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@android:color/white"
+            android:gravity="center" />
+
+    </androidx.gridlayout.widget.GridLayout>
+</LinearLayout>
