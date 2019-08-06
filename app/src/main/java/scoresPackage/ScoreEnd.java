@@ -3,34 +3,53 @@ package scoresPackage;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.quickscore.R;
 
 import java.util.Arrays;
-import java.util.Comparator;
+
+import interfacesPackage.OnChangeIndexListener;
 
 public class ScoreEnd {
 
+    private Context context;
     private int arrowsInEnd;
     private int cellIndex = 0;
     TextView[] cellArray;// = new TextView[];
     private TextView sumTextV;
+    private TextView indexTextV;
     private int[] scoreArray;// = new int[arrowsInEnd];
-    private View view;
+    private  View view;
     private int index;
+    private LinearLayout markLeftLine;
+    private LinearLayout markTopLine;
+    private LinearLayout markRightLine;
+    private LinearLayout markBottomLine;
+    private OnChangeIndexListener indexListener;
 
 
 
-    public ScoreEnd(Context context, int index, View view, int arrowsInEnd) {
+
+    public ScoreEnd(Context context, int index, View view, View markLine, int arrowsInEnd) {
+        this.context = context;
         this.view = view;
         this.index = index;
         this.arrowsInEnd = arrowsInEnd;
         cellArray =  new TextView[arrowsInEnd];
         scoreArray = new int[arrowsInEnd];
 
-        TextView tv_index = view.findViewById(R.id.tv_index);
-        tv_index.setText(String.valueOf(index+1));
+
+        indexTextV = view.findViewById(R.id.tv_index);
+        indexTextV.setText(String.valueOf(index+1));
+
+        markTopLine = markLine.findViewById(R.id.ll_mark_top_line);
+        markLeftLine = view.findViewById(R.id.ll_mark_line_left);
+        markRightLine = view.findViewById(R.id.ll_mark_line_right);
+
+
+
 
         cellArray =  new TextView[arrowsInEnd];
         String viewId;
@@ -46,14 +65,10 @@ public class ScoreEnd {
 
     }
 
-    public void doit(){
-//        TextView t = view.findViewById(R.id.tv_index);
-//        t.setText(String.valueOf(index+1));
+    public void setOnIndexListener(OnChangeIndexListener listener){
+        indexListener = listener;
     }
 
-    public void setTextViews(int index, TextView textView){
-
-    }
     public void enterScore(int score){
 
         if(cellIndex <arrowsInEnd){
@@ -64,8 +79,10 @@ public class ScoreEnd {
                 cellArray[i].setText(String.valueOf(scoreArray[i]));
             }
             cellIndex++;
-            if (cellIndex ==arrowsInEnd){
+            if (isFull()){
                 showSum();
+                //indexTextV.setBackgroundResource(R.color.white_background);
+                if(indexListener != null) indexListener.onChange();
             }
 
         }
@@ -92,6 +109,7 @@ public class ScoreEnd {
         if(cellIndex < arrowsInEnd){
             return false;
         }else {
+           //setFrameColor(R.color.black);
             return true;
         }
     }
@@ -103,6 +121,15 @@ public class ScoreEnd {
             s+=Integer.parseInt(cellArray[i].getText().toString());
         }
         sumTextV.setText(String.valueOf(s));
-        int x=0;
+    }
+
+
+    public void setFrameColor(int whichLines, int color){
+        if(whichLines==1){
+            markLeftLine.setBackgroundResource(color);
+            markRightLine.setBackgroundResource(color);
+        }
+
+        markTopLine.setBackgroundResource(color);
     }
 }

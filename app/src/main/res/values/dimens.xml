@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cells_margin">2dp</dimen>
+    <dimen name="cells_margin">1dp</dimen>
     <dimen name="buttons_outline_dim">1dp</dimen>
+    <dimen name="index_tv_width">15dp</dimen>
 </resources>

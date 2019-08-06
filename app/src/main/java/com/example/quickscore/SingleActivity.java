@@ -5,23 +5,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import interfacesPackage.OnChangeIndexListener;
 import scoresPackage.ScoreEnd;
 
 
 public class SingleActivity extends BaseActivity {
 
-    int ARROWS_IN_END = 3;
-    int NUMBER_OF_ENDS = 10;
+    static int ARROWS_IN_END = 3;
+    static  int NUMBER_OF_ENDS = 10;
     TextView[] arrTextViews = new TextView[ARROWS_IN_END+1];
     int endIndex = 0;
-    ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS];
+    public static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS];
     private ViewGroup endsDummy;
+    private ArrayList<LinearLayout> arrMarkFrameLines = new ArrayList<LinearLayout>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,29 +35,47 @@ public class SingleActivity extends BaseActivity {
 
         initEnds();
         initButtons();
+        scoreEnd[0].setFrameColor(1,R.color.mark__frame__red);
+        scoreEnd[1].setFrameColor(0,R.color.mark__frame__red);
     }
 
     void initEnds(){
         endsDummy = findViewById(R.id.ends_dummy);
 
+
         for(int i=0; i<NUMBER_OF_ENDS; i++){
 
 
             if(i<NUMBER_OF_ENDS-1){
+
+
+                View endHorizontalLine = new View(this);
+                endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.mark_frame_horisontal_line, null);
                 View indoorEndView = new View(this);
                 indoorEndView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
+
+                endsDummy.addView(endHorizontalLine);
                 endsDummy.addView(indoorEndView);
 
-                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, ARROWS_IN_END);
+                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, endHorizontalLine, ARROWS_IN_END);
+                scoreEnd[i].setOnIndexListener(new OnChangeIndexListener() {
+                    @Override
+                    public void onChange() {
+                        endIndex++;
+                        scoreEnd[endIndex-1].setFrameColor(1, R.color.black);
+                        scoreEnd[endIndex].setFrameColor(1, R.color.mark__frame__red);
+                        scoreEnd[endIndex+1].setFrameColor(0, R.color.mark__frame__red);
+                    }
+                });
+
             }else{
                 View indoorEndViewBttm = new View(this);
                 indoorEndViewBttm = LayoutInflater.from(this).inflate(R.layout.end_3arrows_bttm, null);
                 endsDummy.addView(indoorEndViewBttm);
 
-                scoreEnd[i] = new ScoreEnd(this, i, indoorEndViewBttm, ARROWS_IN_END);
+                //scoreEnd[i] = new ScoreEnd(this, i, indoorEndViewBttm, ARROWS_IN_END);
             }
         }
-//
     }
 
 
@@ -77,7 +100,9 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(10);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
+//                if(scoreEnd[endIndex].isFull()){
+//                    endIndex++;
+//                }
             }
         });
 
@@ -85,7 +110,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(0);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -93,7 +117,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(1);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -101,7 +124,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(2);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -109,7 +131,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(3);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -117,7 +138,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(4);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -125,7 +145,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(5);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -133,7 +152,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(6);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -141,7 +159,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(7);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -149,7 +166,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(8);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -157,7 +173,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(9);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
 
@@ -165,7 +180,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(10);
-                if(scoreEnd[endIndex].isFull()) endIndex++;
             }
         });
     } // initButtons
@@ -184,6 +198,13 @@ public class SingleActivity extends BaseActivity {
             j--;
             i++;
         }
+    }
+
+
+
+    private void printToast(String s){
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+
     }
 }
 
