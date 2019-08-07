@@ -8,12 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import interfacesPackage.OnChangeIndexListener;
 import scoresPackage.ScoreEnd;
 
@@ -24,9 +20,11 @@ public class SingleActivity extends BaseActivity {
     static  int NUMBER_OF_ENDS = 10;
     TextView[] arrTextViews = new TextView[ARROWS_IN_END+1];
     int endIndex = 0;
-    public static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS];
+    public static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
     private ViewGroup endsDummy;
     private ArrayList<LinearLayout> arrMarkFrameLines = new ArrayList<LinearLayout>();
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,25 +33,26 @@ public class SingleActivity extends BaseActivity {
 
         initEnds();
         initButtons();
-        scoreEnd[0].setFrameColor(1,R.color.mark__frame__red);
-        scoreEnd[1].setFrameColor(0,R.color.mark__frame__red);
+        updateMarkFrame(0);
     }
+
+
+
+
+
 
     void initEnds(){
         endsDummy = findViewById(R.id.ends_dummy);
 
 
-        for(int i=0; i<NUMBER_OF_ENDS; i++){
+
+        for(int i=0; i<NUMBER_OF_ENDS+1; i++){
 
 
-            if(i<NUMBER_OF_ENDS-1){
+            if(i<NUMBER_OF_ENDS){
 
-
-                View endHorizontalLine = new View(this);
-                endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.mark_frame_horisontal_line, null);
-                View indoorEndView = new View(this);
-                indoorEndView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
-
+                View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
+                View indoorEndView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
                 endsDummy.addView(endHorizontalLine);
                 endsDummy.addView(indoorEndView);
 
@@ -62,18 +61,14 @@ public class SingleActivity extends BaseActivity {
                     @Override
                     public void onChange() {
                         endIndex++;
-                        scoreEnd[endIndex-1].setFrameColor(1, R.color.black);
-                        scoreEnd[endIndex].setFrameColor(1, R.color.mark__frame__red);
-                        scoreEnd[endIndex+1].setFrameColor(0, R.color.mark__frame__red);
+                        if(endIndex<NUMBER_OF_ENDS) updateMarkFrame(endIndex);
                     }
                 });
 
             }else{
-                View indoorEndViewBttm = new View(this);
-                indoorEndViewBttm = LayoutInflater.from(this).inflate(R.layout.end_3arrows_bttm, null);
-                endsDummy.addView(indoorEndViewBttm);
-
-                //scoreEnd[i] = new ScoreEnd(this, i, indoorEndViewBttm, ARROWS_IN_END);
+                View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
+                endsDummy.addView(endHorizontalLine);
+                scoreEnd[i] = new ScoreEnd(this, endHorizontalLine);
             }
         }
     }
@@ -100,9 +95,6 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scoreEnd[endIndex].enterScore(10);
-//                if(scoreEnd[endIndex].isFull()){
-//                    endIndex++;
-//                }
             }
         });
 
@@ -185,19 +177,11 @@ public class SingleActivity extends BaseActivity {
     } // initButtons
 
 
-    void prepareArray(int[] array){
-        if (array == null) return;
-        int i = 0;
-        int j = array.length - 1;
-        int tmp;
-        Arrays.sort(array);
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
+
+    private void updateMarkFrame(int markIndex){
+        if(markIndex>0)              scoreEnd[markIndex-1].setFrameColor(1, R.color.black);
+                                     scoreEnd[markIndex].setFrameColor(1,R.color.mark__frame__red);
+        if(markIndex<NUMBER_OF_ENDS)  scoreEnd[markIndex+1].setFrameColor(0,R.color.mark__frame__red);
     }
 
 

@@ -31,6 +31,10 @@ public class ScoreEnd {
 
 
 
+    public ScoreEnd(Context context, View lastMarkLine){
+        this.context = context;
+        markTopLine = lastMarkLine.findViewById(R.id.ll_mark_top_line);
+    }
 
     public ScoreEnd(Context context, int index, View view, View markLine, int arrowsInEnd) {
         this.context = context;
@@ -47,8 +51,6 @@ public class ScoreEnd {
         markTopLine = markLine.findViewById(R.id.ll_mark_top_line);
         markLeftLine = view.findViewById(R.id.ll_mark_line_left);
         markRightLine = view.findViewById(R.id.ll_mark_line_right);
-
-
 
 
         cellArray =  new TextView[arrowsInEnd];
@@ -109,7 +111,6 @@ public class ScoreEnd {
         if(cellIndex < arrowsInEnd){
             return false;
         }else {
-           //setFrameColor(R.color.black);
             return true;
         }
     }
