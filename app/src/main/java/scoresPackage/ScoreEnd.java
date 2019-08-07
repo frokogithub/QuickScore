@@ -17,7 +17,7 @@ public class ScoreEnd {
     private Context context;
     private int arrowsInEnd;
     private int cellIndex = 0;
-    TextView[] cellArray;
+    private TextView[] cellArray;
     private TextView sumTextV;
     private TextView indexTextV;
     private int[] scoreArray;
@@ -59,12 +59,22 @@ public class ScoreEnd {
         for(int i=0; i<arrowsInEnd; i++){
             viewId = "tv"+i;
             resId = context.getResources().getIdentifier(viewId,"id", context.getPackageName());
-//                arrTextViews[i] = findViewById(resId);
             cellArray[i] = view.findViewById(resId);
+            cellArray[i].setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    eraseCell(view);
+                    return false;
+                }
+            });
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
 
+    }
+
+    private void eraseCell(View cell){
+        ((TextView)cell).setText("");
     }
 
     public void setOnIndexListener(OnChangeIndexListener listener){
@@ -106,7 +116,7 @@ public class ScoreEnd {
         }
     }
 
-    public boolean isFull(){
+    private boolean isFull(){
         if(cellIndex < arrowsInEnd){
             return false;
         }else {
