@@ -32,8 +32,7 @@ public class ScoreEnd {
 
 
 
-    public ScoreEnd(Context context, View lastMarkLine){
-        this.context = context;
+    public ScoreEnd(View lastMarkLine){
         markTopLine = lastMarkLine.findViewById(R.id.ll_mark_top_line);
     }
 

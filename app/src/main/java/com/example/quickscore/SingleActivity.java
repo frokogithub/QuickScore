@@ -14,8 +14,8 @@ import scoresPackage.ScoreEnd;
 
 public class SingleActivity extends BaseActivity {
 
-    final static int ARROWS_IN_END = 3;
-    final static  int NUMBER_OF_ENDS = 10;
+    public static   int ARROWS_IN_END = 3;
+    public final static  int NUMBER_OF_ENDS = 10;
     private int endIndex = 0;
     private static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
     private ViewGroup endsDummy;
@@ -45,11 +45,11 @@ public class SingleActivity extends BaseActivity {
             if(i<NUMBER_OF_ENDS){
 
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
-                View indoorEndView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
+                View endView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
                 endsDummy.addView(endHorizontalLine);
-                endsDummy.addView(indoorEndView);
+                endsDummy.addView(endView);
 
-                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, endHorizontalLine, ARROWS_IN_END);//TODO: sprawdzić cz trzeba przesyłać ARROWS_IN_END
+                scoreEnd[i] = new ScoreEnd(this, i, endView, endHorizontalLine, ARROWS_IN_END);
                 scoreEnd[i].setOnIndexListener(new OnChangeIndexListener() {
                     @Override
                     public void onChange() {
@@ -62,7 +62,7 @@ public class SingleActivity extends BaseActivity {
             }else{
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
                 endsDummy.addView(endHorizontalLine);
-                scoreEnd[i] = new ScoreEnd(this, endHorizontalLine);
+                scoreEnd[i] = new ScoreEnd(endHorizontalLine);
             }
         }
     }
@@ -70,20 +70,20 @@ public class SingleActivity extends BaseActivity {
 
 
     void initButtons(){
-        Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, bX, bM;
+        //Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, bX, bM;
 
-        bX=findViewById(R.id.bX);
-        bM=findViewById(R.id.bM);
-        b1=findViewById(R.id.b1);
-        b2=findViewById(R.id.b2);
-        b3=findViewById(R.id.b3);
-        b4=findViewById(R.id.b4);
-        b5=findViewById(R.id.b5);
-        b6=findViewById(R.id.b6);
-        b7=findViewById(R.id.b7);
-        b8=findViewById(R.id.b8);
-        b9=findViewById(R.id.b9);
-        b10=findViewById(R.id.b10);
+        Button bX=findViewById(R.id.bX);
+        Button bM=findViewById(R.id.bM);
+        Button b1=findViewById(R.id.b1);
+        Button b2=findViewById(R.id.b2);
+        Button b3=findViewById(R.id.b3);
+        Button b4=findViewById(R.id.b4);
+        Button b5=findViewById(R.id.b5);
+        Button b6=findViewById(R.id.b6);
+        Button b7=findViewById(R.id.b7);
+        Button b8=findViewById(R.id.b8);
+        Button b9=findViewById(R.id.b9);
+        Button b10=findViewById(R.id.b10);
 
         bX.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +168,17 @@ public class SingleActivity extends BaseActivity {
                 scoreEnd[endIndex].enterScore(10);
             }
         });
+
+
+        Button bMenu = findViewById(R.id.b_menu);
+        bMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                PopUpMenu popUpMenu = new PopUpMenu();
+                popUpMenu.showPopupWindow(arg0, getApplicationContext());
+            }
+        });
+
     } // initButtons
 
 
