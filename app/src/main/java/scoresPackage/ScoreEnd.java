@@ -17,10 +17,10 @@ public class ScoreEnd {
     private Context context;
     private int arrowsInEnd;
     private int cellIndex = 0;
-    TextView[] cellArray;// = new TextView[];
+    TextView[] cellArray;
     private TextView sumTextV;
     private TextView indexTextV;
-    private int[] scoreArray;// = new int[arrowsInEnd];
+    private int[] scoreArray;
     private  View view;
     private int index;
     private LinearLayout markLeftLine;
@@ -28,6 +28,7 @@ public class ScoreEnd {
     private LinearLayout markRightLine;
     private LinearLayout markBottomLine;
     private OnChangeIndexListener indexListener;
+    private int sum;
 
 
 
@@ -83,7 +84,6 @@ public class ScoreEnd {
             cellIndex++;
             if (isFull()){
                 showSum();
-                //indexTextV.setBackgroundResource(R.color.white_background);
                 if(indexListener != null) indexListener.onChange();
             }
 
@@ -117,11 +117,15 @@ public class ScoreEnd {
 
     private void showSum(){
 
-        int s=0;
+        sum=0;
         for(int i=0; i<arrowsInEnd;i++){
-            s+=Integer.parseInt(cellArray[i].getText().toString());
+            sum+=Integer.parseInt(cellArray[i].getText().toString());
         }
-        sumTextV.setText(String.valueOf(s));
+        sumTextV.setText(String.valueOf(sum));
+    }
+
+    public int getSum(){
+        return sum;
     }
 
 

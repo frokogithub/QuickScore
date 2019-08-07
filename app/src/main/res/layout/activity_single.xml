@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:background="@color/white_background"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintEnd_toStartOf="@+id/tv_total"
         app:layout_constraintHorizontal_bias="0.845"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"></LinearLayout>
@@ -276,13 +276,13 @@
         app:layout_constraintGuide_end="8dp" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="45dp"
-        android:layout_height="30dp"
+        android:id="@+id/tv_total"
+        android:layout_width="@dimen/tv_total_W"
+        android:layout_height="@dimen/tv_total_H"
         android:layout_marginEnd="80dp"
         android:background="@color/black"
         android:gravity="center"
-        android:text="135"
+        android:text="0"
         android:textColor="@color/white_background"
         app:layout_constraintBottom_toBottomOf="@+id/ends_dummy"
         app:layout_constraintEnd_toStartOf="@+id/guideline2" />

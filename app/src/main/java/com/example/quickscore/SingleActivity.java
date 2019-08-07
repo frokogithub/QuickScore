@@ -5,24 +5,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import java.util.ArrayList;
 import interfacesPackage.OnChangeIndexListener;
 import scoresPackage.ScoreEnd;
 
 
 public class SingleActivity extends BaseActivity {
 
-    static int ARROWS_IN_END = 3;
-    static  int NUMBER_OF_ENDS = 10;
-    TextView[] arrTextViews = new TextView[ARROWS_IN_END+1];
-    int endIndex = 0;
-    public static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
+    final static int ARROWS_IN_END = 3;
+    final static  int NUMBER_OF_ENDS = 10;
+    private int endIndex = 0;
+    private static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
     private ViewGroup endsDummy;
-    private ArrayList<LinearLayout> arrMarkFrameLines = new ArrayList<LinearLayout>();
+    private TextView totalSum;
 
 
 
@@ -34,9 +31,9 @@ public class SingleActivity extends BaseActivity {
         initEnds();
         initButtons();
         updateMarkFrame(0);
+
+        totalSum = findViewById(R.id.tv_total);
     }
-
-
 
 
 
@@ -44,11 +41,7 @@ public class SingleActivity extends BaseActivity {
     void initEnds(){
         endsDummy = findViewById(R.id.ends_dummy);
 
-
-
         for(int i=0; i<NUMBER_OF_ENDS+1; i++){
-
-
             if(i<NUMBER_OF_ENDS){
 
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
@@ -56,12 +49,13 @@ public class SingleActivity extends BaseActivity {
                 endsDummy.addView(endHorizontalLine);
                 endsDummy.addView(indoorEndView);
 
-                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, endHorizontalLine, ARROWS_IN_END);
+                scoreEnd[i] = new ScoreEnd(this, i,  indoorEndView, endHorizontalLine, ARROWS_IN_END);//TODO: sprawdzić cz trzeba przesyłać ARROWS_IN_END
                 scoreEnd[i].setOnIndexListener(new OnChangeIndexListener() {
                     @Override
                     public void onChange() {
                         endIndex++;
                         if(endIndex<NUMBER_OF_ENDS) updateMarkFrame(endIndex);
+                        updateTotalSum();
                     }
                 });
 
@@ -185,6 +179,14 @@ public class SingleActivity extends BaseActivity {
     }
 
 
+    private void updateTotalSum(){
+        int s=0;
+        for(int i=0; i<endIndex ; i++){
+            s += scoreEnd[i].getSum();
+        }
+        totalSum.setText(String.valueOf(s));
+        int x=0;
+    }
 
     private void printToast(String s){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
