@@ -3,4 +3,6 @@
     <dimen name="cells_margin">1dp</dimen>
     <dimen name="buttons_outline_dim">1dp</dimen>
     <dimen name="index_tv_width">15dp</dimen>
+    <dimen name="cell_size">30dp</dimen>
+    <dimen name="before_sum_space">7dp</dimen>
 </resources>
