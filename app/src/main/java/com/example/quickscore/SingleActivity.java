@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
+import interfacesPackage.OnEraseListener;
 import scoresPackage.ScoreEnd;
 
 
@@ -59,6 +60,12 @@ public class SingleActivity extends BaseActivity {
                     }
                 });
 
+                scoreEnd[i].setOnEraseListener(new OnEraseListener() {
+                    @Override
+                    public void onErase(int endIndex) {
+                        printToast("EDIT");
+                    }
+                });
             }else{
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
                 endsDummy.addView(endHorizontalLine);

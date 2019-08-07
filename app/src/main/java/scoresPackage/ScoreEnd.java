@@ -11,6 +11,7 @@ import com.example.quickscore.R;
 import java.util.Arrays;
 
 import interfacesPackage.OnChangeIndexListener;
+import interfacesPackage.OnEraseListener;
 
 public class ScoreEnd {
 
@@ -28,6 +29,7 @@ public class ScoreEnd {
     private LinearLayout markRightLine;
     private LinearLayout markBottomLine;
     private OnChangeIndexListener indexListener;
+    private OnEraseListener eraseListener;
     private int sum;
 
 
@@ -75,10 +77,15 @@ public class ScoreEnd {
 
     private void eraseCell(View cell){
         ((TextView)cell).setText("");
+        if(eraseListener!=null) eraseListener.onErase(index);
     }
 
     public void setOnIndexListener(OnChangeIndexListener listener){
         indexListener = listener;
+    }
+
+    public  void setOnEraseListener(OnEraseListener listener){
+        eraseListener = listener;
     }
 
     public void enterScore(int score){
