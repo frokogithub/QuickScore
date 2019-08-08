@@ -18,9 +18,11 @@ public class SingleActivity extends BaseActivity {
     public static   int ARROWS_IN_END = 3;
     public final static  int NUMBER_OF_ENDS = 10;
     private int endIndex = 0;
+    private int editedEndIndex;
     private static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
     private ViewGroup endsDummy;
     private TextView totalSum;
+    private boolean editInProgressFlag = false;
 
 
 
@@ -31,7 +33,7 @@ public class SingleActivity extends BaseActivity {
 
         initEnds();
         initButtons();
-        updateMarkFrame(0);
+        markEnd(0);
 
         totalSum = findViewById(R.id.tv_total);
     }
@@ -54,16 +56,31 @@ public class SingleActivity extends BaseActivity {
                 scoreEnd[i].setOnIndexListener(new OnChangeIndexListener() {
                     @Override
                     public void onChange() {
-                        endIndex++;
-                        if(endIndex<NUMBER_OF_ENDS) updateMarkFrame(endIndex);
+
+                        if(editInProgressFlag){
+                            editInProgressFlag = false;
+                            unmarkEnd(editedEndIndex);
+                            //markEnd(endIndex);
+
+                        }else{
+                            endIndex++;
+                            unmarkEnd(endIndex-1);
+                        }
+
+                        if(endIndex<NUMBER_OF_ENDS)
+                            markEnd(endIndex);
                         updateTotalSum();
                     }
                 });
 
                 scoreEnd[i].setOnEraseListener(new OnEraseListener() {
                     @Override
-                    public void onErase(int endIndex) {
-                        printToast("EDIT");
+                    public void onErase(int index) {
+                        editInProgressFlag = true;
+                        editedEndIndex = index;
+                        unmarkEnd(endIndex);
+                        markEnd(editedEndIndex);
+                        updateTotalSum();
                     }
                 });
             }else{
@@ -77,7 +94,7 @@ public class SingleActivity extends BaseActivity {
 
 
     void initButtons(){
-        //Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, bX, bM;
+
 
         Button bX=findViewById(R.id.bX);
         Button bM=findViewById(R.id.bM);
@@ -95,84 +112,84 @@ public class SingleActivity extends BaseActivity {
         bX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(10);
+                enterScore(11);
             }
         });
 
         bM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(0);
+                enterScore(0);
             }
         });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(1);
+                enterScore(1);
             }
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(2);
+                enterScore(2);
             }
         });
 
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(3);
+                enterScore(3);
             }
         });
 
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(4);
+                enterScore(4);
             }
         });
 
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(5);
+                enterScore(5);
             }
         });
 
         b6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(6);
+                enterScore(6);
             }
         });
 
         b7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(7);
+                enterScore(7);
             }
         });
 
         b8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(8);
+                enterScore(8);
             }
         });
 
         b9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(9);
+                enterScore(9);
             }
         });
 
         b10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreEnd[endIndex].enterScore(10);
+                enterScore(10);
             }
         });
 
@@ -188,12 +205,31 @@ public class SingleActivity extends BaseActivity {
 
     } // initButtons
 
+    private void enterScore (int score){
+        int activeEndIndex;
+        if(editInProgressFlag){
+            activeEndIndex = editedEndIndex;
+        }else{
+            activeEndIndex = endIndex;
+        }
+        scoreEnd[activeEndIndex].addScore(score);
+    }
 
 
-    private void updateMarkFrame(int markIndex){
-        if(markIndex>0)              scoreEnd[markIndex-1].setFrameColor(1, R.color.black);
-                                     scoreEnd[markIndex].setFrameColor(1,R.color.mark__frame__red);
-        if(markIndex<NUMBER_OF_ENDS)  scoreEnd[markIndex+1].setFrameColor(0,R.color.mark__frame__red);
+
+    private void markEnd(int index){
+        int color = R.color.mark__frame__red;
+        scoreEnd[index].setFrameColor(true, color);
+        if(index<NUMBER_OF_ENDS)
+            scoreEnd[index+1].setFrameColor(false, color);
+    }
+
+    private void unmarkEnd(int index){
+        int color = R.color.black;
+        scoreEnd[index].setFrameColor(true, color);
+        if(index<NUMBER_OF_ENDS)
+            scoreEnd[index+1].setFrameColor(false, color);
+
     }
 
 

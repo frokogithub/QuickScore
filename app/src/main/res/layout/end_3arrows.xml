@@ -32,7 +32,8 @@
             android:layout_width="@dimen/cell_size"
             android:layout_height="@dimen/cell_size"
             android:background="@android:color/white"
-            android:gravity="center" />
+            android:gravity="center"
+            android:tag="0" />
 
         <TextView
             android:id="@+id/tv1"
@@ -40,7 +41,8 @@
             android:layout_height="@dimen/cell_size"
             android:layout_marginStart="@dimen/cells_margin"
             android:background="@android:color/white"
-            android:gravity="center" />
+            android:gravity="center"
+            android:tag="1" />
 
         <TextView
             android:id="@+id/tv2"
@@ -48,7 +50,8 @@
             android:layout_height="@dimen/cell_size"
             android:layout_marginStart="@dimen/cells_margin"
             android:background="@android:color/white"
-            android:gravity="center" />
+            android:gravity="center"
+            android:tag="2" />
 
         <LinearLayout
             android:id="@+id/ll_mark_line_right"

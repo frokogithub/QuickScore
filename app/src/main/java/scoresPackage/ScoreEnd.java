@@ -2,9 +2,11 @@ package scoresPackage;
 
 
 import android.content.Context;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quickscore.R;
 
@@ -22,15 +24,15 @@ public class ScoreEnd {
     private TextView sumTextV;
     private TextView indexTextV;
     private int[] scoreArray;
-    private  View view;
+    private  View view; //TODO: out?
     private int index;
     private LinearLayout markLeftLine;
     private LinearLayout markTopLine;
     private LinearLayout markRightLine;
-    private LinearLayout markBottomLine;
     private OnChangeIndexListener indexListener;
     private OnEraseListener eraseListener;
     private int sum;
+
 
 
 
@@ -72,37 +74,69 @@ public class ScoreEnd {
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
-
     }
 
-    private void eraseCell(View cell){
-        ((TextView)cell).setText("");
-        if(eraseListener!=null) eraseListener.onErase(index);
-    }
 
     public void setOnIndexListener(OnChangeIndexListener listener){
         indexListener = listener;
     }
-
     public  void setOnEraseListener(OnEraseListener listener){
         eraseListener = listener;
     }
 
-    public void enterScore(int score){
 
-        if(cellIndex <arrowsInEnd){
+
+    private void eraseCell(View cell){
+        try {
+            Vibrator vib = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+            if(vib.hasVibrator()) vib.vibrate(100);
+        }
+        catch (Exception e){
+            return;
+        }
+
+        String s = cell.getTag().toString();
+        int erasedCellIndex = Integer.parseInt(s);
+        scoreArray[erasedCellIndex] = 0;
+        for (int i=0;i<arrowsInEnd;i++){
+            cellArray[i].setText(null);
+        }
+        prepareArray(scoreArray);
+        if(cellIndex > 0) cellIndex--;
+        updateCells(false);
+        if(cellIndex<arrowsInEnd-1) cellIndex++;
+
+        sum = 0;
+        sumTextV.setText(null);
+
+        if(eraseListener!=null) eraseListener.onErase(index);
+    }
+
+
+
+    public void addScore(int score){
             scoreArray[cellIndex] = score;
-
             if (cellIndex > 0) prepareArray(scoreArray);
-            for(int i = 0; i< cellIndex +1; i++){
-                cellArray[i].setText(String.valueOf(scoreArray[i]));
+            updateCells(true);
+    }
+
+    private void updateCells(boolean scoreEntered){
+        if(cellIndex <arrowsInEnd){
+            for(int i = 0; i< cellIndex+1; i++){
+                if(scoreArray[i]==11){
+                    cellArray[i].setText("X");
+                }else if(scoreArray[i]==0){
+                    cellArray[i].setText("M");
+                }else{
+                    cellArray[i].setText(String.valueOf(scoreArray[i]));
+                }
             }
-            cellIndex++;
+
             if (isFull()){
                 showSum();
                 if(indexListener != null) indexListener.onChange();
             }
-
+            if(scoreEntered && cellIndex<arrowsInEnd-1) cellIndex++;
         }
     }
 
@@ -124,7 +158,7 @@ public class ScoreEnd {
     }
 
     private boolean isFull(){
-        if(cellIndex < arrowsInEnd){
+        if(cellIndex < arrowsInEnd-1){
             return false;
         }else {
             return true;
@@ -132,10 +166,13 @@ public class ScoreEnd {
     }
 
     private void showSum(){
-
         sum=0;
         for(int i=0; i<arrowsInEnd;i++){
-            sum+=Integer.parseInt(cellArray[i].getText().toString());
+            if(scoreArray[i]==11){
+                sum += 10;
+            }else{
+                sum += scoreArray[i];
+            }
         }
         sumTextV.setText(String.valueOf(sum));
     }
@@ -145,12 +182,16 @@ public class ScoreEnd {
     }
 
 
-    public void setFrameColor(int whichLines, int color){
-        if(whichLines==1){
+    public void setFrameColor(boolean threeLines, int color){
+        if(threeLines){
             markLeftLine.setBackgroundResource(color);
             markRightLine.setBackgroundResource(color);
         }
-
         markTopLine.setBackgroundResource(color);
+    }
+
+
+    private void printToast(String s){
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 }
