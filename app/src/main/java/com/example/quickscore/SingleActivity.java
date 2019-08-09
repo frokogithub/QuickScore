@@ -1,7 +1,9 @@
 package com.example.quickscore;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +14,9 @@ import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import scoresPackage.End;
+
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
 
 
 public class SingleActivity extends BaseActivity {
@@ -62,14 +67,7 @@ public class SingleActivity extends BaseActivity {
                         if(editInProgressFlag){
                             editInProgressFlag = false;
                             unmarkEnd(editedEndIndex);
-                            for(int i=0; i<NUMBER_OF_ENDS; i++){
-                                if(i<endIndex){
-                                    end[i].setEditable(true);
-                                }else{
-                                    end[i].setEditable(false);
-                                }
-                            }
-
+                            setEditableEnds();
                         }else{
                             endIndex++;
                             unmarkEnd(endIndex-1);
@@ -84,24 +82,41 @@ public class SingleActivity extends BaseActivity {
                 end[i].setOnEraseListener(new OnEraseListener() {
                     @Override
                     public void onErase(int index) {
-                        editInProgressFlag = true;
-                        editedEndIndex = index;
-                        unmarkEnd(endIndex);
-                        markEnd(editedEndIndex);
-                        updateTotalSum();
-                        for(int i=0; i<NUMBER_OF_ENDS; i++){
-                            if(i==editedEndIndex){
-                                end[i].setEditable(true);
-                            }else{
-                                end[i].setEditable(false);
-                            }
+                        if(index!=endIndex){
+                            editInProgressFlag = true;
+                            editedEndIndex = index;
+                            unmarkEnd(endIndex);
+                            markEnd(editedEndIndex);
+                            updateTotalSum();
+                            setEditableEnds();
                         }
+
                     }
                 });
             }else{
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
                 endsDummy.addView(endHorizontalLine);
                 end[i] = new End(endHorizontalLine);
+            }
+        }
+    }//initEnds()
+
+    private  void setEditableEnds(){
+        if(editInProgressFlag){
+            for(int i=0; i<NUMBER_OF_ENDS; i++){
+                if(i==editedEndIndex){
+                    end[i].setEditable(true);
+                }else{
+                    end[i].setEditable(false);
+                }
+            }
+        }else{
+            for(int i=0; i<NUMBER_OF_ENDS; i++){
+                if(i<endIndex){
+                    end[i].setEditable(true);
+                }else{
+                    end[i].setEditable(false);
+                }
             }
         }
     }
@@ -209,14 +224,6 @@ public class SingleActivity extends BaseActivity {
         });
 
 
-//        Button bMenu = findViewById(R.id.b_menu);
-//        bMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-//                PopUpMenu popUpMenu = new PopUpMenu();
-//                popUpMenu.showPopupWindow(arg0, getApplicationContext());
-//            }
-//        });
 
         ImageView ivMenu = findViewById(R.id.iv_menu);
         ivMenu.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +235,34 @@ public class SingleActivity extends BaseActivity {
         });
 
     } // initButtons
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event) {
+//        if(event.getAction()==MotionEvent.ACTION_DOWN){
+//            switch(v.getId()){
+//                case R.id.bX:
+//
+//                    enterScore(11);
+//                    break;
+//                case R.id.b10:
+//                    enterScore(10);
+//                    break;
+//                case R.id.b9:
+//                    enterScore(9);
+//                    break;
+//                case R.id.b8:
+//                    enterScore(8);
+//                    break;
+//            }
+//            v.setPressed(true);
+//        }else if(event.getAction()==MotionEvent.ACTION_UP){
+//            v.setPressed(false);
+//            v.performClick();
+//        }
+//
+//        return true;
+//    }
+
+
 
     private void enterScore (int score){
         int activeEndIndex;
@@ -269,6 +304,9 @@ public class SingleActivity extends BaseActivity {
     private void printToast(String s){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
 
+    }
+    private void printLog(String s){
+        Log.i("Kroko",s);
     }
 }
 
