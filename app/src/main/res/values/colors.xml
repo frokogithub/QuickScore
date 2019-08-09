@@ -5,8 +5,11 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="mark__frame__red">#E21D1D</color>
-    <color name="dark_grey_1">#858585</color>
+    <color name="dark_grey_1">#FAFAFA</color>
+    <color name="dark_grey_2">#F3F3F3</color>
+    <color name="dark_grey_3">#BEBEBE</color>
     <color name="white_background">#FFFFFF</color>
     <color name="white_transparent">#D5FFFFFF</color>
+    <color name="white_252">#FCFCFC</color>
     <color name="black">#000000</color>
 </resources>

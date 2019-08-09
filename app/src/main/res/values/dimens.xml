@@ -4,7 +4,7 @@
     <dimen name="buttons_outline_dim">1dp</dimen>
     <dimen name="index_tv_width">15dp</dimen>
     <dimen name="cell_size">30dp</dimen>
-    <dimen name="before_sum_space">7dp</dimen>
-    <dimen name="tv_total_H">30dp</dimen>
-    <dimen name="tv_total_W">45dp</dimen>
+    <dimen name="before_sum_space">11dp</dimen>
+    <dimen name="tv_total_H">35dp</dimen>
+    <dimen name="tv_total_W">70dp</dimen>
 </resources>

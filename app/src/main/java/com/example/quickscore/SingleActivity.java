@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
-import scoresPackage.ScoreEnd;
+import scoresPackage.End;
 
 
 public class SingleActivity extends BaseActivity {
@@ -19,7 +20,7 @@ public class SingleActivity extends BaseActivity {
     public final static  int NUMBER_OF_ENDS = 10;
     private int endIndex = 0;
     private int editedEndIndex;
-    private static ScoreEnd[] scoreEnd = new ScoreEnd[NUMBER_OF_ENDS+1];
+    private static End[] end = new End[NUMBER_OF_ENDS+1];
     private ViewGroup endsDummy;
     private TextView totalSum;
     private boolean editInProgressFlag = false;
@@ -34,6 +35,7 @@ public class SingleActivity extends BaseActivity {
         initEnds();
         initButtons();
         markEnd(0);
+        end[0].setEditable(true);
 
         totalSum = findViewById(R.id.tv_total);
     }
@@ -52,28 +54,34 @@ public class SingleActivity extends BaseActivity {
                 endsDummy.addView(endHorizontalLine);
                 endsDummy.addView(endView);
 
-                scoreEnd[i] = new ScoreEnd(this, i, endView, endHorizontalLine, ARROWS_IN_END);
-                scoreEnd[i].setOnIndexListener(new OnChangeIndexListener() {
+                end[i] = new End(this, i, endView, endHorizontalLine, ARROWS_IN_END);
+                end[i].setOnIndexListener(new OnChangeIndexListener() {
                     @Override
                     public void onChange() {
 
                         if(editInProgressFlag){
                             editInProgressFlag = false;
                             unmarkEnd(editedEndIndex);
-                            //markEnd(endIndex);
+                            for(int i=0; i<NUMBER_OF_ENDS; i++){
+                                if(i<endIndex){
+                                    end[i].setEditable(true);
+                                }else{
+                                    end[i].setEditable(false);
+                                }
+                            }
 
                         }else{
                             endIndex++;
                             unmarkEnd(endIndex-1);
                         }
 
-                        if(endIndex<NUMBER_OF_ENDS)
-                            markEnd(endIndex);
+                        if(endIndex<NUMBER_OF_ENDS) markEnd(endIndex);
                         updateTotalSum();
+                        end[endIndex].setEditable(true);
                     }
                 });
 
-                scoreEnd[i].setOnEraseListener(new OnEraseListener() {
+                end[i].setOnEraseListener(new OnEraseListener() {
                     @Override
                     public void onErase(int index) {
                         editInProgressFlag = true;
@@ -81,12 +89,19 @@ public class SingleActivity extends BaseActivity {
                         unmarkEnd(endIndex);
                         markEnd(editedEndIndex);
                         updateTotalSum();
+                        for(int i=0; i<NUMBER_OF_ENDS; i++){
+                            if(i==editedEndIndex){
+                                end[i].setEditable(true);
+                            }else{
+                                end[i].setEditable(false);
+                            }
+                        }
                     }
                 });
             }else{
                 View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
                 endsDummy.addView(endHorizontalLine);
-                scoreEnd[i] = new ScoreEnd(endHorizontalLine);
+                end[i] = new End(endHorizontalLine);
             }
         }
     }
@@ -194,8 +209,17 @@ public class SingleActivity extends BaseActivity {
         });
 
 
-        Button bMenu = findViewById(R.id.b_menu);
-        bMenu.setOnClickListener(new View.OnClickListener() {
+//        Button bMenu = findViewById(R.id.b_menu);
+//        bMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                PopUpMenu popUpMenu = new PopUpMenu();
+//                popUpMenu.showPopupWindow(arg0, getApplicationContext());
+//            }
+//        });
+
+        ImageView ivMenu = findViewById(R.id.iv_menu);
+        ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 PopUpMenu popUpMenu = new PopUpMenu();
@@ -212,23 +236,23 @@ public class SingleActivity extends BaseActivity {
         }else{
             activeEndIndex = endIndex;
         }
-        scoreEnd[activeEndIndex].addScore(score);
+        end[activeEndIndex].addScore(score);
     }
 
 
 
     private void markEnd(int index){
         int color = R.color.mark__frame__red;
-        scoreEnd[index].setFrameColor(true, color);
+        end[index].setFrameColor(true, color);
         if(index<NUMBER_OF_ENDS)
-            scoreEnd[index+1].setFrameColor(false, color);
+            end[index+1].setFrameColor(false, color);
     }
 
     private void unmarkEnd(int index){
         int color = R.color.black;
-        scoreEnd[index].setFrameColor(true, color);
+        end[index].setFrameColor(true, color);
         if(index<NUMBER_OF_ENDS)
-            scoreEnd[index+1].setFrameColor(false, color);
+            end[index+1].setFrameColor(false, color);
 
     }
 
@@ -236,7 +260,7 @@ public class SingleActivity extends BaseActivity {
     private void updateTotalSum(){
         int s=0;
         for(int i=0; i<endIndex ; i++){
-            s += scoreEnd[i].getSum();
+            s += end[i].getSum();
         }
         totalSum.setText(String.valueOf(s));
         int x=0;

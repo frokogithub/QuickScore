@@ -14,10 +14,10 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/white_background"
+        android:background="@color/white_252"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/tv_total"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.569"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"></LinearLayout>
 
@@ -43,12 +43,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="X"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b10"
@@ -60,12 +60,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="10"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b9"
@@ -77,12 +77,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="9"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b8"
@@ -94,12 +94,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="8"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b7"
@@ -111,12 +111,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="7"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b6"
@@ -128,12 +128,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="6"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b5"
@@ -145,12 +145,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="5"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b4"
@@ -162,12 +162,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="4"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b3"
@@ -179,12 +179,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="3"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b2"
@@ -196,12 +196,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="2"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/b1"
@@ -213,12 +213,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="1"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/bM"
@@ -230,12 +230,12 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:background="@drawable/points_button_selector"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-thin"
             android:soundEffectsEnabled="false"
             android:text="M"
-            android:textColor="@color/dark_grey_1"
+            android:textColor="#535353"
             android:textSize="24sp"
-            android:textStyle="normal" />
+            android:textStyle="normal|bold" />
 
     </androidx.gridlayout.widget.GridLayout>
 
@@ -244,31 +244,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="64dp" />
+        app:layout_constraintGuide_begin="44dp" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="52dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="@dimen/tv_total_W"
+        android:layout_height="@dimen/tv_total_H"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.074"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/black"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/white_background"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ends_dummy"
+        app:layout_constraintEnd_toEndOf="@+id/gl_buttons" />
 
-    <Button
-        android:id="@+id/b_menu"
-        android:layout_width="36dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:text="Menu"
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:layout_width="24dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/test" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -278,15 +276,14 @@
         app:layout_constraintGuide_end="8dp" />
 
     <TextView
-        android:id="@+id/tv_total"
-        android:layout_width="@dimen/tv_total_W"
-        android:layout_height="@dimen/tv_total_H"
-        android:layout_marginEnd="4dp"
-        android:background="@color/black"
+        android:id="@+id/textView2"
+        android:layout_width="68dp"
+        android:layout_height="24dp"
         android:gravity="center"
-        android:text="0"
-        android:textColor="@color/white_background"
-        app:layout_constraintBottom_toBottomOf="@+id/ends_dummy"
-        app:layout_constraintEnd_toEndOf="@+id/gl_buttons" />
+        android:text="TOTAL"
+        android:textScaleX="1.4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_total"
+        app:layout_constraintStart_toStartOf="@+id/tv_total" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

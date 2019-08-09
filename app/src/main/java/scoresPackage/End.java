@@ -15,16 +15,15 @@ import java.util.Arrays;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 
-public class ScoreEnd {
+public class End {
 
     private Context context;
     private int arrowsInEnd;
-    private int cellIndex = 0;
     private TextView[] cellArray;
     private TextView sumTextV;
     private TextView indexTextV;
     private int[] scoreArray;
-    private  View view; //TODO: out?
+    private  View view;
     private int index;
     private LinearLayout markLeftLine;
     private LinearLayout markTopLine;
@@ -32,15 +31,17 @@ public class ScoreEnd {
     private OnChangeIndexListener indexListener;
     private OnEraseListener eraseListener;
     private int sum;
+    private boolean isEditable = false;
+    private int emptyCells = 3;
 
 
 
 
-    public ScoreEnd(View lastMarkLine){
+    public End(View lastMarkLine){
         markTopLine = lastMarkLine.findViewById(R.id.ll_mark_top_line);
-    }
+    }//End(1)
 
-    public ScoreEnd(Context context, int index, View view, View markLine, int arrowsInEnd) {
+    public End(Context context, int index, View view, View markLine, int arrowsInEnd) {
         this.context = context;
         this.view = view;
         this.index = index;
@@ -67,14 +68,14 @@ public class ScoreEnd {
             cellArray[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    eraseCell(view);
+                    if(isEditable)eraseCell(view);
                     return false;
                 }
             });
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
-    }
+    }//End(2)
 
 
     public void setOnIndexListener(OnChangeIndexListener listener){
@@ -83,7 +84,6 @@ public class ScoreEnd {
     public  void setOnEraseListener(OnEraseListener listener){
         eraseListener = listener;
     }
-
 
 
     private void eraseCell(View cell){
@@ -98,31 +98,34 @@ public class ScoreEnd {
         String s = cell.getTag().toString();
         int erasedCellIndex = Integer.parseInt(s);
         scoreArray[erasedCellIndex] = 0;
-        for (int i=0;i<arrowsInEnd;i++){
-            cellArray[i].setText(null);
-        }
+        emptyCells++;
+
         prepareArray(scoreArray);
-        if(cellIndex > 0) cellIndex--;
+        for(int i=0; i<emptyCells; i++){
+            cellArray[arrowsInEnd-emptyCells].setText(null);
+        }
         updateCells(false);
-        if(cellIndex<arrowsInEnd-1) cellIndex++;
 
         sum = 0;
         sumTextV.setText(null);
 
         if(eraseListener!=null) eraseListener.onErase(index);
-    }
-
+    }//eraseCell
 
 
     public void addScore(int score){
-            scoreArray[cellIndex] = score;
-            if (cellIndex > 0) prepareArray(scoreArray);
+            scoreArray[arrowsInEnd-emptyCells] = score;
+            emptyCells--;
+            //if (cellIndex > 0) prepareArray(scoreArray);
+            if (emptyCells < 3) prepareArray(scoreArray);
             updateCells(true);
+
     }
 
+
     private void updateCells(boolean scoreEntered){
-        if(cellIndex <arrowsInEnd){
-            for(int i = 0; i< cellIndex+1; i++){
+
+            for(int i = 0; i<arrowsInEnd-emptyCells; i++){
                 if(scoreArray[i]==11){
                     cellArray[i].setText("X");
                 }else if(scoreArray[i]==0){
@@ -136,9 +139,9 @@ public class ScoreEnd {
                 showSum();
                 if(indexListener != null) indexListener.onChange();
             }
-            if(scoreEntered && cellIndex<arrowsInEnd-1) cellIndex++;
-        }
     }
+
+
 
     private void prepareArray(int[] array){
 
@@ -158,11 +161,7 @@ public class ScoreEnd {
     }
 
     private boolean isFull(){
-        if(cellIndex < arrowsInEnd-1){
-            return false;
-        }else {
-            return true;
-        }
+        return emptyCells==0;
     }
 
     private void showSum(){
@@ -188,6 +187,10 @@ public class ScoreEnd {
             markRightLine.setBackgroundResource(color);
         }
         markTopLine.setBackgroundResource(color);
+    }
+
+    public void setEditable(boolean state){
+        isEditable = state;
     }
 
 
