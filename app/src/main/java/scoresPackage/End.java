@@ -32,7 +32,7 @@ public class End {
     private OnEraseListener eraseListener;
     private int sum;
     private boolean isEditable = false;
-    private int emptyCells = 3;
+    private int emptyCells;
 
 
 
@@ -48,6 +48,7 @@ public class End {
         this.arrowsInEnd = arrowsInEnd;
         cellArray =  new TextView[arrowsInEnd];
         scoreArray = new int[arrowsInEnd];
+        emptyCells = arrowsInEnd;
 
 
         indexTextV = view.findViewById(R.id.tv_index);
@@ -117,7 +118,7 @@ public class End {
             scoreArray[arrowsInEnd-emptyCells] = score;
             emptyCells--;
             //if (cellIndex > 0) prepareArray(scoreArray);
-            if (emptyCells < 3) prepareArray(scoreArray);
+            if (emptyCells < arrowsInEnd) prepareArray(scoreArray);
             updateCells(true);
 
     }

@@ -3,32 +3,35 @@ package com.example.quickscore;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import scoresPackage.End;
 
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
-
 
 public class SingleActivity extends BaseActivity {
 
-    public static   int ARROWS_IN_END = 3;
-    public final static  int NUMBER_OF_ENDS = 10;
+    private int shootingType = 2; //1 indoor, 2 outdoor
+    private static   int ARROWS_IN_END;
+    private static  int NUMBER_OF_ENDS;
     private int endIndex = 0;
     private int editedEndIndex;
-    private static End[] end = new End[NUMBER_OF_ENDS+1];
+    private static End[] end;
     private ViewGroup endsDummy;
     private TextView totalSum;
     private boolean editInProgressFlag = false;
+    private ViewGroup insertDummy;
 
 
 
@@ -37,12 +40,49 @@ public class SingleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
+
+
+
+
+
+        insertDummy=findViewById(R.id.cl_insert_dummy);
+
+        View ins3 = LayoutInflater.from(this).inflate(R.layout.cl_insert_3arr, null);
+
+
+
+        setState();
         initEnds();
         initButtons();
         markEnd(0);
         end[0].setEditable(true);
 
-        totalSum = findViewById(R.id.tv_total);
+        totalSum = findViewById(R.id.tv_total_text);
+    }
+
+    private void setState(){
+        insertDummy.removeAllViews();
+        switch (shootingType){
+            case 1:
+                ARROWS_IN_END = 3;
+                NUMBER_OF_ENDS = 10;
+                View ins3 = LayoutInflater.from(this).inflate(R.layout.cl_insert_3arr, null);
+                insertDummy.addView(ins3);
+                break;
+            case 2:
+                ARROWS_IN_END = 6;
+                NUMBER_OF_ENDS = 6;
+                View ins6 = LayoutInflater.from(this).inflate(R.layout.cl_insert_6arr, null);
+                insertDummy.addView(ins6);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void chooseLayout(){
+
     }
 
 
@@ -50,12 +90,30 @@ public class SingleActivity extends BaseActivity {
 
     void initEnds(){
         endsDummy = findViewById(R.id.ends_dummy);
+        end = new End[NUMBER_OF_ENDS+1];
+
+        int endHorizontalLineId=0, endViewId=0;
+        switch (shootingType){
+            case 1:
+                endHorizontalLineId = R.layout.end_horizontal_line;
+                endViewId = R.layout.end_3arrows;
+                break;
+            case 2:
+                endHorizontalLineId = R.layout.end_horizontal_line_6arr;
+                endViewId = R.layout.end_6arrows;
+                break;
+            default:
+                break;
+        }
 
         for(int i=0; i<NUMBER_OF_ENDS+1; i++){
             if(i<NUMBER_OF_ENDS){
+//
 
-                View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
-                View endView = LayoutInflater.from(this).inflate(R.layout.end_3arrows, null);
+
+                View endHorizontalLine = LayoutInflater.from(this).inflate(endHorizontalLineId, null);
+                View endView = LayoutInflater.from(this).inflate(endViewId, null);
+
                 endsDummy.addView(endHorizontalLine);
                 endsDummy.addView(endView);
 
@@ -94,7 +152,7 @@ public class SingleActivity extends BaseActivity {
                     }
                 });
             }else{
-                View endHorizontalLine = LayoutInflater.from(this).inflate(R.layout.end_horizontal_line, null);
+                View endHorizontalLine = LayoutInflater.from(this).inflate(endHorizontalLineId, null);
                 endsDummy.addView(endHorizontalLine);
                 end[i] = new End(endHorizontalLine);
             }
@@ -234,7 +292,30 @@ public class SingleActivity extends BaseActivity {
             }
         });
 
+        Button bInOut =findViewById(R.id.b_in_out_switch);
+        bInOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (shootingType){
+                    case 1:
+                        shootingType = 2;
+                        break;
+                    case 2:
+                        shootingType = 1;
+                        break;
+                    default:
+                        break;
+                }
+                setState();
+                initEnds();
+                markEnd(0);
+                end[0].setEditable(true);
+            }
+        });
+
     } // initButtons
+
+
 //    @Override
 //    public boolean onTouch(View v, MotionEvent event) {
 //        if(event.getAction()==MotionEvent.ACTION_DOWN){
