@@ -5,16 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import scoresPackage.End;
@@ -22,8 +17,12 @@ import scoresPackage.End;
 
 public class SingleActivity extends BaseActivity {
 
+    private final static int INDOOR_ARROWS_IN_END = 3;
+    private final static int OUTDOOR_ARROWS_IN_END = 6;
+    private final static int INDOOR_NUMBER_OF_ENDS = 10;
+    private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
     private int shootingType = 2; //1 indoor, 2 outdoor
-    private static   int ARROWS_IN_END;
+    private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int endIndex = 0;
     private int editedEndIndex;
@@ -34,58 +33,39 @@ public class SingleActivity extends BaseActivity {
     private ViewGroup insertDummy;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
-
-
-
-
-
-        insertDummy=findViewById(R.id.cl_insert_dummy);
-
-        View ins3 = LayoutInflater.from(this).inflate(R.layout.cl_insert_3arr, null);
-
-
-
-        setState();
+        setInitialState();
         initEnds();
         initButtons();
-        markEnd(0);
-        end[0].setEditable(true);
 
-        totalSum = findViewById(R.id.tv_total);
     }
 
-    private void setState(){
+    private void setInitialState(){
+        insertDummy=findViewById(R.id.cl_insert_dummy);
         insertDummy.removeAllViews();
         switch (shootingType){
             case 1:
-                ARROWS_IN_END = 3;
-                NUMBER_OF_ENDS = 10;
+                ARROWS_IN_END = INDOOR_ARROWS_IN_END;
+                NUMBER_OF_ENDS = INDOOR_NUMBER_OF_ENDS;
                 View ins3 = LayoutInflater.from(this).inflate(R.layout.cl_insert_3arr, null);
                 insertDummy.addView(ins3);
                 break;
             case 2:
-                ARROWS_IN_END = 6;
-                NUMBER_OF_ENDS = 6;
+                ARROWS_IN_END = OUTDOOR_ARROWS_IN_END;
+                NUMBER_OF_ENDS = OUTDOOR_NUMBER_OF_ENDS;
                 View ins6 = LayoutInflater.from(this).inflate(R.layout.cl_insert_6arr, null);
                 insertDummy.addView(ins6);
                 break;
             default:
                 break;
         }
-
+        endIndex = 0;
+        totalSum = findViewById(R.id.tv_total);
     }
-
-    private void chooseLayout(){
-
-    }
-
-
 
 
     void initEnds(){
@@ -108,8 +88,6 @@ public class SingleActivity extends BaseActivity {
 
         for(int i=0; i<NUMBER_OF_ENDS+1; i++){
             if(i<NUMBER_OF_ENDS){
-//
-
 
                 View endHorizontalLine = LayoutInflater.from(this).inflate(endHorizontalLineId, null);
                 View endView = LayoutInflater.from(this).inflate(endViewId, null);
@@ -125,7 +103,7 @@ public class SingleActivity extends BaseActivity {
                         if(editInProgressFlag){
                             editInProgressFlag = false;
                             unmarkEnd(editedEndIndex);
-                            setEditableEnds();
+                            end[endIndex].setEditable(true);
                         }else{
                             endIndex++;
                             unmarkEnd(endIndex-1);
@@ -133,7 +111,6 @@ public class SingleActivity extends BaseActivity {
 
                         if(endIndex<NUMBER_OF_ENDS) markEnd(endIndex);
                         updateTotalSum();
-                        end[endIndex].setEditable(true);
                     }
                 });
 
@@ -145,10 +122,9 @@ public class SingleActivity extends BaseActivity {
                             editedEndIndex = index;
                             unmarkEnd(endIndex);
                             markEnd(editedEndIndex);
+                            end[endIndex].setEditable(false);
                             updateTotalSum();
-                            setEditableEnds();
                         }
-
                     }
                 });
             }else{
@@ -157,32 +133,12 @@ public class SingleActivity extends BaseActivity {
                 end[i] = new End(endHorizontalLine);
             }
         }
+        markEnd(0);
     }//initEnds()
-
-    private  void setEditableEnds(){
-        if(editInProgressFlag){
-            for(int i=0; i<NUMBER_OF_ENDS; i++){
-                if(i==editedEndIndex){
-                    end[i].setEditable(true);
-                }else{
-                    end[i].setEditable(false);
-                }
-            }
-        }else{
-            for(int i=0; i<NUMBER_OF_ENDS; i++){
-                if(i<endIndex){
-                    end[i].setEditable(true);
-                }else{
-                    end[i].setEditable(false);
-                }
-            }
-        }
-    }
 
 
 
     void initButtons(){
-
 
         Button bX=findViewById(R.id.bX);
         Button bM=findViewById(R.id.bM);
@@ -203,77 +159,66 @@ public class SingleActivity extends BaseActivity {
                 enterScore(11);
             }
         });
-
         bM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(0);
             }
         });
-
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(1);
             }
         });
-
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(2);
             }
         });
-
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(3);
             }
         });
-
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(4);
             }
         });
-
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(5);
             }
         });
-
         b6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(6);
             }
         });
-
         b7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(7);
             }
         });
-
         b8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(8);
             }
         });
-
         b9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(9);
             }
         });
-
         b10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -306,11 +251,8 @@ public class SingleActivity extends BaseActivity {
                     default:
                         break;
                 }
-                setState();
+                setInitialState();
                 initEnds();
-                markEnd(0);
-                end[0].setEditable(true);
-                totalSum = findViewById(R.id.tv_total);
             }
         });
 
@@ -355,7 +297,6 @@ public class SingleActivity extends BaseActivity {
         }
         end[activeEndIndex].addScore(score);
     }
-
 
 
     private void markEnd(int index){

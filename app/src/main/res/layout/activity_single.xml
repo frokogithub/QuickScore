@@ -239,7 +239,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:srcCompat="@drawable/test" />
+        app:srcCompat="@drawable/menu_icon_1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

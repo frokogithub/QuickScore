@@ -31,7 +31,7 @@ public class End {
     private OnChangeIndexListener indexListener;
     private OnEraseListener eraseListener;
     private int sum;
-    private boolean isEditable = false;
+    private boolean isEditable = true;
     private int emptyCells;
 
 
@@ -69,8 +69,8 @@ public class End {
             cellArray[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if(isEditable)eraseCell(view);
-                    return false;
+                   if(!((TextView)view).getText().toString().equals("") && isEditable) eraseCell(view);
+                   return false;
                 }
             });
         }
@@ -142,10 +142,7 @@ public class End {
             }
     }
 
-
-
     private void prepareArray(int[] array){
-
         if (array == null) return;
         Arrays.sort(array);
 
