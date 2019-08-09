@@ -278,7 +278,6 @@
         android:id="@+id/cl_insert_dummy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFEB3B"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline3"

@@ -57,7 +57,7 @@ public class SingleActivity extends BaseActivity {
         markEnd(0);
         end[0].setEditable(true);
 
-        totalSum = findViewById(R.id.tv_total_text);
+        totalSum = findViewById(R.id.tv_total);
     }
 
     private void setState(){
@@ -310,6 +310,7 @@ public class SingleActivity extends BaseActivity {
                 initEnds();
                 markEnd(0);
                 end[0].setEditable(true);
+                totalSum = findViewById(R.id.tv_total);
             }
         });
 
