@@ -105,7 +105,7 @@ public class SingleActivity extends BaseActivity {
                             unmarkEnd(editedEndIndex);
                             end[endIndex].setEditable(true);
                         }else{
-                            endIndex++;
+                            if (endIndex < NUMBER_OF_ENDS) endIndex++;
                             unmarkEnd(endIndex-1);
                         }
 
@@ -120,7 +120,7 @@ public class SingleActivity extends BaseActivity {
                         if(index!=endIndex){
                             editInProgressFlag = true;
                             editedEndIndex = index;
-                            unmarkEnd(endIndex);
+                            if(endIndex<NUMBER_OF_ENDS)unmarkEnd(endIndex);
                             markEnd(editedEndIndex);
                             end[endIndex].setEditable(false);
                             updateTotalSum();
@@ -295,7 +295,7 @@ public class SingleActivity extends BaseActivity {
         }else{
             activeEndIndex = endIndex;
         }
-        end[activeEndIndex].addScore(score);
+        if(activeEndIndex<NUMBER_OF_ENDS)end[activeEndIndex].addScore(score);
     }
 
 
