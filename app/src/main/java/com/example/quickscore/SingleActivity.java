@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
@@ -243,7 +240,9 @@ public class SingleActivity extends BaseActivity {
                 popUpMenu.setOnMenuItemClick(new OnMenuItemClickListener() {
                     @Override
                     public void onMenuItemClick(String command) {
-                        if(command.equals("NEW")) clearEnds();
+                        if(command.equals("NEW")){
+                            clearEnds();
+                        }
                     }
                 });
             }
@@ -344,6 +343,8 @@ public class SingleActivity extends BaseActivity {
         markEnd(0);
         totalSum.setText("0");
     }
+
+
 
     private void printToast(String s){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();

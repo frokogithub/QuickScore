@@ -1,21 +1,19 @@
 package com.example.quickscore;
 
-/*
-W końcowej wersji jako dummy użyć ConstraintLayout
- */
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import interfacesPackage.OnMenuItemClickListener;
@@ -28,8 +26,12 @@ public class PopUpMenu {
     private View popupView;
     private View view;
     private  OnMenuItemClickListener menuListener;
+    private String  command;
+    private final static int X_OFFSET = -380;
+    private final static int Y_OFFSET = -20;
 
-    public void showPopupWindow(final View view, Activity activity, Context context) {
+
+    public void showPopupWindow(final View view, AppCompatActivity activity, Context context) {
 
         this.activity = activity;
         this.context = context;
@@ -59,8 +61,6 @@ public class PopUpMenu {
 
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = true;
-
-        //Create a window with our parameters
         popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -81,7 +81,7 @@ public class PopUpMenu {
         });
 
 
-        popupWindow.showAsDropDown(view, -380, -20);
+        popupWindow.showAsDropDown(view, X_OFFSET, Y_OFFSET);
     }
 
     private void initButtons(){
@@ -98,8 +98,9 @@ public class PopUpMenu {
 
             @Override
             public void onClick(View v) {
+                command = "NEW";
                 popupWindow.dismiss();
-                if(menuListener!=null) menuListener.onMenuItemClick("NEW");
+                showSaveDialog();
             }
         });
     }
@@ -108,6 +109,42 @@ public class PopUpMenu {
         ConstraintLayout layout_MainMenu = activity.findViewById( R.id.bckgd);
         layout_MainMenu.setAlpha(level);
     }
+
+
+    private void showSaveDialog() {
+        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
+        ViewGroup viewGroup = activity.findViewById(android.R.id.content);
+
+        View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(dialogView);
+        final AlertDialog saveDialog = builder.create();
+        saveDialog.show();
+
+        Button bSave = dialogView.findViewById(R.id.bSave);
+        Button bDsave = dialogView.findViewById(R.id.bdont_save);
+
+        bSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveDialog.dismiss();
+                printToast("Let's save");
+                if(menuListener!=null) menuListener.onMenuItemClick(command);
+            }
+        });
+
+        bDsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveDialog.dismiss();
+                printToast("Fuck this fuckin' file");
+                if(menuListener!=null) menuListener.onMenuItemClick(command);
+            }
+        });
+
+
+    }
+
 
     private void printToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();

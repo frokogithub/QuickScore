@@ -5,6 +5,7 @@ package com.example.quickscore;
 Pozostałe aktywnośći dziedziczą po Base activity
 */
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
