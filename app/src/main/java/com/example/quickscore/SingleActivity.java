@@ -342,6 +342,7 @@ public class SingleActivity extends BaseActivity {
         }
         endIndex = 0;
         markEnd(0);
+        totalSum.setText("0");
     }
 
     private void printToast(String s){
