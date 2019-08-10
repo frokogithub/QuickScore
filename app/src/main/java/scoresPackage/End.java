@@ -191,6 +191,16 @@ public class End {
         isEditable = state;
     }
 
+    public void clear(){
+        for(int i=0;i<arrowsInEnd;i++){
+            scoreArray[i]=0;
+            cellArray[i].setText(null);
+            emptyCells = arrowsInEnd;
+            sum = 0;
+            sumTextV.setText(null);
+        }
+    }
+
 
     private void printToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();

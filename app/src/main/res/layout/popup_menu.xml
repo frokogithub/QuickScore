@@ -10,13 +10,27 @@
     android:focusableInTouchMode="true">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="200dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/popup_menu_background"
+        android:clickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/b_new_round"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Button"
+        android:background="@drawable/start_button_background"
         app:layout_constraintBottom_toTopOf="@+id/close"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
@@ -25,31 +39,43 @@
         android:id="@+id/close"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:text="Close"
+        android:background="@drawable/start_button_background"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/btn"
-        app:layout_constraintTop_toBottomOf="@+id/btn" />
+        app:layout_constraintStart_toStartOf="@+id/b_new_round"
+        app:layout_constraintTop_toBottomOf="@+id/b_new_round" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
-        android:text="Timer"
+        android:background="@drawable/start_button_background"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/close"
+        app:layout_constraintStart_toStartOf="@+id/close"
         app:layout_constraintTop_toBottomOf="@+id/close" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="200dp"
-        android:layout_height="301dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/popup_menu_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="NEW"
+        android:textColor="@color/white_background"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/b_new_round"
+        app:layout_constraintStart_toEndOf="@+id/b_new_round"
+        app:layout_constraintTop_toTopOf="@+id/b_new_round" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text=""
+        android:textColor="@color/white_background"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/b_new_round"
+        app:layout_constraintStart_toEndOf="@+id/b_new_round"
+        app:layout_constraintTop_toTopOf="@+id/b_new_round" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

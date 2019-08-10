@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
+import interfacesPackage.OnMenuItemClickListener;
 import scoresPackage.End;
 
 
@@ -37,6 +41,7 @@ public class SingleActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
+
 
         setInitialState();
         initEnds();
@@ -233,7 +238,13 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View arg0) {
                 PopUpMenu popUpMenu = new PopUpMenu();
-                popUpMenu.showPopupWindow(arg0, getApplicationContext());
+                popUpMenu.showPopupWindow(arg0, SingleActivity.this, getApplicationContext());
+                popUpMenu.setOnMenuItemClick(new OnMenuItemClickListener() {
+                    @Override
+                    public void onMenuItemClick(String command) {
+                        if(command.equals("NEW")) clearEnds();
+                    }
+                });
             }
         });
 
@@ -322,6 +333,15 @@ public class SingleActivity extends BaseActivity {
         }
         totalSum.setText(String.valueOf(s));
         int x=0;
+    }
+
+    private void clearEnds(){
+        for(int i=0;i<NUMBER_OF_ENDS;i++){
+            end[i].clear();
+            unmarkEnd(i);
+        }
+        endIndex = 0;
+        markEnd(0);
     }
 
     private void printToast(String s){
