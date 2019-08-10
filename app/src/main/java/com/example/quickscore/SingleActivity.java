@@ -70,6 +70,7 @@ public class SingleActivity extends BaseActivity {
         }
         endIndex = 0;
         totalSum = findViewById(R.id.tv_total);
+        totalSum.setText("0");
     }
 
 
@@ -332,7 +333,6 @@ public class SingleActivity extends BaseActivity {
             s += end[i].getSum();
         }
         totalSum.setText(String.valueOf(s));
-        int x=0;
     }
 
     private void clearEnds(){
