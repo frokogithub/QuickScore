@@ -334,7 +334,7 @@ public class SingleActivity extends BaseActivity {
         totalSum.setText(String.valueOf(s));
     }
 
-    private void clearEnds(){
+    private  void clearEnds(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             end[i].clear();
             unmarkEnd(i);
