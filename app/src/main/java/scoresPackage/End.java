@@ -37,7 +37,7 @@ public class End {
 
 
 
-    public End(View lastMarkLine){
+    public End(View lastMarkLine) {
         markTopLine = lastMarkLine.findViewById(R.id.ll_mark_top_line);
     }//End(1)
 
@@ -52,7 +52,7 @@ public class End {
 
 
         indexTextV = view.findViewById(R.id.tv_index);
-        indexTextV.setText(String.valueOf(index+1));
+        if(indexTextV!=null)indexTextV.setText(String.valueOf(index+1));
 
         markTopLine = markLine.findViewById(R.id.ll_mark_top_line);
         markLeftLine = view.findViewById(R.id.ll_mark_line_left);
@@ -76,6 +76,7 @@ public class End {
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
+
     }//End(2)
 
 
@@ -126,20 +127,21 @@ public class End {
 
     private void updateCells(boolean scoreEntered){
 
-            for(int i = 0; i<arrowsInEnd-emptyCells; i++){
+
+        for(int i = 0; i<arrowsInEnd-emptyCells; i++){
                 if(scoreArray[i]==11){
                     cellArray[i].setText("X");
                 }else if(scoreArray[i]==0){
                     cellArray[i].setText("M");
                 }else{
-                    cellArray[i].setText(String.valueOf(scoreArray[i]));
+                   cellArray[i].setText(String.valueOf(scoreArray[i]));
                 }
-            }
+        }
 
-            if (isFull()){
+        if (isFull()){
                 showSum();
                 if(indexListener != null) indexListener.onChange();
-            }
+        }
     }
 
     private void prepareArray(int[] array){

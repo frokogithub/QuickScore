@@ -8,4 +8,6 @@
     <dimen name="before_sum_space">11dp</dimen>
     <dimen name="tv_total_H">35dp</dimen>
     <dimen name="tv_total_W">70dp</dimen>
+    <dimen name="outer_mark_H">6dp</dimen>
+    <dimen name="outer_mark_line">2dp</dimen>
 </resources>

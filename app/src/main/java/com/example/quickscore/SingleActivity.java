@@ -22,7 +22,7 @@ public class SingleActivity extends BaseActivity {
     private final static int OUTDOOR_ARROWS_IN_END = 6;
     private final static int INDOOR_NUMBER_OF_ENDS = 10;
     private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
-    private int shootingType = 2; //1 indoor, 2 outdoor
+    private int EventType = 2; //1 indoor, 2 outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int endIndex = 0;
@@ -44,12 +44,13 @@ public class SingleActivity extends BaseActivity {
         initEnds();
         initButtons();
 
+
     }
 
     private void setInitialState(){
         insertDummy=findViewById(R.id.cl_insert_dummy);
         insertDummy.removeAllViews();
-        switch (shootingType){
+        switch (EventType){
             case 1:
                 ARROWS_IN_END = INDOOR_ARROWS_IN_END;
                 NUMBER_OF_ENDS = INDOOR_NUMBER_OF_ENDS;
@@ -76,7 +77,7 @@ public class SingleActivity extends BaseActivity {
         end = new End[NUMBER_OF_ENDS+1];
 
         int endHorizontalLineId=0, endViewId=0;
-        switch (shootingType){
+        switch (EventType){
             case 1:
                 endHorizontalLineId = R.layout.end_horizontal_line;
                 endViewId = R.layout.end_3arrows;
@@ -159,7 +160,7 @@ public class SingleActivity extends BaseActivity {
         bX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterScore(11);
+               enterScore(11);
             }
         });
         bM.setOnClickListener(new View.OnClickListener() {
@@ -252,12 +253,12 @@ public class SingleActivity extends BaseActivity {
         bInOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (shootingType){
+                switch (EventType){
                     case 1:
-                        shootingType = 2;
+                        EventType = 2;
                         break;
                     case 2:
-                        shootingType = 1;
+                        EventType = 1;
                         break;
                     default:
                         break;
