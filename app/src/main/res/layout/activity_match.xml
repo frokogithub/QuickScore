@@ -322,95 +322,33 @@
 
     <TextView
         android:id="@+id/B_tv_total_score"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:background="@color/black"
         android:gravity="center"
         android:text="150"
         android:textColor="@color/white_background"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/B_ends_dummy"
+        app:layout_constraintEnd_toEndOf="@+id/tv_archer_B"
+        app:layout_constraintStart_toStartOf="@+id/tv_archer_B"
         app:layout_constraintTop_toBottomOf="@+id/tv_archer_B" />
 
     <TextView
         android:id="@+id/A_tv_total_score"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:background="@color/black"
         android:gravity="center"
         android:text="150"
         android:textColor="@color/white_background"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/A_ends_dummy"
+        app:layout_constraintEnd_toEndOf="@+id/tv_archer_A"
+        app:layout_constraintStart_toStartOf="@+id/tv_archer_A"
         app:layout_constraintTop_toBottomOf="@+id/tv_archer_A" />
-
-    <LinearLayout
-        android:id="@+id/A_outer_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/outer_mark_line"
-        android:layout_marginBottom="16dp"
-        android:background="@color/outer_mark_color"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/B_ends_dummy"
-        app:layout_constraintEnd_toEndOf="@+id/B_ends_dummy">
-
-        <Space
-            android:id="@+id/t1"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Space
-            android:id="@+id/t0"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Space
-            android:layout_width="@dimen/cells_margin"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Space
-            android:layout_width="@dimen/cells_margin"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Space
-            android:id="@+id/t2"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Space
-            android:layout_width="@dimen/cells_margin"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/outer_mark_line"
-        android:layout_height="@dimen/outer_mark_H"
-        android:background="@color/outer_mark_color"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/A_outer_mark"
-        app:layout_constraintTop_toTopOf="@+id/A_outer_mark"></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/outer_mark_line"
-        android:layout_height="@dimen/outer_mark_H"
-        android:background="@color/outer_mark_color"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/A_outer_mark"
-        app:layout_constraintTop_toTopOf="@+id/A_outer_mark">
-
-    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -418,6 +356,114 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="44dp" />
+
+    <LinearLayout
+        android:id="@+id/A_outer_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/A_ends_dummy"
+        app:layout_constraintStart_toStartOf="@+id/A_ends_dummy">
+
+        <LinearLayout
+            android:layout_width="@dimen/outer_mark_line"
+            android:layout_height="@dimen/outer_mark_H"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/outer_mark_line"
+            android:layout_marginBottom="16dp"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cells_margin"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/outer_mark_line"
+            android:layout_height="@dimen/outer_mark_H"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal"></LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/B_outer_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/B_ends_dummy"
+        app:layout_constraintEnd_toEndOf="@+id/B_ends_dummy">
+
+        <LinearLayout
+            android:layout_width="@dimen/outer_mark_line"
+            android:layout_height="@dimen/outer_mark_H"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/outer_mark_line"
+            android:layout_marginBottom="16dp"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cells_margin"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/cell_size"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/outer_mark_line"
+            android:layout_height="@dimen/outer_mark_H"
+            android:background="@color/outer_mark_color"
+            android:orientation="horizontal"></LinearLayout>
+
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

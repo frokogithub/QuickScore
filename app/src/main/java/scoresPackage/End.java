@@ -30,7 +30,7 @@ public class End {
     private LinearLayout markRightLine;
     private OnChangeIndexListener indexListener;
     private OnEraseListener eraseListener;
-    private int sum;
+    private int sum=0;
     private boolean isEditable = true;
     private int emptyCells;
 
@@ -160,7 +160,7 @@ public class End {
         }
     }
 
-    private boolean isFull(){
+    public boolean isFull(){
         return emptyCells==0;
     }
 

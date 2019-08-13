@@ -11,30 +11,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
-import interfacesPackage.OnMenuItemClickListener;
 import scoresPackage.End;
 
 public class MatchActivity extends BaseActivity {
 
 
     private int EventType = 2; //1 indoor, 2 outdoor,
+    private int division = 1; //1 recurve, 2 compound
     private static  int ARROWS_IN_END = 3;
     private static  int NUMBER_OF_ENDS = 5;
     private int endIndex = 0;
     private int editedEndIndex;
+    private int activeArcher;
     private static End[] endA;
     private static End[] endB;
-    private ViewGroup AendsDummy;
-    private ViewGroup BendsDummy;
+    private ViewGroup endsDummyA;
+    private ViewGroup endsDummyB;
+    private ViewGroup outerMarkA;
+    private ViewGroup outerMarkB;
     private TextView totalSum;
     private boolean editInProgressFlag = false;
     private ViewGroup insertDummy;
-    private TextView AtvTotalScore;
-    private TextView BtvTotalScore;
+    private TextView tvTotalScoreA;
+    private TextView tvTotalScoreB;
 
 
     @Override
@@ -51,21 +53,27 @@ public class MatchActivity extends BaseActivity {
     }
 
     private void setInitialState(){
-      AtvTotalScore = findViewById(R.id.A_tv_total_score);
-      BtvTotalScore = findViewById(R.id.B_tv_total_score);
-      AtvTotalScore.setText("0");
-      BtvTotalScore.setText("0");
+      tvTotalScoreA = findViewById(R.id.A_tv_total_score);
+      tvTotalScoreB = findViewById(R.id.B_tv_total_score);
+      tvTotalScoreA.setText("0");
+      tvTotalScoreB.setText("0");
+
+      outerMarkA = findViewById(R.id.A_outer_mark);
+      outerMarkB = findViewById(R.id.B_outer_mark);
 
       endIndex = 0;
+      setActiveArcher(1);
 
     }
 
 
     void initEnds(){
-        AendsDummy = findViewById(R.id.A_ends_dummy);
-        BendsDummy = findViewById(R.id.B_ends_dummy);
+        endsDummyA = findViewById(R.id.A_ends_dummy);
+        endsDummyB = findViewById(R.id.B_ends_dummy);
         endA = new End[NUMBER_OF_ENDS+1];
         endB = new End[NUMBER_OF_ENDS+1];
+
+
 
 //        int endHorizontalLineId=0, endViewId=0;
 //        switch (EventType){
@@ -95,57 +103,100 @@ public class MatchActivity extends BaseActivity {
                 View AendView = LayoutInflater.from(this).inflate(AendViewId, null);
                 View BendView = LayoutInflater.from(this).inflate(BendViewId, null);
 
-                AendsDummy.addView(AendHorizontalLine);
-                AendsDummy.addView(AendView);
-                BendsDummy.addView(BendHorizontalLine);
-                BendsDummy.addView(BendView);
+                endsDummyA.addView(AendHorizontalLine);
+                endsDummyA.addView(AendView);
+                endsDummyB.addView(BendHorizontalLine);
+                endsDummyB.addView(BendView);
 
                 endA[i] = new End(this, i, AendView, AendHorizontalLine, ARROWS_IN_END);
                 endB[i] = new End(this, i, BendView, BendHorizontalLine, ARROWS_IN_END);
-//                endB[i].setOnIndexListener(new OnChangeIndexListener() {
-//                    @Override
-//                    public void onChange() {
-//
-//                        if(editInProgressFlag){
-//                            editInProgressFlag = false;
-//                            unmarkEnd(editedEndIndex);
-//                            end[endIndex].setEditable(true);
-//                        }else{
-//                            if (endIndex < NUMBER_OF_ENDS) endIndex++;
-//                            unmarkEnd(endIndex-1);
-//                        }
-//
-//                        if(endIndex<NUMBER_OF_ENDS) markEnd(endIndex);
-//                        updateTotalSum();
-//                    }
-//                });
-//
-//                end[i].setOnEraseListener(new OnEraseListener() {
-//                    @Override
-//                    public void onErase(int index) {
-//                        if(index!=endIndex){
-//                            editInProgressFlag = true;
-//                            editedEndIndex = index;
-//                            if(endIndex<NUMBER_OF_ENDS)unmarkEnd(endIndex);
-//                            markEnd(editedEndIndex);
-//                            end[endIndex].setEditable(false);
-//                            updateTotalSum();
-//                        }
-//                    }
-//                });
+
+                addEndsListeners(i);
             }else{
                 View AendHorizontalLine = LayoutInflater.from(this).inflate(AendHorizontalLineId, null);
                 View BendHorizontalLine = LayoutInflater.from(this).inflate(BendHorizontalLineId, null);
-                AendsDummy.addView(AendHorizontalLine);
-                BendsDummy.addView(BendHorizontalLine);
+                endsDummyA.addView(AendHorizontalLine);
+                endsDummyB.addView(BendHorizontalLine);
                 endA[i] = new End(AendHorizontalLine);
                 endB[i] = new End(BendHorizontalLine);
             }
         }
-        markEnd(0);
+        markEnd(1,0);
     }//initEnds()
 
+    private void addEndsListeners(int i){
+                endA[i].setOnIndexListener(new OnChangeIndexListener() {
+                    @Override
+                    public void onChange() {
+                        doIfEndIsFull();
+                    }
+                });
+                endB[i].setOnIndexListener(new OnChangeIndexListener() {
+                    @Override
+                    public void onChange() {
+                        doIfEndIsFull();
+                    }
+                });
 
+                endA[i].setOnEraseListener(new OnEraseListener() {
+                    @Override
+                    public void onErase(int index) {
+                        if(index!=endIndex){
+                            editInProgressFlag = true;
+                            editedEndIndex = index;
+                            if(endIndex<NUMBER_OF_ENDS)unmarkEnd(endIndex);
+                            //markEnd(editedEndIndex);
+                            endA[endIndex].setEditable(false);
+                            updateTotalScore();
+                        }
+                    }
+                });
+    }
+
+    private void doIfEndIsFull(){
+        if(editInProgressFlag){
+            editInProgressFlag = false;
+            unmarkEnd(editedEndIndex);
+            endA[endIndex].setEditable(true);
+        }else{
+            unmarkEnd(endIndex);
+            if(endA[endIndex].isFull() && endB[endIndex].isFull()){
+                if (endIndex < NUMBER_OF_ENDS) endIndex++;
+                setActiveArcher(1);
+                updateTotalScore();
+            }else if (endA[endIndex].isFull()){
+                setActiveArcher(2);
+            }else if(endB[endIndex].isFull()){
+                setActiveArcher(1);
+            }
+            if(endIndex<NUMBER_OF_ENDS) markEnd(activeArcher,endIndex);
+        }
+    }
+
+    private void switchArcher(){
+        if(activeArcher==1){
+            setActiveArcher(2);
+        }else{
+            setActiveArcher(1);
+        }
+    }
+
+    private  void setActiveArcher(int archer){
+        switch (archer){
+            case 1:
+                outerMarkA.setVisibility(View.VISIBLE);
+                outerMarkB.setVisibility(View.INVISIBLE);
+                activeArcher = 1;
+                break;
+            case 2:
+                outerMarkA.setVisibility(View.INVISIBLE);
+                outerMarkB.setVisibility(View.VISIBLE);
+                activeArcher = 2;
+                break;
+            default:
+                break;
+        }
+    }
 
     void initButtons(){
 
@@ -279,45 +330,87 @@ public class MatchActivity extends BaseActivity {
 
 
     private void enterScore (int score){
-//        int activeEndIndex;
-//        if(editInProgressFlag){
-//            activeEndIndex = editedEndIndex;
-//        }else{
-//            activeEndIndex = endIndex;
-//        }
-//        if(activeEndIndex<NUMBER_OF_ENDS)end[activeEndIndex].addScore(score);
-    }
-
-
-    private void markEnd(int index){
-        int color = R.color.mark__frame__red;
-        endA[index].setFrameColor(true, color);
-        endB[index].setFrameColor(true, color);
-        if(index<NUMBER_OF_ENDS){
-            endA[index+1].setFrameColor(false, color);
-            endB[index+1].setFrameColor(false, color);
+        int activeEndIndex;
+        if(editInProgressFlag){
+            activeEndIndex = editedEndIndex;
+        }else{
+            activeEndIndex = endIndex;
         }
 
+        switch (activeArcher){
+            case 1:
+                if(activeEndIndex<NUMBER_OF_ENDS)endA[activeEndIndex].addScore(score);
+                break;
+            case 2:
+                if(activeEndIndex<NUMBER_OF_ENDS)endB[activeEndIndex].addScore(score);
+                break;
+            default:
+                break;
+        }
     }
-//
-//    private void unmarkEnd(int index){
-//        int color = R.color.black;
-//        end[index].setFrameColor(true, color);
-//        if(index<NUMBER_OF_ENDS)
-//            end[index+1].setFrameColor(false, color);
-//
-//    }
-//
-//
-//    private void updateTotalSum(){
+
+
+    private void markEnd(int archerIndex, int _endIndex){
+        int color = R.color.mark__frame__red;
+
+        switch (archerIndex){
+            case 1:
+                endA[_endIndex].setFrameColor(true, color);
+                if(_endIndex <NUMBER_OF_ENDS) endA[_endIndex +1].setFrameColor(false, color);
+                break;
+            case 2:
+                endB[_endIndex].setFrameColor(true, color);
+                if(_endIndex <NUMBER_OF_ENDS) endB[_endIndex +1].setFrameColor(false, color);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void unmarkEnd(int index){
+        int color = R.color.black;
+        endA[index].setFrameColor(true, color);
+        endB[index].setFrameColor(true, color);
+        if(index<NUMBER_OF_ENDS) {
+            endA[index + 1].setFrameColor(false, color);
+            endB[index + 1].setFrameColor(false, color);
+        }
+    }
+
+
+    private void updateTotalScore(){
 //        int s=0;
 //        for(int i=0; i<endIndex ; i++){
 //            s += end[i].getSum();
 //        }
 //        totalSum.setText(String.valueOf(s));
-//    }
-//
-//    private  void clearEnds(){
+        int scoreA = 0, scoreB = 0;
+        for(int i=0;i<NUMBER_OF_ENDS;i++){
+            if(endA[i].isFull() && endB[i].isFull()){
+                if(endA[i].getSum() > endB[i].getSum()){
+                    scoreA += 2;
+                }else if (endB[i].getSum() > endA[i].getSum()){
+                    scoreB += 2;
+                }else{
+                    scoreA++;
+                    scoreB++;
+                }
+            }
+        }
+        tvTotalScoreA.setText(String.valueOf(scoreA));
+        tvTotalScoreB.setText(String.valueOf(scoreB));
+
+        if(scoreA==5 && scoreB==5){
+            printToast("shoot OFF");
+        }
+        if(scoreA==6 || scoreB==6){
+            printToast("Match End");
+        }
+
+
+    }
+
+    private  void clearEnds(){
 //        for(int i=0;i<NUMBER_OF_ENDS;i++){
 //            end[i].clear();
 //            unmarkEnd(i);
@@ -325,7 +418,7 @@ public class MatchActivity extends BaseActivity {
 //        endIndex = 0;
 //        markEnd(0);
 //        totalSum.setText("0");
-//    }
+    }
 
 
 

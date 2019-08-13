@@ -24,18 +24,18 @@
             android:layout_height="match_parent" />
 
         <Space
-            android:id="@+id/t0"
+            android:id="@+id/b_t0"
             android:layout_width="@dimen/cell_size_large"
             android:layout_height="match_parent" />
 
         <Space
-            android:id="@+id/t1"
+            android:id="@+id/b_t1"
             android:layout_width="@dimen/cell_size_large"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/cells_margin" />
 
         <Space
-            android:id="@+id/t2"
+            android:id="@+id/b_t2"
             android:layout_width="@dimen/cell_size_large"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/cells_margin" />
