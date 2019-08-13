@@ -180,6 +180,10 @@ public class End {
         return sum;
     }
 
+    public int getEmptyCellsAmount(){
+        return emptyCells;
+    }
+
 
     public void setFrameColor(boolean threeLines, int color){
         if(threeLines){

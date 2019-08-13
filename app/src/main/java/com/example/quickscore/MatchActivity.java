@@ -23,7 +23,7 @@ public class MatchActivity extends BaseActivity {
     private int division = 1; //1 recurve, 2 compound
     private static  int ARROWS_IN_END = 3;
     private static  int NUMBER_OF_ENDS = 5;
-    private int endIndex = 0;
+    private int activeRow = 0;
     private int editedEndIndex;
     private int activeArcher;
     private static End[] endA;
@@ -47,6 +47,7 @@ public class MatchActivity extends BaseActivity {
 
         setInitialState();
         initEnds();
+        activateFirstUnfullEnd(true, true);
         initButtons();
 
 
@@ -60,10 +61,6 @@ public class MatchActivity extends BaseActivity {
 
       outerMarkA = findViewById(R.id.A_outer_mark);
       outerMarkB = findViewById(R.id.B_outer_mark);
-
-      endIndex = 0;
-      setActiveArcher(1);
-
     }
 
 
@@ -121,7 +118,6 @@ public class MatchActivity extends BaseActivity {
                 endB[i] = new End(BendHorizontalLine);
             }
         }
-        markEnd(1,0);
     }//initEnds()
 
     private void addEndsListeners(int i){
@@ -141,57 +137,81 @@ public class MatchActivity extends BaseActivity {
                 endA[i].setOnEraseListener(new OnEraseListener() {
                     @Override
                     public void onErase(int index) {
-                        if(index!=endIndex){
-                            editInProgressFlag = true;
-                            editedEndIndex = index;
-                            if(endIndex<NUMBER_OF_ENDS)unmarkEnd(endIndex);
-                            //markEnd(editedEndIndex);
-                            endA[endIndex].setEditable(false);
-                            updateTotalScore();
-                        }
+                        doIfCellErased(0, index);
                     }
                 });
-    }
+
+                endB[i].setOnEraseListener(new OnEraseListener() {
+                    @Override
+                    public void onErase(int index) {
+                        doIfCellErased(1, index);
+                    }
+                });
+    }//addEndsListeners()
 
     private void doIfEndIsFull(){
-        if(editInProgressFlag){
-            editInProgressFlag = false;
-            unmarkEnd(editedEndIndex);
-            endA[endIndex].setEditable(true);
-        }else{
-            unmarkEnd(endIndex);
-            if(endA[endIndex].isFull() && endB[endIndex].isFull()){
-                if (endIndex < NUMBER_OF_ENDS) endIndex++;
-                setActiveArcher(1);
+        if(endA[activeRow].isFull() && endB[activeRow].isFull()){
                 updateTotalScore();
-            }else if (endA[endIndex].isFull()){
-                setActiveArcher(2);
-            }else if(endB[endIndex].isFull()){
-                setActiveArcher(1);
+        }
+
+        unmarkEnd();
+        activateFirstUnfullEnd(true, true);
+    }// doIfEndIsFull()
+
+    private void doIfCellErased(int archerIndex, int endIndex){
+
+        unmarkEnd();
+        setActiveArcher(archerIndex);
+        activeRow = endIndex;
+        markEnd();
+    }//doIfCellErased()
+
+
+    private void activateFirstUnfullEnd(boolean searchA, boolean searchB){
+        for(int i=0;i<NUMBER_OF_ENDS;i++){
+            if(searchA && endA[i].getEmptyCellsAmount()>0){
+                setActiveArcher(0);
+                activeRow = i;
+                //activateEnd();
+                markEnd();
+                return;
             }
-            if(endIndex<NUMBER_OF_ENDS) markEnd(activeArcher,endIndex);
+            if(searchB && endB[i].getEmptyCellsAmount()>0){
+                setActiveArcher(1);
+                activeRow = i;
+                //activateEnd();
+                markEnd();
+                return;
+            }
         }
     }
 
-    private void switchArcher(){
-        if(activeArcher==1){
-            setActiveArcher(2);
-        }else{
-            setActiveArcher(1);
+
+    private void setEndEditable(boolean editable){
+        switch (activeArcher){
+            case 0:
+                endA[activeRow].setEditable(editable);
+                break;
+            case 1:
+                endB[activeRow].setEditable(editable);
+                break;
+            default:
+                break;
         }
     }
+
 
     private  void setActiveArcher(int archer){
         switch (archer){
-            case 1:
-                outerMarkA.setVisibility(View.VISIBLE);
+            case 0:
+                outerMarkA.setVisibility(View.VISIBLE); //TODO: ustawienie outerMark przenieść do markEnd() unmarkEnd()
                 outerMarkB.setVisibility(View.INVISIBLE);
-                activeArcher = 1;
+                activeArcher = 0;
                 break;
-            case 2:
+            case 1:
                 outerMarkA.setVisibility(View.INVISIBLE);
                 outerMarkB.setVisibility(View.VISIBLE);
-                activeArcher = 2;
+                activeArcher = 1;
                 break;
             default:
                 break;
@@ -330,19 +350,14 @@ public class MatchActivity extends BaseActivity {
 
 
     private void enterScore (int score){
-        int activeEndIndex;
-        if(editInProgressFlag){
-            activeEndIndex = editedEndIndex;
-        }else{
-            activeEndIndex = endIndex;
-        }
+
 
         switch (activeArcher){
-            case 1:
-                if(activeEndIndex<NUMBER_OF_ENDS)endA[activeEndIndex].addScore(score);
+            case 0:
+                if(activeRow<NUMBER_OF_ENDS)endA[activeRow].addScore(score);
                 break;
-            case 2:
-                if(activeEndIndex<NUMBER_OF_ENDS)endB[activeEndIndex].addScore(score);
+            case 1:
+                if(activeRow<NUMBER_OF_ENDS)endB[activeRow].addScore(score);
                 break;
             default:
                 break;
@@ -350,37 +365,37 @@ public class MatchActivity extends BaseActivity {
     }
 
 
-    private void markEnd(int archerIndex, int _endIndex){
+    private void markEnd(){
         int color = R.color.mark__frame__red;
 
-        switch (archerIndex){
-            case 1:
-                endA[_endIndex].setFrameColor(true, color);
-                if(_endIndex <NUMBER_OF_ENDS) endA[_endIndex +1].setFrameColor(false, color);
+        switch (activeArcher){
+            case 0:
+                endA[activeRow].setFrameColor(true, color);
+                if(activeRow <NUMBER_OF_ENDS) endA[activeRow +1].setFrameColor(false, color);
                 break;
-            case 2:
-                endB[_endIndex].setFrameColor(true, color);
-                if(_endIndex <NUMBER_OF_ENDS) endB[_endIndex +1].setFrameColor(false, color);
+            case 1:
+                endB[activeRow].setFrameColor(true, color);
+                if(activeRow <NUMBER_OF_ENDS) endB[activeRow +1].setFrameColor(false, color);
                 break;
             default:
                 break;
         }
     }
 
-    private void unmarkEnd(int index){
+    private void unmarkEnd(){
         int color = R.color.black;
-        endA[index].setFrameColor(true, color);
-        endB[index].setFrameColor(true, color);
-        if(index<NUMBER_OF_ENDS) {
-            endA[index + 1].setFrameColor(false, color);
-            endB[index + 1].setFrameColor(false, color);
+        endA[activeRow].setFrameColor(true, color);
+        endB[activeRow].setFrameColor(true, color);
+        if(activeRow<NUMBER_OF_ENDS) {
+            endA[activeRow + 1].setFrameColor(false, color);
+            endB[activeRow + 1].setFrameColor(false, color);
         }
     }
 
 
     private void updateTotalScore(){
 //        int s=0;
-//        for(int i=0; i<endIndex ; i++){
+//        for(int i=0; i<activeRow ; i++){
 //            s += end[i].getSum();
 //        }
 //        totalSum.setText(String.valueOf(s));
@@ -403,7 +418,7 @@ public class MatchActivity extends BaseActivity {
         if(scoreA==5 && scoreB==5){
             printToast("shoot OFF");
         }
-        if(scoreA==6 || scoreB==6){
+        if(scoreA>=6 || scoreB>=6){
             printToast("Match End");
         }
 
@@ -415,7 +430,7 @@ public class MatchActivity extends BaseActivity {
 //            end[i].clear();
 //            unmarkEnd(i);
 //        }
-//        endIndex = 0;
+//        activeRow = 0;
 //        markEnd(0);
 //        totalSum.setText("0");
     }

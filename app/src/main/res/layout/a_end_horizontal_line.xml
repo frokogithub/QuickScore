@@ -20,18 +20,18 @@
 
         <Space
             android:id="@+id/b_t0"
-            android:layout_width="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
             android:layout_height="match_parent" />
 
         <Space
             android:id="@+id/b_t1"
-            android:layout_width="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/cells_margin" />
 
         <Space
             android:id="@+id/b_t2"
-            android:layout_width="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/cells_margin" />
 
@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <Space
-        android:layout_width="@dimen/before_sum_space"
+        android:layout_width="@dimen/before_sum_space_match"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
@@ -54,7 +54,7 @@
 
         <Space
             android:id="@+id/tsum"
-            android:layout_width="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/cells_margin"
             android:layout_marginEnd="@dimen/cells_margin"

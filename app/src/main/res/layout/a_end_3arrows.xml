@@ -20,8 +20,8 @@
 
         <TextView
             android:id="@+id/tv0"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
+            android:layout_height="@dimen/cell_size_match"
             android:background="@android:color/white"
             android:gravity="center"
             android:tag="0"
@@ -30,8 +30,8 @@
 
         <TextView
             android:id="@+id/tv1"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
+            android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
             android:background="@android:color/white"
             android:gravity="center"
@@ -41,8 +41,8 @@
 
         <TextView
             android:id="@+id/tv2"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
+            android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
             android:background="@android:color/white"
             android:gravity="center"
@@ -59,8 +59,8 @@
 
         <LinearLayout
             android:id="@+id/space"
-            android:layout_width="@dimen/before_sum_space"
-            android:layout_height="@dimen/cell_size"
+            android:layout_width="@dimen/before_sum_space_match"
+            android:layout_height="@dimen/cell_size_match"
             android:background="@android:color/white"
             android:orientation="horizontal"
             android:visibility="visible">
@@ -69,8 +69,8 @@
 
         <TextView
             android:id="@+id/tv_sum"
-            android:layout_width="@dimen/cell_size"
-            android:layout_height="@dimen/cell_size"
+            android:layout_width="@dimen/cell_size_match"
+            android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
             android:layout_marginEnd="@dimen/cells_margin"
             android:background="@android:color/white"
