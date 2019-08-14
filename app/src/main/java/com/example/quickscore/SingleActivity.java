@@ -25,7 +25,7 @@ public class SingleActivity extends BaseActivity {
     private int EventType = 2; //1 indoor, 2 outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
-    private int endIndex = 0;
+    private int activeRow = 0;
     private int editedEndIndex;
     private static End[] end;
     private ViewGroup endsDummy;
@@ -42,6 +42,7 @@ public class SingleActivity extends BaseActivity {
 
         setInitialState();
         initEnds();
+        activateFirstUnfullEnd();
         initButtons();
 
 
@@ -66,7 +67,7 @@ public class SingleActivity extends BaseActivity {
             default:
                 break;
         }
-        endIndex = 0;
+        activeRow = 0;
         totalSum = findViewById(R.id.tv_total);
         totalSum.setText("0");
     }
@@ -100,45 +101,58 @@ public class SingleActivity extends BaseActivity {
                 endsDummy.addView(endView);
 
                 end[i] = new End(this, i, endView, endHorizontalLine, ARROWS_IN_END);
-                end[i].setOnIndexListener(new OnChangeIndexListener() {
-                    @Override
-                    public void onChange() {
-
-                        if(editInProgressFlag){
-                            editInProgressFlag = false;
-                            unmarkEnd(editedEndIndex);
-                            end[endIndex].setEditable(true);
-                        }else{
-                            if (endIndex < NUMBER_OF_ENDS) endIndex++;
-                            unmarkEnd(endIndex-1);
-                        }
-
-                        if(endIndex<NUMBER_OF_ENDS) markEnd(endIndex);
-                        updateTotalSum();
-                    }
-                });
-
-                end[i].setOnEraseListener(new OnEraseListener() {
-                    @Override
-                    public void onErase(int index) {
-                        if(index!=endIndex){
-                            editInProgressFlag = true;
-                            editedEndIndex = index;
-                            if(endIndex<NUMBER_OF_ENDS)unmarkEnd(endIndex);
-                            markEnd(editedEndIndex);
-                            end[endIndex].setEditable(false);
-                            updateTotalSum();
-                        }
-                    }
-                });
+                addEndsListeners(i);
             }else{
                 View endHorizontalLine = LayoutInflater.from(this).inflate(endHorizontalLineId, null);
                 endsDummy.addView(endHorizontalLine);
                 end[i] = new End(endHorizontalLine);
             }
         }
-        markEnd(0);
     }//initEnds()
+
+
+
+    private void addEndsListeners(int i){
+        end[i].setOnIndexListener(new OnChangeIndexListener() {
+            @Override
+            public void onChange() {
+                doIfEndIsFull();
+            }
+        });
+        end[i].setOnEraseListener(new OnEraseListener() {
+            @Override
+            public void onErase(int index) {
+                doIfCellErased(index);
+            }
+        });
+    }//addEndsListeners()
+
+
+    private void doIfEndIsFull(){
+        updateTotalSum();
+        unmarkEnd();
+        activateFirstUnfullEnd();
+    }// doIfEndIsFull()
+
+    private void doIfCellErased(int endIndex){
+
+        unmarkEnd();
+        activeRow = endIndex;
+        markEnd();
+    }//doIfCellErased()
+
+
+
+    private void activateFirstUnfullEnd(){
+        for(int i=0;i<NUMBER_OF_ENDS;i++){
+            if(end[i].getEmptyCellsAmount()>0){
+                activeRow = i;
+                markEnd();
+                return;
+            }
+        }
+    }
+
 
 
 
@@ -299,37 +313,28 @@ public class SingleActivity extends BaseActivity {
 //    }
 
 
-
     private void enterScore (int score){
-        int activeEndIndex;
-        if(editInProgressFlag){
-            activeEndIndex = editedEndIndex;
-        }else{
-            activeEndIndex = endIndex;
-        }
-        if(activeEndIndex<NUMBER_OF_ENDS)end[activeEndIndex].addScore(score);
+        if(activeRow<NUMBER_OF_ENDS)end[activeRow].addScore(score);
     }
 
-
-    private void markEnd(int index){
+    private void markEnd(){
         int color = R.color.mark__frame__red;
-        end[index].setFrameColor(true, color);
-        if(index<NUMBER_OF_ENDS)
-            end[index+1].setFrameColor(false, color);
+        end[activeRow].setFrameColor(true, color);
+        if(activeRow <NUMBER_OF_ENDS) end[activeRow +1].setFrameColor(false, color);
     }
 
-    private void unmarkEnd(int index){
+    private void unmarkEnd(){
         int color = R.color.black;
-        end[index].setFrameColor(true, color);
-        if(index<NUMBER_OF_ENDS)
-            end[index+1].setFrameColor(false, color);
-
+        end[activeRow].setFrameColor(true, color);
+        if(activeRow<NUMBER_OF_ENDS) {
+            end[activeRow + 1].setFrameColor(false, color);
+        }
     }
 
 
     private void updateTotalSum(){
         int s=0;
-        for(int i=0; i<endIndex ; i++){
+        for(int i = 0; i< activeRow+1; i++){
             s += end[i].getSum();
         }
         totalSum.setText(String.valueOf(s));
@@ -338,10 +343,10 @@ public class SingleActivity extends BaseActivity {
     private  void clearEnds(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             end[i].clear();
-            unmarkEnd(i);
+            unmarkEnd();
         }
-        endIndex = 0;
-        markEnd(0);
+        activeRow = 0;
+        markEnd();
         totalSum.setText("0");
     }
 
