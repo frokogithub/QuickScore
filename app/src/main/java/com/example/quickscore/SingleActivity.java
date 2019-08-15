@@ -32,6 +32,7 @@ public class SingleActivity extends BaseActivity {
     private TextView totalSum;
     private boolean editInProgressFlag = false;
     private ViewGroup insertDummy;
+    private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
 
 
     @Override
@@ -42,7 +43,7 @@ public class SingleActivity extends BaseActivity {
 
         setInitialState();
         initEnds();
-        activateFirstUnfullEnd();
+        activateFirstIncompleteEnd();
         initButtons();
 
 
@@ -131,19 +132,28 @@ public class SingleActivity extends BaseActivity {
     private void doIfEndIsFull(){
         updateTotalSum();
         unmarkEnd();
-        activateFirstUnfullEnd();
+        if(activeRow < NUMBER_OF_ENDS-1){
+            activateFirstIncompleteEnd();
+        }else{
+            scoringStatus = 2;
+        }
+
     }// doIfEndIsFull()
 
     private void doIfCellErased(int endIndex){
+        if(scoringStatus < 2){
+            unmarkEnd();
+        }else{
+            scoringStatus = 1;
+        }
 
-        unmarkEnd();
         activeRow = endIndex;
         markEnd();
     }//doIfCellErased()
 
 
 
-    private void activateFirstUnfullEnd(){
+    private void activateFirstIncompleteEnd(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             if(end[i].getEmptyCellsAmount()>0){
                 activeRow = i;
@@ -244,8 +254,6 @@ public class SingleActivity extends BaseActivity {
             }
         });
 
-
-
         ImageView ivMenu = findViewById(R.id.iv_menu);
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,7 +322,7 @@ public class SingleActivity extends BaseActivity {
 
 
     private void enterScore (int score){
-        if(activeRow<NUMBER_OF_ENDS)end[activeRow].addScore(score);
+        if(scoringStatus < 2 /*activeRow<NUMBER_OF_ENDS*/)end[activeRow].addScore(score);
     }
 
     private void markEnd(){
@@ -343,8 +351,9 @@ public class SingleActivity extends BaseActivity {
     private  void clearEnds(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             end[i].clear();
-            unmarkEnd();
+            //unmarkEnd();
         }
+        unmarkEnd();
         activeRow = 0;
         markEnd();
         totalSum.setText("0");

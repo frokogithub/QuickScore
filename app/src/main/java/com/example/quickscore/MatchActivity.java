@@ -19,12 +19,10 @@ import scoresPackage.End;
 public class MatchActivity extends BaseActivity {
 
 
-    private int EventType = 2; //1 indoor, 2 outdoor,
     private int division = 1; //1 recurve, 2 compound
     private static  int ARROWS_IN_END = 3;
     private static  int NUMBER_OF_ENDS = 5;
     private int activeRow = 0;
-    private int editedEndIndex;
     private int activeArcher;
     private static End[] endA;
     private static End[] endB;
@@ -32,11 +30,9 @@ public class MatchActivity extends BaseActivity {
     private ViewGroup endsDummyB;
     private ViewGroup outerMarkA;
     private ViewGroup outerMarkB;
-    private TextView totalSum;
-    private boolean editInProgressFlag = false;
-    private ViewGroup insertDummy;
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
+    private int scoringStatus = 0;
 
 
     @Override
@@ -44,13 +40,10 @@ public class MatchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
 
-
         setInitialState();
         initEnds();
-        activateFirstUnfullEnd(true, true);
+        activateFirstIncompleteEnd(true, true);
         initButtons();
-
-
     }
 
     private void setInitialState(){
@@ -61,6 +54,7 @@ public class MatchActivity extends BaseActivity {
 
       outerMarkA = findViewById(R.id.A_outer_mark);
       outerMarkB = findViewById(R.id.B_outer_mark);
+      outerMarkB.setVisibility(View.INVISIBLE);
     }
 
 
@@ -71,20 +65,6 @@ public class MatchActivity extends BaseActivity {
         endB = new End[NUMBER_OF_ENDS+1];
 
 
-
-//        int endHorizontalLineId=0, endViewId=0;
-//        switch (EventType){
-//            case 1:
-//                endHorizontalLineId = R.layout.end_horizontal_line;
-//                endViewId = R.layout.end_3arrows;
-//                break;
-//            case 2:
-//                endHorizontalLineId = R.layout.end_horizontal_line_6arr;
-//                endViewId = R.layout.end_6arrows;
-//                break;
-//            default:
-//                break;
-//        }
          int AendHorizontalLineId, BendHorizontalLineId;
          int AendViewId, BendViewId;
          AendHorizontalLineId = R.layout.a_end_horizontal_line;
@@ -153,50 +133,36 @@ public class MatchActivity extends BaseActivity {
         if(endA[activeRow].isFull() && endB[activeRow].isFull()){
                 updateTotalScore();
         }
-
         unmarkEnd();
-        activateFirstUnfullEnd(true, true);
+        if(scoringStatus<2)activateFirstIncompleteEnd(true, true);
     }// doIfEndIsFull()
 
     private void doIfCellErased(int archerIndex, int endIndex){
-
-        unmarkEnd();
+        if(scoringStatus < 2){
+            unmarkEnd();
+        }else{
+            scoringStatus = 1;
+        }
         setActiveArcher(archerIndex);
         activeRow = endIndex;
         markEnd();
     }//doIfCellErased()
 
 
-    private void activateFirstUnfullEnd(boolean searchA, boolean searchB){
+    private void activateFirstIncompleteEnd(boolean searchA, boolean searchB){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             if(searchA && endA[i].getEmptyCellsAmount()>0){
                 setActiveArcher(0);
                 activeRow = i;
-                //activateEnd();
                 markEnd();
                 return;
             }
             if(searchB && endB[i].getEmptyCellsAmount()>0){
                 setActiveArcher(1);
                 activeRow = i;
-                //activateEnd();
                 markEnd();
                 return;
             }
-        }
-    }
-
-
-    private void setEndEditable(boolean editable){
-        switch (activeArcher){
-            case 0:
-                endA[activeRow].setEditable(editable);
-                break;
-            case 1:
-                endB[activeRow].setEditable(editable);
-                break;
-            default:
-                break;
         }
     }
 
@@ -204,13 +170,9 @@ public class MatchActivity extends BaseActivity {
     private  void setActiveArcher(int archer){
         switch (archer){
             case 0:
-                outerMarkA.setVisibility(View.VISIBLE); //TODO: ustawienie outerMark przenieść do markEnd() unmarkEnd()
-                outerMarkB.setVisibility(View.INVISIBLE);
                 activeArcher = 0;
                 break;
             case 1:
-                outerMarkA.setVisibility(View.INVISIBLE);
-                outerMarkB.setVisibility(View.VISIBLE);
                 activeArcher = 1;
                 break;
             default:
@@ -324,40 +286,15 @@ public class MatchActivity extends BaseActivity {
 //                });
 //            }
 //        });
-
-        Button bInOut =findViewById(R.id.b_in_out_switch);
-        bInOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (EventType){
-                    case 1:
-                        EventType = 2;
-                        break;
-                    case 2:
-                        EventType = 1;
-                        break;
-                    default:
-                        break;
-                }
-                setInitialState();
-                initEnds();
-            }
-        });
-
     } // initButtons
 
-
-
-
     private void enterScore (int score){
-
-
         switch (activeArcher){
             case 0:
-                if(activeRow<NUMBER_OF_ENDS)endA[activeRow].addScore(score);
+                if(scoringStatus<2)endA[activeRow].addScore(score);
                 break;
             case 1:
-                if(activeRow<NUMBER_OF_ENDS)endB[activeRow].addScore(score);
+                if(scoringStatus<2)endB[activeRow].addScore(score);
                 break;
             default:
                 break;
@@ -370,10 +307,12 @@ public class MatchActivity extends BaseActivity {
 
         switch (activeArcher){
             case 0:
+                outerMarkA.setVisibility(View.VISIBLE);
                 endA[activeRow].setFrameColor(true, color);
                 if(activeRow <NUMBER_OF_ENDS) endA[activeRow +1].setFrameColor(false, color);
                 break;
             case 1:
+                outerMarkB.setVisibility(View.VISIBLE);
                 endB[activeRow].setFrameColor(true, color);
                 if(activeRow <NUMBER_OF_ENDS) endB[activeRow +1].setFrameColor(false, color);
                 break;
@@ -384,6 +323,8 @@ public class MatchActivity extends BaseActivity {
 
     private void unmarkEnd(){
         int color = R.color.black;
+        outerMarkA.setVisibility(View.INVISIBLE);
+        outerMarkB.setVisibility(View.INVISIBLE);
         endA[activeRow].setFrameColor(true, color);
         endB[activeRow].setFrameColor(true, color);
         if(activeRow<NUMBER_OF_ENDS) {
@@ -416,9 +357,13 @@ public class MatchActivity extends BaseActivity {
         tvTotalScoreB.setText(String.valueOf(scoreB));
 
         if(scoreA==5 && scoreB==5){
+            scoringStatus = 2;
+            unmarkEnd();
             printToast("shoot OFF");
         }
         if(scoreA>=6 || scoreB>=6){
+            scoringStatus = 2;
+            unmarkEnd();
             printToast("Match End");
         }
 
