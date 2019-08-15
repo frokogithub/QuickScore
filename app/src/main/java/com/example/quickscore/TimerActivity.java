@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -16,18 +17,31 @@ public class TimerActivity extends BaseActivity {
     ViewGroup timerBackG;
     private int count;
 
-    private final int SETUP_TIME = 3; // (s)
-    private final int SHOOTING_TIME = 5; // (s)
+    private final int SETUP_TIME = 5; // (s)
+    private final int SHOOTING_TIME = 20; // (s)
 
     MediaPlayer mp_1_whistle;
     MediaPlayer mp_2_whistles;
     MediaPlayer mp_3_whistles;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+
 
         initTimer();
     }
@@ -39,7 +53,7 @@ public class TimerActivity extends BaseActivity {
 
         timerBackG = findViewById(R.id.timer_bckgrnd);
         tvTimer = findViewById(R.id.tvTimer);
-        timerBackG.setBackgroundColor(getResources().getColor(R.color.black));
+        timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
         resetTimer();
 
         timerBackG.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +65,7 @@ public class TimerActivity extends BaseActivity {
     }
 
   private void counting(){
+      tvTimer.setTextSize(130f);
       final Timer timer = new Timer();
       timer.scheduleAtFixedRate(new TimerTask() {
           @Override
@@ -94,6 +109,7 @@ public class TimerActivity extends BaseActivity {
 
   private void resetTimer(){
         shootingphase = 0;
+        tvTimer.setTextSize(60f);
         tvTimer.setText("START");
         //timerBackG.setBackgroundColor(getResources().getColor(R.color.white_background));
   }
