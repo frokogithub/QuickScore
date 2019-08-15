@@ -396,6 +396,7 @@ public class MatchActivity extends BaseActivity {
         tvTotalScoreA.setText("0");
         tvTotalScoreB.setText("0");
         outerMarkB.setVisibility(View.INVISIBLE);
+        scoringStatus = 0;
     }
 
 

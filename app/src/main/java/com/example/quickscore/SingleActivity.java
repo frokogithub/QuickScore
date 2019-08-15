@@ -356,6 +356,7 @@ public class SingleActivity extends BaseActivity {
         activeRow = 0;
         markEnd();
         totalSum.setText("0");
+        scoringStatus = 0;
     }
 
 
