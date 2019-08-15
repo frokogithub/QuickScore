@@ -106,57 +106,105 @@ public class ShowPopupWindow {
         String activityName = activity.getLocalClassName();
         switch (activityName){
             case "SingleActivity":
-                bNewRound.setOnClickListener(new View.OnClickListener() {
+                                    bNewRound.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        command = "NEW";
-                        popupWindow.dismiss();
-                        showSaveDialog();
-                    }
-                });
-                bSecondRound.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "NEW";
+                                            popupWindow.dismiss();
+                                            showSaveDialog();
+                                        }
+                                    });
+                                    bSecondRound.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        command = "SECOND";
-                        popupWindow.dismiss();
-                        printToast("Second round sart");
-                    }
-                });
-                bTimer.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "SECOND";
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+                                    bTimer.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        command = "TIMER";
-                        popupWindow.dismiss();
-                        printToast("Timer start");
-                    }
-                });
-                bSave.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "TIMER";
+                                            //popupWindow.dismiss();
+                                            Intent in = new Intent(context,TimerActivity.class);
+                                            activity.startActivity(in);
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+                                    bSave.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        command = "SAVE";
-                        popupWindow.dismiss();
-                        printToast("Save start");
-                    }
-                });
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "SAVE";
+                                            popupWindow.dismiss();
+                                        }
+                                    });
 
-                bLoad.setVisibility(View.GONE);
-                tvLoad.setVisibility(View.GONE);
-                bBow.setVisibility(View.GONE);
-                tvBow.setVisibility(View.GONE);
+                                    bLoad.setVisibility(View.GONE);
+                                    tvLoad.setVisibility(View.GONE);
+                                    bBow.setVisibility(View.GONE);
+                                    tvBow.setVisibility(View.GONE);
 
-                bSettings.setOnClickListener(new View.OnClickListener() {
+                                    bSettings.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        command = "SETTINGS";
-                        popupWindow.dismiss();
-                        printToast("Settings start");
-                    }
-                });
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "SETTINGS";
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+                                    break;
+            case "MatchActivity":
+                                    bNewRound.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "NEW";
+                                            popupWindow.dismiss();
+                                            showSaveDialog();
+                                        }
+                                    });
+
+                                    bTimer.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            //command = "TIMER";
+                                            popupWindow.dismiss();
+                                            Intent in = new Intent(context,TimerActivity.class);
+                                            activity.startActivity(in);
+                                        }
+                                    });
+                                    bSave.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "SAVE";
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+
+                                    bSecondRound.setVisibility(View.GONE);
+                                    tvSecondRound.setVisibility(View.GONE);
+                                    bLoad.setVisibility(View.GONE);
+                                    tvLoad.setVisibility(View.GONE);
+                                    bBow.setVisibility(View.GONE);
+                                    tvBow.setVisibility(View.GONE);
+
+                                    bSettings.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            command = "SETTINGS";
+                                            popupWindow.dismiss();
+                                            printToast("Settings start");
+                                        }
+                                    });
+                                    break;
+
 
         }
 //        Button close = popupView.findViewById(R.id.close);
@@ -206,10 +254,7 @@ public class ShowPopupWindow {
                 if(menuListener!=null) menuListener.onMenuItemClick(command);
             }
         });
-
-
     }
-
 
     private void printToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();

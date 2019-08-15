@@ -24,4 +24,6 @@
     <color name="grey_transparent">#57969696</color>
     <color name="outer_mark_color">#E21F1F</color>
     <color name="popup_menu_background">#FFFFFF</color>
+    <color name="timer_green">#05B40E</color>
+    <color name="timer_red">#E21505</color>
 </resources>

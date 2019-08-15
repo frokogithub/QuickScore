@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
+import interfacesPackage.OnMenuItemClickListener;
 import scoresPackage.End;
 
 public class MatchActivity extends BaseActivity {
@@ -272,21 +274,34 @@ public class MatchActivity extends BaseActivity {
 
 
         ImageView ivMenu = findViewById(R.id.iv_menu);
-//        ivMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-//                PopUpMenu popUpMenu = new PopUpMenu();
-//                popUpMenu.showPopupWindow(arg0, MatchActivity.this, getApplicationContext());
-//                popUpMenu.setOnMenuItemClick(new OnMenuItemClickListener() {
-//                    @Override
-//                    public void onMenuItemClick(String command) {
-//                        if(command.equals("NEW")){
-//                            clearEnds();
-//                        }
-//                    }
-//                });
-//            }
-//        });
+        ivMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, MatchActivity.this);
+                showPopupWindow.setOnMenuItemClick(new OnMenuItemClickListener() {
+                    @Override
+                    public void onMenuItemClick(String command) {
+                        switch (command){
+                            case "NEW":
+                                clearEnds();
+                                break;
+                            case "TIMER":
+
+                                break;
+                            case "SAVE":
+                                printToast("Save start");
+                                break;
+                            case "SETTINGS":
+                                printToast("Settings start");
+                                break;
+                        }
+                        if(command.equals("NEW")){
+                            clearEnds();
+                        }
+                    }
+                });
+            }
+        });
     } // initButtons
 
     private void enterScore (int score){
@@ -372,13 +387,15 @@ public class MatchActivity extends BaseActivity {
     }
 
     private  void clearEnds(){
-//        for(int i=0;i<NUMBER_OF_ENDS;i++){
-//            end[i].clear();
-//            unmarkEnd(i);
-//        }
-//        activeRow = 0;
-//        markEnd(0);
-//        totalSum.setText("0");
+        for(int i=0;i<NUMBER_OF_ENDS;i++){
+            endA[i].clear();
+            endB[i].clear();
+            unmarkEnd();
+        }
+        activateFirstIncompleteEnd(true, true);
+        tvTotalScoreA.setText("0");
+        tvTotalScoreB.setText("0");
+        outerMarkB.setVisibility(View.INVISIBLE);
     }
 
 
