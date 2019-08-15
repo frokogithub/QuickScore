@@ -258,9 +258,8 @@ public class SingleActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                PopUpMenu popUpMenu = new PopUpMenu();
-                popUpMenu.showPopupWindow(arg0, SingleActivity.this, getApplicationContext());
-                popUpMenu.setOnMenuItemClick(new OnMenuItemClickListener() {
+                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, SingleActivity.this);
+                showPopupWindow.setOnMenuItemClick(new OnMenuItemClickListener() {
                     @Override
                     public void onMenuItemClick(String command) {
                         if(command.equals("NEW")){

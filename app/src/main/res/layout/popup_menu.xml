@@ -10,72 +10,172 @@
     android:focusableInTouchMode="true">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="200dp"
-        android:layout_height="301dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/popup_menu_background"
-        android:clickable="true"
-        android:orientation="horizontal"
+        android:paddingEnd="@dimen/popup_button_marigin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/b_new_round"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginStart="@dimen/popup_button_marigin"
+            android:layout_marginTop="@dimen/popup_button_marigin"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/b_new_round"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/start_button_background"
-        app:layout_constraintBottom_toTopOf="@+id/close"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
-    <Button
-        android:id="@+id/close"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/start_button_background"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/b_new_round"
-        app:layout_constraintTop_toBottomOf="@+id/b_new_round" />
+        <TextView
+            android:id="@+id/tv_popup_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="NEW"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_new_round"
+            app:layout_constraintStart_toEndOf="@+id/b_new_round"
+            app:layout_constraintTop_toTopOf="@+id/b_new_round" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/start_button_background"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/close"
-        app:layout_constraintTop_toBottomOf="@+id/close" />
+        <Button
+            android:id="@+id/b_second_round"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/b_new_round"
+            app:layout_constraintStart_toStartOf="@+id/b_new_round"
+            app:layout_constraintTop_toBottomOf="@+id/b_new_round" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="NEW"
-        android:textColor="@color/white_background"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/b_new_round"
-        app:layout_constraintStart_toEndOf="@+id/b_new_round"
-        app:layout_constraintTop_toTopOf="@+id/b_new_round" />
+        <TextView
+            android:id="@+id/tv_popup_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="SECOND ROUND"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_second_round"
+            app:layout_constraintStart_toEndOf="@+id/b_second_round"
+            app:layout_constraintTop_toTopOf="@+id/b_second_round" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text=""
-        android:textColor="@color/white_background"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/b_new_round"
-        app:layout_constraintStart_toEndOf="@+id/b_new_round"
-        app:layout_constraintTop_toTopOf="@+id/b_new_round" />
+        <Button
+            android:id="@+id/b_timer"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/b_second_round"
+            app:layout_constraintStart_toStartOf="@+id/b_second_round"
+            app:layout_constraintTop_toBottomOf="@+id/b_second_round" />
+
+        <TextView
+            android:id="@+id/tv_popup_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="TIMER"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_timer"
+            app:layout_constraintStart_toEndOf="@+id/b_timer"
+            app:layout_constraintTop_toTopOf="@+id/b_timer" />
+
+        <Button
+            android:id="@+id/b_save"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/b_timer"
+            app:layout_constraintStart_toStartOf="@+id/b_timer"
+            app:layout_constraintTop_toBottomOf="@+id/b_timer" />
+
+        <TextView
+            android:id="@+id/tv_popup_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="SAVE"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_save"
+            app:layout_constraintStart_toEndOf="@+id/b_save"
+            app:layout_constraintTop_toTopOf="@+id/b_save" />
+
+        <Button
+            android:id="@+id/b_load"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/b_save"
+            app:layout_constraintStart_toStartOf="@+id/b_save"
+            app:layout_constraintTop_toBottomOf="@+id/b_save" />
+
+        <TextView
+            android:id="@+id/tv_popup_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="LOAD"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_load"
+            app:layout_constraintStart_toEndOf="@+id/b_load"
+            app:layout_constraintTop_toTopOf="@+id/b_load" />
+
+        <Button
+            android:id="@+id/b_bow"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/b_load"
+            app:layout_constraintStart_toStartOf="@+id/b_load"
+            app:layout_constraintTop_toBottomOf="@+id/b_load" />
+
+        <TextView
+            android:id="@+id/tv_popup_bow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="BOW INFO"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_bow"
+            app:layout_constraintStart_toEndOf="@+id/b_bow"
+            app:layout_constraintTop_toTopOf="@+id/b_bow" />
+
+        <Button
+            android:id="@+id/b_settings"
+            android:layout_width="@dimen/popup_button_size"
+            android:layout_height="@dimen/popup_button_size"
+            android:layout_marginTop="@dimen/popup_button_space"
+            android:layout_marginBottom="@dimen/popup_button_marigin"
+            android:background="@drawable/start_button_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/b_bow"
+            app:layout_constraintStart_toStartOf="@+id/b_bow"
+            app:layout_constraintTop_toBottomOf="@+id/b_bow" />
+
+        <TextView
+            android:id="@+id/tv_popup_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/popup_button_space"
+            android:text="SETTINGS"
+            android:textColor="@color/grey_60"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/b_settings"
+            app:layout_constraintStart_toEndOf="@+id/b_settings"
+            app:layout_constraintTop_toTopOf="@+id/b_settings" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

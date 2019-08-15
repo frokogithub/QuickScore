@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import interfacesPackage.OnMenuItemClickListener;
 
-public class PopUpMenu {
+public class ShowPopupWindow {
 
     private Context context;
     private Activity  activity;
@@ -31,11 +32,11 @@ public class PopUpMenu {
     private final static int Y_OFFSET = -20;
 
 
-    public void showPopupWindow(final View view, AppCompatActivity activity, Context context) {
+    public ShowPopupWindow(final View view, AppCompatActivity activity) {
 
         this.activity = activity;
-        this.context = context;
         this.view = view;
+        context = activity.getBaseContext();
 
         setBackgroundAlfa(0.2f);
         initPopUp();
@@ -85,24 +86,88 @@ public class PopUpMenu {
     }
 
     private void initButtons(){
-        Button close = popupView.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
         Button bNewRound = popupView.findViewById(R.id.b_new_round);
-        bNewRound.setOnClickListener(new View.OnClickListener() {
+        TextView tvNewRound = popupView.findViewById(R.id.tv_popup_new);
+        Button bSecondRound = popupView.findViewById(R.id.b_second_round);
+        TextView tvSecondRound = popupView.findViewById(R.id.tv_popup_second);
+        Button bTimer = popupView.findViewById(R.id.b_timer);
+        TextView tvTimer = popupView.findViewById(R.id.tv_popup_timer);
+        Button bSave = popupView.findViewById(R.id.b_save);
+        TextView tvSave = popupView.findViewById(R.id.tv_popup_save);
+        Button bLoad = popupView.findViewById(R.id.b_load);
+        TextView tvLoad = popupView.findViewById(R.id.tv_popup_load);
+        Button bBow = popupView.findViewById(R.id.b_bow);
+        TextView tvBow = popupView.findViewById(R.id.tv_popup_bow);
+        Button bSettings = popupView.findViewById(R.id.b_settings);
+        TextView tvSettings = popupView.findViewById(R.id.tv_popup_settings);
 
-            @Override
-            public void onClick(View v) {
-                command = "NEW";
-                popupWindow.dismiss();
-                showSaveDialog();
-            }
-        });
+
+        String activityName = activity.getLocalClassName();
+        switch (activityName){
+            case "SingleActivity":
+                bNewRound.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        command = "NEW";
+                        popupWindow.dismiss();
+                        showSaveDialog();
+                    }
+                });
+                bSecondRound.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        command = "SECOND";
+                        popupWindow.dismiss();
+                        printToast("Second round sart");
+                    }
+                });
+                bTimer.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        command = "TIMER";
+                        popupWindow.dismiss();
+                        printToast("Timer start");
+                    }
+                });
+                bSave.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        command = "SAVE";
+                        popupWindow.dismiss();
+                        printToast("Save start");
+                    }
+                });
+
+                bLoad.setVisibility(View.GONE);
+                tvLoad.setVisibility(View.GONE);
+                bBow.setVisibility(View.GONE);
+                tvBow.setVisibility(View.GONE);
+
+                bSettings.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        command = "SETTINGS";
+                        popupWindow.dismiss();
+                        printToast("Settings start");
+                    }
+                });
+
+        }
+//        Button close = popupView.findViewById(R.id.close);
+//        close.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//            }
+//        });
+
     }
 
     private void setBackgroundAlfa(float level){

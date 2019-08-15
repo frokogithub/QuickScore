@@ -183,6 +183,7 @@ public class MatchActivity extends BaseActivity {
     void initButtons(){
 
         Button bX=findViewById(R.id.bX);
+        if(division==1) bX.setText("");
         Button bM=findViewById(R.id.bM);
         Button b1=findViewById(R.id.b1);
         Button b2=findViewById(R.id.b2);
@@ -195,7 +196,7 @@ public class MatchActivity extends BaseActivity {
         Button b9=findViewById(R.id.b9);
         Button b10=findViewById(R.id.b10);
 
-        bX.setOnClickListener(new View.OnClickListener() {
+        if(division!=1) bX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(11);

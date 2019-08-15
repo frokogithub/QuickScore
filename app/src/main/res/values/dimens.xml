@@ -12,4 +12,7 @@
     <dimen name="tv_total_W">70dp</dimen>
     <dimen name="outer_mark_H">6dp</dimen>
     <dimen name="outer_mark_line">2dp</dimen>
+    <dimen name="popup_button_space">16dp</dimen>
+    <dimen name="popup_button_size">50dp</dimen>
+    <dimen name="popup_button_marigin">16dp</dimen>
 </resources>
