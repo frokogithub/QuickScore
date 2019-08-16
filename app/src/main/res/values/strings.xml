@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">QuickScore</string>
     <string name="b8">8</string>
+
+    <!-- TIMER -->
+    <string name="timer_info">Tap screen to\nSTART TIMER</string>
 </resources>

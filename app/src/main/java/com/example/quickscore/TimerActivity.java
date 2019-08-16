@@ -1,10 +1,12 @@
 package com.example.quickscore;
 
-import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -12,17 +14,27 @@ import java.util.TimerTask;
 
 public class TimerActivity extends BaseActivity {
 
-    private int shootingphase; // 0 Start timera/koniec strzelania, 1 wejście, 2 strzelanie
-    private TextView tvTimer;
+    private int countingState; // 0 Start timera, 1 przygotowanie, 2 strzelanie, 3 ostrzeżenie, koniec strzelania
+    private TextView tvCountdown;
+    private TextView tvTapScreen;
     ViewGroup timerBackG;
+    private Button bReset;
+    private Button bPause;
+    private Timer timer;
     private int count;
 
     private final int SETUP_TIME = 5; // (s)
-    private final int SHOOTING_TIME = 20; // (s)
+    private final int SHOOTING_TIME = 10; // (s)
+    private final int WARNING_TIME = 3; // (s)
 
-    MediaPlayer mp_1_whistle;
-    MediaPlayer mp_2_whistles;
-    MediaPlayer mp_3_whistles;
+    private SoundPool soundPool;
+    private int sound1_id;
+    private int sound2_id;
+    private int sound3_id;
+    private float volume = 0.5f;
+
+    private boolean running = true;
+
 
     @Override
     protected void onResume() {
@@ -41,32 +53,60 @@ public class TimerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-
-
         initTimer();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+    }
+
     private void initTimer(){
 
-        mp_1_whistle = MediaPlayer.create(this, R.raw.whistle_1);
-        mp_2_whistles = MediaPlayer.create(this, R.raw.whistles_2);
-        mp_3_whistles = MediaPlayer.create(this, R.raw.whistles_3);
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        sound1_id = soundPool.load(this, R.raw.whistle_1, 1);
+        sound2_id = soundPool.load(this, R.raw.whistle_2, 1);
+        sound3_id = soundPool.load(this, R.raw.whistle_3, 1);
+
 
         timerBackG = findViewById(R.id.timer_bckgrnd);
-        tvTimer = findViewById(R.id.tvTimer);
-        timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
-        resetTimer();
+        tvCountdown = findViewById(R.id.tv_countdown);
+        tvTapScreen = findViewById(R.id.tv_timer_tap_screen);
+        bPause = findViewById(R.id.b_timer_pause);
+        bReset = findViewById(R.id.b_timer_reset);
 
         timerBackG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(shootingphase == 0)counting();
+                if(countingState == 0)counting();
+                if(countingState == 4) resetTimer();
             }
         });
-    }
+
+        bReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetTimer();
+            }
+        });
+        bPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(running){
+                    timer.cancel();
+                    running = false;
+                }else{
+                    counting();
+                    running = true;
+                }
+            }
+        });
+        resetTimer();
+    }//initTimer()
 
   private void counting(){
-      tvTimer.setTextSize(130f);
-      final Timer timer = new Timer();
+      timer = new Timer();
       timer.scheduleAtFixedRate(new TimerTask() {
           @Override
             public void run() {
@@ -75,44 +115,61 @@ public class TimerActivity extends BaseActivity {
                   @Override
                   public void run()
                   {
-                      if(count==0){
-                          switch (shootingphase){
-                              case 0:
-                                  timerBackG.setBackgroundColor(getResources().getColor(R.color.black));
-                                  count = SETUP_TIME;
-                                  mp_2_whistles.start();
-                                  shootingphase = 1;
-                                  break;
-                              case 1:
-                                  count = SHOOTING_TIME;
+                      switch (countingState){
+                          case 0:
+                              bPause.setVisibility(View.VISIBLE);
+                              bReset.setVisibility(View.VISIBLE);
+                              tvCountdown.setVisibility(View.VISIBLE);
+                              tvTapScreen.setVisibility(View.INVISIBLE);
+                              soundPool.play(sound2_id, volume, volume, 1, 0, 1f);
+                              count = SETUP_TIME;
+                              countingState = 1;
+                              break;
+                          case 1:
+                              if(count==0){
                                   timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_green));
-                                  mp_1_whistle.start();
-                                  shootingphase = 2;
-                                  break;
-                              case 2:
+                                  soundPool.play(sound1_id, volume, volume, 1, 0, 1f);
+                                  count = SHOOTING_TIME;
+                                  countingState = 2;
+                              }
+                              break;
+                          case 2:
+                              if(count == WARNING_TIME){
+                                  timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_yellow));
+                                  countingState = 3;
+                              }
+                              break;
+                          case 3:
+                              if(count==0){
                                   timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
-                                  mp_3_whistles.start();
                                   timer.cancel();
-                                  resetTimer();
+                                  tvCountdown.setText("");
+                                  soundPool.play(sound3_id, volume, volume, 1, 0, 1f);
+                                  bPause.setVisibility(View.INVISIBLE);
+                                  bReset.setVisibility(View.INVISIBLE);
+                                  countingState = 4;
                                   return;
-                              default:
-                                  break;
-                          }
+                              }
+                              break;
+                          default:
+                              break;
                       }
-                      tvTimer.setText(String.valueOf(count));
+                      tvCountdown.setText(String.valueOf(count));
                       count--;
                   }
               });
             }
-          }, 0, 1000);
+      }, 0, 1000);
   }
 
   private void resetTimer(){
-        shootingphase = 0;
-        tvTimer.setTextSize(60f);
-        tvTimer.setText("START");
-        //timerBackG.setBackgroundColor(getResources().getColor(R.color.white_background));
+        if(timer!=null) timer.cancel();
+        timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
+        bPause.setVisibility(View.INVISIBLE);
+        bReset.setVisibility(View.INVISIBLE);
+        tvCountdown.setVisibility(View.INVISIBLE);
+        tvTapScreen.setVisibility(View.VISIBLE);
+        countingState = 0;
   }
-
 }
 

@@ -2,25 +2,74 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/timer_bckgrnd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TimerActivity">
 
+    <LinearLayout
+        android:id="@+id/timer_bckgrnd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
     <TextView
-        android:id="@+id/tvTimer"
+        android:id="@+id/tv_countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:fontFamily="@font/roboto_medium"
-        android:gravity="center"
-        android:text="START"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:fontFamily="sans-serif-condensed"
+        android:text="100"
+        android:textAlignment="center"
         android:textColor="@color/white_background"
-        android:textSize="100sp"
+        android:textSize="150sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_timer_tap_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/timer_info"
+        android:textColor="@color/white_background"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timer_bckgrnd" />
+
+    <Button
+        android:id="@+id/b_timer_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="RESET"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_bckgrnd"
+        app:layout_constraintEnd_toStartOf="@+id/b_timer_pause"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/timer_bckgrnd"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/b_timer_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PAUSE"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/b_timer_reset"
+        app:layout_constraintTop_toTopOf="@+id/b_timer_reset" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
