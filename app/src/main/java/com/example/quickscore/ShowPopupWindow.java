@@ -103,7 +103,8 @@ public class ShowPopupWindow {
         TextView tvSettings = popupView.findViewById(R.id.tv_popup_settings);
 
 
-        String activityName = activity.getLocalClassName();
+
+        final String activityName = activity.getLocalClassName();
         switch (activityName){
             case "SingleActivity":
                                     bNewRound.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +120,7 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "SECOND";
+                                            //command = "SECOND";
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -127,9 +128,10 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "TIMER";
+                                            //command = "TIMER";
                                             //popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
+                                            in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
@@ -138,7 +140,7 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "SAVE";
+                                            //command = "SAVE";
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -152,7 +154,7 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "SETTINGS";
+                                            //command = "SETTINGS";
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -162,7 +164,7 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "NEW";
+                                            //command = "NEW";
                                             popupWindow.dismiss();
                                             showSaveDialog();
                                         }
@@ -175,6 +177,7 @@ public class ShowPopupWindow {
                                             //command = "TIMER";
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
+                                            in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                         }
                                     });
@@ -198,23 +201,57 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            command = "SETTINGS";
+                                            //command = "SETTINGS";
                                             popupWindow.dismiss();
-                                            printToast("Settings start");
+                                            printToast("go Settings");
+                                        }
+                                    });
+                                    break;
+            case "StartActivity":
+                                    bTimer.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            //command = "TIMER";
+                                            popupWindow.dismiss();
+                                            Intent in = new Intent(context,TimerActivity.class);
+                                            in.putExtra("actName", activityName);
+                                            activity.startActivity(in);
+                                        }
+                                    });
+                                    bLoad.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            //command = "SAVE";
+                                            printToast("go Load");
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+
+
+                                    bNewRound.setVisibility(View.GONE);
+                                    tvNewRound.setVisibility(View.GONE);
+                                    bSecondRound.setVisibility(View.GONE);
+                                    tvSecondRound.setVisibility(View.GONE);
+                                    bSave.setVisibility(View.GONE);
+                                    tvSave.setVisibility(View.GONE);
+                                    bBow.setVisibility(View.GONE);
+                                    tvBow.setVisibility(View.GONE);
+
+                                    bSettings.setOnClickListener(new View.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(View v) {
+                                            //command = "SETTINGS";
+                                            popupWindow.dismiss();
+                                            printToast("go Settings");
                                         }
                                     });
                                     break;
 
 
         }
-//        Button close = popupView.findViewById(R.id.close);
-//        close.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                popupWindow.dismiss();
-//            }
-//        });
 
     }
 

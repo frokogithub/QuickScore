@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.app.Activity;
+import android.widget.ImageView;
 
-public class MainActivity extends BaseActivity {
+import interfacesPackage.OnMenuItemClickListener;
+
+public class StartActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,14 @@ public class MainActivity extends BaseActivity {
 
                 Intent in = new Intent(getApplicationContext(),MatchActivity.class);
                 startActivity(in);
+            }
+        });
+
+        ImageView ivMenu = findViewById(R.id.iv_menu);
+        ivMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, StartActivity.this);
             }
         });
 

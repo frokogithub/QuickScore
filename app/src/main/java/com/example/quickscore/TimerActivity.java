@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class TimerActivity extends BaseActivity {
 
     private boolean running = true;
 
+    private  String activityName;
+
 
     @Override
     protected void onResume() {
@@ -64,11 +67,13 @@ public class TimerActivity extends BaseActivity {
 
     private void initTimer(){
 
+        Intent intent = getIntent();
+        activityName = intent.getStringExtra("actName");
+
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         sound1_id = soundPool.load(this, R.raw.whistle_1, 1);
         sound2_id = soundPool.load(this, R.raw.whistle_2, 1);
         sound3_id = soundPool.load(this, R.raw.whistle_3, 1);
-
 
         timerBackG = findViewById(R.id.timer_bckgrnd);
         tvCountdown = findViewById(R.id.tv_countdown);
@@ -148,6 +153,7 @@ public class TimerActivity extends BaseActivity {
                                   bPause.setVisibility(View.INVISIBLE);
                                   bReset.setVisibility(View.INVISIBLE);
                                   countingState = 4;
+                                  if(activityName.equals("SingleActivity") || activityName.equals("MatchActivity")) finish();
                                   return;
                               }
                               break;

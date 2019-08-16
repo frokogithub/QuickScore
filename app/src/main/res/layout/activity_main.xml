@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bckgd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_background"
-    tools:context=".MainActivity">
+    tools:context=".StartActivity">
 
     <Button
         android:id="@+id/b_Single"
@@ -32,6 +33,18 @@
         android:text="MATCH"
         app:layout_constraintEnd_toEndOf="@+id/b_Single"
         app:layout_constraintTop_toBottomOf="@+id/b_Single" />
+
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:layout_width="50dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="30dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu_icon_1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
