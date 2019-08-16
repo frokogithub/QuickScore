@@ -164,7 +164,7 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "NEW";
+                                            command = "NEW";
                                             popupWindow.dismiss();
                                             showSaveDialog();
                                         }

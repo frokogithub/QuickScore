@@ -1,9 +1,10 @@
 package com.example.quickscore;
 
-import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
+import interfacesPackage.OnScoreBoardClickListener;
 import scoresPackage.End;
 
 public class MatchActivity extends BaseActivity {
@@ -32,9 +34,12 @@ public class MatchActivity extends BaseActivity {
     private ViewGroup endsDummyB;
     private ViewGroup outerMarkA;
     private ViewGroup outerMarkB;
+    private ViewGroup parent;
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
     private int scoringStatus = 0;
+    Rect clickRectA;
+    Rect clickRectB;
 
 
     @Override
@@ -49,23 +54,29 @@ public class MatchActivity extends BaseActivity {
     }
 
     private void setInitialState(){
-      tvTotalScoreA = findViewById(R.id.A_tv_total_score);
-      tvTotalScoreB = findViewById(R.id.B_tv_total_score);
-      tvTotalScoreA.setText("0");
-      tvTotalScoreB.setText("0");
 
-      outerMarkA = findViewById(R.id.A_outer_mark);
-      outerMarkB = findViewById(R.id.B_outer_mark);
-      outerMarkB.setVisibility(View.INVISIBLE);
+        endsDummyA = findViewById(R.id.A_ends_dummy);
+        endsDummyB = findViewById(R.id.B_ends_dummy);
+
+
+
+
+        tvTotalScoreA = findViewById(R.id.A_tv_total_score);
+        tvTotalScoreB = findViewById(R.id.B_tv_total_score);
+        tvTotalScoreA.setText("0");
+        tvTotalScoreB.setText("0");
+
+     ;
+
+        outerMarkA = findViewById(R.id.A_outer_mark);
+        outerMarkB = findViewById(R.id.B_outer_mark);
+        outerMarkB.setVisibility(View.INVISIBLE);
     }
 
 
     void initEnds(){
-        endsDummyA = findViewById(R.id.A_ends_dummy);
-        endsDummyB = findViewById(R.id.B_ends_dummy);
         endA = new End[NUMBER_OF_ENDS+1];
         endB = new End[NUMBER_OF_ENDS+1];
-
 
          int AendHorizontalLineId, BendHorizontalLineId;
          int AendViewId, BendViewId;
@@ -127,6 +138,29 @@ public class MatchActivity extends BaseActivity {
                     @Override
                     public void onErase(int index) {
                         doIfCellErased(1, index);
+                    }
+                });
+                endA[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
+                    @Override
+                    public void onScoreBoardClick() {
+                        unmarkEnd();
+                        activateFirstIncompleteEnd(true, false);
+//                        printToast("A clicked");
+//                        unmarkEnd();
+//                        activeArcher = 0;
+//                        markEnd();
+                    }
+                });
+
+                endB[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
+                    @Override
+                    public void onScoreBoardClick() {
+                        unmarkEnd();
+                        activateFirstIncompleteEnd(false, true);
+//                        printToast("B clicked");
+//                        unmarkEnd();
+//                        activeArcher = 1;
+//                        markEnd();
                     }
                 });
     }//addEndsListeners()

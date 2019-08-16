@@ -48,6 +48,7 @@ public class TimerActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        soundPool.release();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 

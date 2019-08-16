@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
+import interfacesPackage.OnScoreBoardClickListener;
 
 public class End {
 
@@ -30,6 +31,7 @@ public class End {
     private LinearLayout markRightLine;
     private OnChangeIndexListener indexListener;
     private OnEraseListener eraseListener;
+    private OnScoreBoardClickListener scoreClicklistener;
     private int sum=0;
     private boolean isEditable = true;
     private int emptyCells;
@@ -73,6 +75,13 @@ public class End {
                    return false;
                 }
             });
+            cellArray[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(scoreClicklistener!=null) scoreClicklistener.onScoreBoardClick();
+                }
+            });
+
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
@@ -87,6 +96,9 @@ public class End {
         eraseListener = listener;
     }
 
+    public void setOnScoreBoardClickListener(OnScoreBoardClickListener listener){
+        scoreClicklistener = listener;
+    }
 
     private void eraseCell(View cell){
         try {
