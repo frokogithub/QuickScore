@@ -1,18 +1,73 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- LIGHT (Manifest)-->
+    <style name="QuickScoreLightTheme" parent="BaseLightTheme">
+        <item name="background_color">@color/light_theme_background</item>
+        <item name="lines_color">@color/light_theme_lines</item>
+        <item name="text_low_contrast_color">@color/light_theme_text_low_contrast</item>
+        <item name="text_middle_contrast_color">@color/light_theme_text_middle_contrast</item>
+        <item name="text_high_contrast_color">@color/light_theme_text_high_contrast</item>
+        <item name="cell_outline_color">@color/light_theme_cell_outline</item>
+        <item name="total_cell_color">@color/light_theme_total_cell</item>
+        <item name="total_text_color">@color/light_theme_total_text</item>
+        <item name="sum_cell_color">@color/light_theme_sum_cell</item>
+        <item name="inner_mark_color">@color/light_theme_inner_mark</item>
+        <item name="outer_mark_color">@color/light_theme_outer_mark</item>
+        <item name="popup_menu_background_color">@color/light_popup_menu_background</item>
+        <item name="start_button_background">@drawable/light_theme_start_button_background</item>
+    </style>
+
+
+
+    <!-- DARK -->
+    <style name="QuickScoreDarkTheme" parent="BaseDarkTheme">
+        <item name="background_color">@color/dark_theme_background</item>
+        <item name="lines_color">@color/dark_theme_lines</item>
+        <item name="text_low_contrast_color">@color/dark_theme_text_low_contrast</item>
+        <item name="text_middle_contrast_color">@color/dark_theme_text_middle_contrast</item>
+        <item name="text_high_contrast_color">@color/dark_theme_text_high_contrast</item>
+        <item name="cell_outline_color">@color/dark_theme_cell_outline</item>
+        <item name="total_cell_color">@color/dark_theme_total_cell</item>
+        <item name="total_text_color">@color/dark_theme_total_text</item>
+        <item name="sum_cell_color">@color/dark_theme_sum_cell</item>
+        <item name="inner_mark_color">@color/dark_theme_inner_mark</item>
+        <item name="outer_mark_color">@color/dark_theme_outer_mark</item>
+        <item name="popup_menu_background_color">@color/dark_popup_menu_background</item>
+        <item name="start_button_background">@drawable/dark_theme_start_button_background</item>
+    </style>
+
+
+
+
+
+
+
+
+
+    <style name="BaseLightTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
+    <style name="BaseDarkTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+    </style>
+
+
+
+
 </resources>
-<!--"Theme.AppCompat.Light.DarkActionBar"-->
+
 

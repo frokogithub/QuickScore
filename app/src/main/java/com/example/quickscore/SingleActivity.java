@@ -2,6 +2,7 @@ package com.example.quickscore;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,21 @@ public class SingleActivity extends BaseActivity {
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int activeRow = 0;
-    private int editedEndIndex;
     private static End[] end;
     private ViewGroup endsDummy;
     private TextView totalSum;
-    private boolean editInProgressFlag = false;
     private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
+    static boolean THEME_CHANGED_FLAG = false;
+
+    @Override
+    protected void onResume() {
+        if(THEME_CHANGED_FLAG){
+            THEME_CHANGED_FLAG = false;
+            recreate();
+        }
+        super.onResume();
+    }
 
 
     @Override
@@ -286,6 +295,7 @@ public class SingleActivity extends BaseActivity {
                 }
                 setInitialState();
                 initEnds();
+                activateFirstIncompleteEnd();
             }
         });
 
@@ -325,13 +335,17 @@ public class SingleActivity extends BaseActivity {
     }
 
     private void markEnd(){
-        int color = R.color.mark__frame__red;
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.inner_mark_color, outValue, true);
+        int color = outValue.resourceId;
         end[activeRow].setFrameColor(true, color);
         if(activeRow <NUMBER_OF_ENDS) end[activeRow +1].setFrameColor(false, color);
     }
 
     private void unmarkEnd(){
-        int color = R.color.black;
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.cell_outline_color, outValue, true);
+        int color = outValue.resourceId;
         end[activeRow].setFrameColor(true, color);
         if(activeRow<NUMBER_OF_ENDS) {
             end[activeRow + 1].setFrameColor(false, color);

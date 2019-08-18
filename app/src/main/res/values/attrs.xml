@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="K">
+    <attr name="background_color" format="color"/>
+    <attr name="text_low_contrast_color" format="reference"/>
+    <attr name="text_middle_contrast_color" format="reference"/>
+    <attr name="text_high_contrast_color" format="reference"/>
+    <attr name="inner_mark_color" format="reference"/>
+    <attr name="outer_mark_color" format="reference"/>
+    <attr name="lines_color" format="reference"/>
+    <attr name="cell_outline_color" format="reference"/>
+    <attr name="sum_cell_color" format="reference"/>
+    <attr name="total_cell_color" format="reference"/>
+    <attr name="total_text_color" format="reference"/>
+    <attr name="popup_menu_background_color" format="reference"/>
+
+    <attr name="start_button_background" format="reference"/>
+
+    </declare-styleable>
+
+
+</resources>

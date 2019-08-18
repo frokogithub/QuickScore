@@ -52,18 +52,15 @@ public class ShowPopupWindow {
     }
 
     private void initPopUp(){
-        //Create a View object yourself through inflater
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(R.layout.popup_menu, null);
 
-        //Specify the length and width through constants
+
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
-        //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = true;
-        popupWindow = new PopupWindow(popupView, width, height, focusable);
 
+        popupWindow = new PopupWindow(popupView, width, height, true);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -120,7 +117,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SECOND";
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -128,8 +124,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "TIMER";
-                                            //popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
                                             in.putExtra("actName", activityName);
                                             activity.startActivity(in);
@@ -140,7 +134,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SAVE";
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -154,7 +147,9 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SETTINGS";
+                                            Intent in = new Intent(context,SettingsActivity.class);
+                                            //in.putExtra("actName", activityName);
+                                            activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -174,7 +169,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "TIMER";
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
                                             in.putExtra("actName", activityName);
@@ -201,7 +195,9 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SETTINGS";
+                                            Intent in = new Intent(context,SettingsActivity.class);
+                                            //in.putExtra("actName", activityName);
+                                            activity.startActivity(in);
                                             popupWindow.dismiss();
                                             printToast("go Settings");
                                         }
@@ -212,7 +208,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "TIMER";
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
                                             in.putExtra("actName", activityName);
@@ -223,7 +218,6 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SAVE";
                                             printToast("go Load");
                                             popupWindow.dismiss();
                                         }
@@ -243,7 +237,9 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            //command = "SETTINGS";
+                                            Intent in = new Intent(context,SettingsActivity.class);
+                                            //in.putExtra("actName", activityName);
+                                            activity.startActivity(in);
                                             popupWindow.dismiss();
                                             printToast("go Settings");
                                         }

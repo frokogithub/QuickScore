@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/black">
+        android:background="?attr/cell_outline_color">
 
         <TextView
             android:id="@+id/tv_sum"
@@ -17,16 +17,16 @@
             android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
             android:layout_marginEnd="@dimen/cells_margin"
-            android:background="@color/dark_grey_2"
+            android:background="?attr/sum_cell_color"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/space"
             android:layout_width="@dimen/before_sum_space_match"
             android:layout_height="@dimen/cell_size_match"
-            android:background="@android:color/white"
+            android:background="?attr/background_color"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -36,18 +36,18 @@
             android:id="@+id/ll_mark_line_left"
             android:layout_width="@dimen/cells_margin"
             android:layout_height="@dimen/cell_size_match"
-            android:background="@color/black"
+            android:background="?attr/cell_outline_color"
             android:orientation="horizontal"></LinearLayout>
 
         <TextView
             android:id="@+id/tv0"
             android:layout_width="@dimen/cell_size_match"
             android:layout_height="@dimen/cell_size_match"
-            android:background="@android:color/white"
+            android:background="?attr/background_color"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:tag="0"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_middle_contrast_color"
             android:textSize="18sp" />
 
         <TextView
@@ -55,11 +55,11 @@
             android:layout_width="@dimen/cell_size_match"
             android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
-            android:background="@android:color/white"
+            android:background="?attr/background_color"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:tag="1"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_middle_contrast_color"
             android:textSize="18sp" />
 
         <TextView
@@ -67,18 +67,18 @@
             android:layout_width="@dimen/cell_size_match"
             android:layout_height="@dimen/cell_size_match"
             android:layout_marginStart="@dimen/cells_margin"
-            android:background="@android:color/white"
+            android:background="?attr/background_color"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:tag="2"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_middle_contrast_color"
             android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/ll_mark_line_right"
             android:layout_width="@dimen/cells_margin"
             android:layout_height="@dimen/cell_size_match"
-            android:background="@color/black"
+            android:background="?attr/cell_outline_color"
             android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>

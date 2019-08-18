@@ -2,12 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <solid android:color="@color/white_background"/>
-   <!-- <gradient
-        android:startColor="@color/white_background"
-        android:endColor="@color/dark_grey_2"
-        android:angle="135"/> -->
-    <stroke android:width="@dimen/buttons_outline_dim" android:color="@color/dark_grey_3"/>
+    <solid android:color="?attr/background_color"/>
+    <stroke android:width="@dimen/buttons_outline_dim" android:color="?attr/text_low_contrast_color"/>
     <corners
         android:radius="2dp" />
 </shape>

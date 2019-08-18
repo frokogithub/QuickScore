@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#DADADA</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -22,8 +22,40 @@
     <color name="white_252">#FCFCFC</color>
     <color name="black">#000000</color>
     <color name="grey_transparent">#57969696</color>
-    <color name="outer_mark_color">#E21F1F</color>
     <color name="popup_menu_background">#FFFFFF</color>
+
+
+    <color name="dark_theme_background">#000000</color>
+    <color name="dark_theme_text_low_contrast">#8D8D8D</color>
+    <color name="dark_theme_text_middle_contrast">#CFCFCF</color>
+    <color name="dark_theme_text_high_contrast">#FFFFFF</color>
+    <color name="dark_theme_inner_mark">#C52700</color>
+    <color name="dark_theme_outer_mark">#A01F00</color>
+    <color name="dark_theme_lines">#FFFFFF</color>
+    <color name="dark_theme_cell_outline">#F7F7F7</color>
+    <color name="dark_theme_sum_cell">#505050</color>
+    <color name="dark_theme_total_cell">#F3F3F3</color>
+    <color name="dark_theme_total_text">#000000</color>
+    <color name="dark_popup_menu_background">#030303</color>
+
+
+    <color name="light_theme_background">#FFFFFF</color>
+    <color name="light_theme_text_low_contrast">#BDBDBD</color>
+    <color name="light_theme_text_middle_contrast">#757575</color>
+    <color name="light_theme_text_high_contrast">#000000</color>
+    <color name="light_theme_inner_mark">#FA5127</color>
+    <color name="light_theme_outer_mark">#E4583E</color>
+    <color name="light_theme_lines">#000000</color>
+    <color name="light_theme_cell_outline">#1D1D1D</color>
+    <color name="light_theme_sum_cell">#ECECEC</color>
+    <color name="light_theme_total_cell">#141414</color>
+    <color name="light_theme_total_text">#FFFFFF</color>
+    <color name="light_popup_menu_background">#F7F7F7</color>
+
+
+    <!--   MATCH   -->
+    <color name="outer_mark_color">#E21F1F</color>
+    <color name="sum_backg_color">#F3F3F3</color>
 
     <!--   TIMER   -->
     <color name="timer_green">#09B610</color>

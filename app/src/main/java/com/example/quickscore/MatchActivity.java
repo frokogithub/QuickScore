@@ -3,6 +3,7 @@ package com.example.quickscore;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,9 +39,17 @@ public class MatchActivity extends BaseActivity {
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
     private int scoringStatus = 0;
-    Rect clickRectA;
-    Rect clickRectB;
+    static boolean THEME_CHANGED_FLAG = false;
 
+    @Override
+    protected void onResume() {
+
+        if(THEME_CHANGED_FLAG){
+            THEME_CHANGED_FLAG = false;
+            recreate();
+        }
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -353,7 +362,9 @@ public class MatchActivity extends BaseActivity {
 
 
     private void markEnd(){
-        int color = R.color.mark__frame__red;
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.inner_mark_color, outValue, true);
+        int color = outValue.resourceId;
 
         switch (activeArcher){
             case 0:
@@ -372,7 +383,11 @@ public class MatchActivity extends BaseActivity {
     }
 
     private void unmarkEnd(){
-        int color = R.color.black;
+
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.cell_outline_color, outValue, true);
+        int color = outValue.resourceId;
+
         outerMarkA.setVisibility(View.INVISIBLE);
         outerMarkB.setVisibility(View.INVISIBLE);
         endA[activeRow].setFrameColor(true, color);

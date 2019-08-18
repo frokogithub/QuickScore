@@ -4,22 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.app.Activity;
 import android.widget.ImageView;
 
-import interfacesPackage.OnMenuItemClickListener;
 
 public class StartActivity extends BaseActivity {
+
+    static boolean THEME_CHANGED_FLAG = false;
+    @Override
+    protected void onResume() {
+
+        if(THEME_CHANGED_FLAG){
+            THEME_CHANGED_FLAG = false;
+            recreate();
+        }
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start);
 
 
         Button b_Single = findViewById(R.id.b_Single);
         Button b_Match = findViewById(R.id.b_Match);
-
 
 
         b_Single.setOnClickListener(new View.OnClickListener() {
@@ -49,4 +57,5 @@ public class StartActivity extends BaseActivity {
         });
 
     }
+
 }

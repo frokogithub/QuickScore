@@ -5,7 +5,7 @@
     android:id="@+id/bckgd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_background"
+    android:background="?attr/background_color"
     tools:context=".StartActivity">
 
 
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:background="@color/white_background"
+        android:background="?attr/background_color"
         app:columnCount="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="X"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="10"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="9"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
             android:soundEffectsEnabled="true"
             android:text="@string/b8"
             android:textAllCaps="true"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="7"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -125,7 +125,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="6"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="5"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -161,7 +161,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="4"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="3"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -197,7 +197,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="2"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="1"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -233,7 +233,7 @@
             android:gravity="center"
             android:soundEffectsEnabled="true"
             android:text="M"
-            android:textColor="#9B9B9B"
+            android:textColor="?attr/text_high_contrast_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -259,7 +259,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/white_252"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -272,7 +271,6 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/white_252"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -284,7 +282,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/white_252"
+        android:background="?attr/background_color"
         android:cursorVisible="false"
         android:ems="5"
         android:gravity="center"
@@ -299,7 +297,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@color/white_252"
+        android:background="?attr/background_color"
         android:cursorVisible="false"
         android:ems="5"
         android:gravity="center"
@@ -313,10 +311,10 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:background="@color/black"
+        android:background="?attr/total_cell_color"
         android:gravity="center"
         android:text="150"
-        android:textColor="@color/white_background"
+        android:textColor="?attr/total_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_archer_B"
@@ -328,10 +326,10 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:background="@color/black"
+        android:background="?attr/total_cell_color"
         android:gravity="center"
         android:text="150"
-        android:textColor="@color/white_background"
+        android:textColor="?attr/total_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_archer_A"
@@ -357,7 +355,7 @@
         <LinearLayout
             android:layout_width="@dimen/outer_mark_line"
             android:layout_height="@dimen/outer_mark_H"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal">
 
         </LinearLayout>
@@ -366,7 +364,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/outer_mark_line"
             android:layout_marginBottom="16dp"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal">
 
             <Space
@@ -393,7 +391,7 @@
         <LinearLayout
             android:layout_width="@dimen/outer_mark_line"
             android:layout_height="@dimen/outer_mark_H"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>
@@ -411,7 +409,7 @@
         <LinearLayout
             android:layout_width="@dimen/outer_mark_line"
             android:layout_height="@dimen/outer_mark_H"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal">
 
         </LinearLayout>
@@ -420,7 +418,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/outer_mark_line"
             android:layout_marginBottom="16dp"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal">
 
             <Space
@@ -447,7 +445,7 @@
         <LinearLayout
             android:layout_width="@dimen/outer_mark_line"
             android:layout_height="@dimen/outer_mark_H"
-            android:background="@color/outer_mark_color"
+            android:background="?attr/outer_mark_color"
             android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>
