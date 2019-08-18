@@ -25,18 +25,7 @@
     <color name="popup_menu_background">#FFFFFF</color>
 
 
-    <color name="dark_theme_background">#000000</color>
-    <color name="dark_theme_text_low_contrast">#8D8D8D</color>
-    <color name="dark_theme_text_middle_contrast">#CFCFCF</color>
-    <color name="dark_theme_text_high_contrast">#FFFFFF</color>
-    <color name="dark_theme_inner_mark">#C52700</color>
-    <color name="dark_theme_outer_mark">#A01F00</color>
-    <color name="dark_theme_lines">#FFFFFF</color>
-    <color name="dark_theme_cell_outline">#F7F7F7</color>
-    <color name="dark_theme_sum_cell">#505050</color>
-    <color name="dark_theme_total_cell">#F3F3F3</color>
-    <color name="dark_theme_total_text">#000000</color>
-    <color name="dark_popup_menu_background">#030303</color>
+
 
 
     <color name="light_theme_background">#FFFFFF</color>
@@ -51,6 +40,20 @@
     <color name="light_theme_total_cell">#141414</color>
     <color name="light_theme_total_text">#FFFFFF</color>
     <color name="light_popup_menu_background">#F7F7F7</color>
+
+
+    <color name="dark_theme_background">#000000</color>
+    <color name="dark_theme_text_low_contrast">#8D8D8D</color>
+    <color name="dark_theme_text_middle_contrast">#CFCFCF</color>
+    <color name="dark_theme_text_high_contrast">#FFFFFF</color>
+    <color name="dark_theme_inner_mark">#FF8282</color>
+    <color name="dark_theme_outer_mark">#A01F00</color>
+    <color name="dark_theme_lines">#FFFFFF</color>
+    <color name="dark_theme_cell_outline">#D8D8D8</color>
+    <color name="dark_theme_sum_cell">#353535</color>
+    <color name="dark_theme_total_cell">#808080</color>
+    <color name="dark_theme_total_text">#FFFFFF</color>
+    <color name="dark_popup_menu_background">#030303</color>
 
 
     <!--   MATCH   -->
