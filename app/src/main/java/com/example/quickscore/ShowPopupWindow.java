@@ -199,7 +199,6 @@ public class ShowPopupWindow {
                                             //in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
-                                            printToast("go Settings");
                                         }
                                     });
                                     break;
@@ -241,7 +240,6 @@ public class ShowPopupWindow {
                                             //in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
-                                            printToast("go Settings");
                                         }
                                     });
                                     break;

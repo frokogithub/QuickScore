@@ -19,6 +19,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         updateTheme();
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
     }
 
     public void updateTheme() {

@@ -46,21 +46,24 @@
 
     <style name="BaseLightTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/light_status_bar</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+
+
 
     </style>
 
     <style name="BaseDarkTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/dark_status_bar</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/dark_theme_background</item>
 
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
 
 
     </style>

@@ -2,30 +2,7 @@
 <resources>
     <color name="colorPrimary">#DADADA</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-
-    <color name="mark__frame__red">#E21D1D</color>
-    <color name="dark_grey_1">#FAFAFA</color>
-    <color name="dark_grey_2">#F3F3F3</color>
-    <color name="dark_grey_3">#BEBEBE</color>
-    <color name="grey_10">#E6E6E6</color>
-    <color name="grey_20">#CDCDCD</color>
-    <color name="grey_30">#B4B4B4</color>
-    <color name="grey_40">#9A9A9A</color>
-    <color name="grey_50">#808080</color>
-    <color name="grey_60">#666666</color>
-    <color name="grey_70">#4D4D4D</color>
-    <color name="grey_80">#333333</color>
-    <color name="grey_90">#1A1A1A</color>
-    <color name="white_background">#FFFFFF</color>
-    <color name="white_transparent">#D5FFFFFF</color>
-    <color name="white_252">#FCFCFC</color>
-    <color name="black">#000000</color>
-    <color name="grey_transparent">#57969696</color>
-    <color name="popup_menu_background">#FFFFFF</color>
-
-
-
+    <color name="colorAccent">#F02616</color>
 
 
     <color name="light_theme_background">#FFFFFF</color>
@@ -40,28 +17,31 @@
     <color name="light_theme_total_cell">#141414</color>
     <color name="light_theme_total_text">#FFFFFF</color>
     <color name="light_popup_menu_background">#F7F7F7</color>
+    <color name="light_status_bar">#D5D5D5</color>
+    <color name="light_status_bar_text">#4B4B4B</color>
 
 
     <color name="dark_theme_background">#000000</color>
     <color name="dark_theme_text_low_contrast">#8D8D8D</color>
     <color name="dark_theme_text_middle_contrast">#CFCFCF</color>
     <color name="dark_theme_text_high_contrast">#FFFFFF</color>
-    <color name="dark_theme_inner_mark">#FF8282</color>
-    <color name="dark_theme_outer_mark">#A01F00</color>
+    <color name="dark_theme_inner_mark">#961111</color>
+    <color name="dark_theme_outer_mark">#6B200E</color>
     <color name="dark_theme_lines">#FFFFFF</color>
-    <color name="dark_theme_cell_outline">#D8D8D8</color>
-    <color name="dark_theme_sum_cell">#353535</color>
+    <color name="dark_theme_cell_outline">#919191</color>
+    <color name="dark_theme_sum_cell">#222222</color>
     <color name="dark_theme_total_cell">#808080</color>
     <color name="dark_theme_total_text">#FFFFFF</color>
     <color name="dark_popup_menu_background">#030303</color>
+    <color name="dark_status_bar">#555555</color>
+    <color name="dark_status_bar_text">#F3F3F3</color>
 
 
-    <!--   MATCH   -->
-    <color name="outer_mark_color">#E21F1F</color>
-    <color name="sum_backg_color">#F3F3F3</color>
+
 
     <!--   TIMER   -->
     <color name="timer_green">#09B610</color>
     <color name="timer_red">#FF2600</color>
     <color name="timer_yellow">#FFC107</color>
+    <color name="timer_text">#F3F3F3</color>
 </resources>
