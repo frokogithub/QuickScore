@@ -1,25 +1,12 @@
-<!--
-  ~ Copyright 2018 The app Open Source Project
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:title="Apperence"
+        app:layout="@layout/settings_header"
         app:iconSpaceReserved="false">
         <ListPreference
+            app:layout="@layout/settings_row"
+            app:elevation="0dp"
             app:defaultValue="light"
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
@@ -34,20 +21,48 @@
 
     <PreferenceCategory
         app:title="Timer"
+        app:layout="@layout/settings_header"
         app:iconSpaceReserved="false">
 
         <EditTextPreference
+            app:layout="@layout/settings_row"
             app:defaultValue="100"
             app:key="prepare_time"
-            app:title="Prepare Time (s)"
+            app:title="Prepare Time  (seconds)"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true"/>
         <EditTextPreference
+            app:layout="@layout/settings_row"
             app:defaultValue="100"
             app:key="shooting_time"
-            app:title="Shooting Time (s)"
+            app:title="Shooting Time  (seconds)"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true"/>
+        <CheckBoxPreference
+            app:layout="@layout/settings_row"
+            app:defaultValue="true"
+            app:key="timerSounds"
+            app:title="Whistle"
+            app:summaryOn="On"
+            app:summaryOff="Off"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Save/Load"
+        app:layout="@layout/settings_header"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            app:layout="@layout/settings_row"
+            app:elevation="0dp"
+            app:defaultValue="Ask before save"
+            app:entries="@array/closeAction_entries"
+            app:entryValues="@array/closeAction_values"
+            app:key="closeAction"
+            app:title="Close Action"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 

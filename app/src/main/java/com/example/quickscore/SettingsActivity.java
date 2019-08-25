@@ -3,6 +3,7 @@ package com.example.quickscore;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
@@ -17,9 +18,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends BaseActivity {
 
-
-    //static FragmentManager fragmentManager;
-
     static boolean THEME_CHANGED_FLAG = false;
     @Override
     protected void onResume() {
@@ -33,14 +31,12 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        //return super.onSupportNavigateUp();
         finish();
         return true;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //fragmentManager = getSupportFragmentManager();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         SettingsFragment settingsFragment = new SettingsFragment();
@@ -52,13 +48,10 @@ public class SettingsActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Settings");
+            actionBar.setElevation(0);
             actionBar.show();
         }
-
-
-
     }
-
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 

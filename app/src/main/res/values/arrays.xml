@@ -8,4 +8,16 @@
         <item>LIGHT</item>
         <item>DARK</item>
     </string-array>
+
+
+    <string-array name="closeAction_entries">
+        <item>Always save</item>
+        <item>Ask before save</item>
+        <item>Don\'t ask, don\'t save</item>
+    </string-array>
+    <string-array name="closeAction_values">
+        <item>Always</item>
+        <item>Ask </item>
+        <item>Don\'t</item>
+    </string-array>
 </resources>

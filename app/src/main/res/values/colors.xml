@@ -19,6 +19,10 @@
     <color name="light_popup_menu_background">#F7F7F7</color>
     <color name="light_status_bar">#D5D5D5</color>
     <color name="light_status_bar_text">#4B4B4B</color>
+    <color name="light_theme_settings_header">#F7F7F7</color>
+    <color name="light_theme_settings_header_text">#03A9F4</color>
+    <color name="light_theme_settings_row">#FFFFFF</color>
+    <color name="light_theme_settings_divider">#E9E9E9</color>
 
 
     <color name="dark_theme_background">#000000</color>
@@ -35,6 +39,10 @@
     <color name="dark_popup_menu_background">#030303</color>
     <color name="dark_status_bar">#555555</color>
     <color name="dark_status_bar_text">#F3F3F3</color>
+    <color name="dark_theme_settings_header">#4E4E4E</color>
+    <color name="dark_theme_settings_header_text">#BDE9FF</color>
+    <color name="dark_theme_settings_row">#272727</color>
+    <color name="dark_theme_settings_divider">#686868</color>
 
 
 

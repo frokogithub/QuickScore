@@ -15,6 +15,10 @@
         <item name="outer_mark_color">@color/light_theme_outer_mark</item>
         <item name="popup_menu_background_color">@color/light_popup_menu_background</item>
         <item name="start_button_background">@drawable/light_theme_start_button_background</item>
+        <item name="settings_header_color">@color/light_theme_settings_header</item>
+        <item name="settings_header_text_color">@color/light_theme_settings_header_text</item>
+        <item name="settings_row_color">@color/light_theme_settings_row</item>
+        <item name="settings_divider_color">@color/light_theme_settings_divider</item>
     </style>
 
 
@@ -34,6 +38,10 @@
         <item name="outer_mark_color">@color/dark_theme_outer_mark</item>
         <item name="popup_menu_background_color">@color/dark_popup_menu_background</item>
         <item name="start_button_background">@drawable/dark_theme_start_button_background</item>
+        <item name="settings_header_color">@color/dark_theme_settings_header</item>
+        <item name="settings_header_text_color">@color/dark_theme_settings_header_text</item>
+        <item name="settings_row_color">@color/dark_theme_settings_row</item>
+        <item name="settings_divider_color">@color/dark_theme_settings_divider</item>
     </style>
 
 
@@ -47,26 +55,17 @@
     <style name="BaseLightTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/light_status_bar</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-
-
-
+        <item name="colorAccent">@color/light_theme_settings_header_text</item>
 
     </style>
 
     <style name="BaseDarkTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_status_bar</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:background">@color/dark_theme_background</item>
-
-
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-
-
-
+        <item name="colorAccent">@color/dark_theme_settings_header_text</item>
+        <item name="android:background">@color/dark_theme_settings_row</item>
     </style>
+
 
 
 
