@@ -1,11 +1,9 @@
 package com.example.quickscore;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,17 +36,21 @@ public class MatchActivity extends BaseActivity {
     private ViewGroup parent;
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
+    private TextView tvArcherA;
+    private TextView tvArcherB;
+    private TextView tvFocusDummy;
     private int scoringStatus = 0;
+    private String archerAName = "Archer A";
+    private String archerBName = "Archer B";
     static boolean THEME_CHANGED_FLAG = false;
 
     @Override
     protected void onResume() {
-
+        super.onResume();
         if(THEME_CHANGED_FLAG){
             THEME_CHANGED_FLAG = false;
             recreate();
         }
-        super.onResume();
     }
 
     @Override
@@ -63,24 +65,24 @@ public class MatchActivity extends BaseActivity {
     }
 
     private void setInitialState(){
-
         endsDummyA = findViewById(R.id.A_ends_dummy);
         endsDummyB = findViewById(R.id.B_ends_dummy);
-
-
-
 
         tvTotalScoreA = findViewById(R.id.A_tv_total_score);
         tvTotalScoreB = findViewById(R.id.B_tv_total_score);
         tvTotalScoreA.setText("0");
         tvTotalScoreB.setText("0");
 
-     ;
+
+        tvArcherA = findViewById(R.id.tv_archer_A);
+        tvArcherB = findViewById(R.id.tv_archer_B);
+        tvArcherA.setText(archerAName);
+        tvArcherB.setText(archerBName);
 
         outerMarkA = findViewById(R.id.A_outer_mark);
         outerMarkB = findViewById(R.id.B_outer_mark);
         outerMarkB.setVisibility(View.INVISIBLE);
-    }
+    }//setInitialState()
 
 
     void initEnds(){
@@ -338,9 +340,9 @@ public class MatchActivity extends BaseActivity {
                                 printToast("Settings start");
                                 break;
                         }
-                        if(command.equals("NEW")){
-                            clearEnds();
-                        }
+//                        if(command.equals("NEW")){
+//                            clearEnds();
+//                        }
                     }
                 });
             }

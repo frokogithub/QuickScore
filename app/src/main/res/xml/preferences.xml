@@ -15,6 +15,15 @@
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
+        <CheckBoxPreference
+            app:layout="@layout/settings_row"
+            app:defaultValue="true"
+            app:key="coloredCells"
+            app:title="Colored Scores"
+            app:summaryOn="On"
+            app:summaryOff="Off"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
 

@@ -19,6 +19,13 @@
         <item name="settings_header_text_color">@color/light_theme_settings_header_text</item>
         <item name="settings_row_color">@color/light_theme_settings_row</item>
         <item name="settings_divider_color">@color/light_theme_settings_divider</item>
+        <item name="action_bar_color">@color/light_theme_action_bar</item>
+        <item name="action_bar_text_color">@color/light_theme_action_bar_text</item>
+        <item name="cell_yellow_color">@color/light_theme_cell_yellow</item>
+        <item name="cell_red_color">@color/light_theme_cell_red</item>
+        <item name="cell_blue_color">@color/light_theme_cell_blue</item>
+        <item name="cell_black_color">@color/light_theme_cell_black</item>
+        <item name="cell_white_color">@color/light_theme_cell_white</item>
     </style>
 
 
@@ -42,6 +49,13 @@
         <item name="settings_header_text_color">@color/dark_theme_settings_header_text</item>
         <item name="settings_row_color">@color/dark_theme_settings_row</item>
         <item name="settings_divider_color">@color/dark_theme_settings_divider</item>
+        <item name="action_bar_color">@color/dark_theme_action_bar</item>
+        <item name="action_bar_text_color">@color/dark_theme_action_bar_text</item>
+        <item name="cell_yellow_color">@color/dark_theme_cell_yellow</item>
+        <item name="cell_red_color">@color/dark_theme_cell_red</item>
+        <item name="cell_blue_color">@color/dark_theme_cell_blue</item>
+        <item name="cell_black_color">@color/dark_theme_cell_black</item>
+        <item name="cell_white_color">@color/dark_theme_cell_white</item>
     </style>
 
 
@@ -52,18 +66,18 @@
 
 
 
-    <style name="BaseLightTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="BaseLightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/light_theme_action_bar</item>
         <item name="colorPrimaryDark">@color/light_status_bar</item>
         <item name="colorAccent">@color/light_theme_settings_header_text</item>
 
     </style>
 
     <style name="BaseDarkTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/dark_theme_action_bar</item>
         <item name="colorPrimaryDark">@color/dark_status_bar</item>
         <item name="colorAccent">@color/dark_theme_settings_header_text</item>
-        <item name="android:background">@color/dark_theme_settings_row</item>
+
     </style>
 
 

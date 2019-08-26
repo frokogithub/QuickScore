@@ -23,6 +23,13 @@
     <color name="light_theme_settings_header_text">#03A9F4</color>
     <color name="light_theme_settings_row">#FFFFFF</color>
     <color name="light_theme_settings_divider">#E9E9E9</color>
+    <color name="light_theme_action_bar">#CADCEC</color>
+    <color name="light_theme_action_bar_text">#FFFFFF</color>
+    <color name="light_theme_cell_yellow">#FDF7CD</color>
+    <color name="light_theme_cell_red">#FFE0E0</color>
+    <color name="light_theme_cell_blue">#D1E8FF</color>
+    <color name="light_theme_cell_black">#D6D6D6</color>
+    <color name="light_theme_cell_white">#FFFFFF</color>
 
 
     <color name="dark_theme_background">#000000</color>
@@ -39,10 +46,17 @@
     <color name="dark_popup_menu_background">#030303</color>
     <color name="dark_status_bar">#555555</color>
     <color name="dark_status_bar_text">#F3F3F3</color>
-    <color name="dark_theme_settings_header">#4E4E4E</color>
-    <color name="dark_theme_settings_header_text">#BDE9FF</color>
-    <color name="dark_theme_settings_row">#272727</color>
+    <color name="dark_theme_settings_header">#353535</color>
+    <color name="dark_theme_settings_header_text">#036786</color>
+    <color name="dark_theme_settings_row">#000000</color>
     <color name="dark_theme_settings_divider">#686868</color>
+    <color name="dark_theme_action_bar">#113E50</color>
+    <color name="dark_theme_action_bar_text">#FFFFFF</color>
+    <color name="dark_theme_cell_yellow">#DD9300</color>
+    <color name="dark_theme_cell_red">#8F1900</color>
+    <color name="dark_theme_cell_blue">#014574</color>
+    <color name="dark_theme_cell_black">#000000</color>
+    <color name="dark_theme_cell_white">#838383</color>
 
 
 

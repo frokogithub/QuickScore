@@ -12,13 +12,13 @@ public class StartActivity extends BaseActivity {
     static boolean THEME_CHANGED_FLAG = false;
     @Override
     protected void onResume() {
-
+        super.onResume();
         if(THEME_CHANGED_FLAG){
             THEME_CHANGED_FLAG = false;
             recreate();
         }
-        super.onResume();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

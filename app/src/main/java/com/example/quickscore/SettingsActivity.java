@@ -3,13 +3,13 @@ package com.example.quickscore;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -18,17 +18,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends BaseActivity {
 
-    static boolean THEME_CHANGED_FLAG = false;
-    @Override
-    protected void onResume() {
-
-        if(THEME_CHANGED_FLAG){
-            THEME_CHANGED_FLAG = false;
-            recreate();
-        }
-        super.onResume();
-    }
-
+    //static boolean THEME_CHANGED_FLAG = false;
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -54,19 +44,14 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
-
-
         @Override
         public void onCreatePreferences(@Nullable Bundle savedInstanceState, String rootKey) {
-
-
             setPreferencesFromResource(R.xml.preferences, rootKey);
             EditTextPreference etPref = findPreference("prepare_time");
             etPref.setOnBindEditTextListener(new androidx.preference.EditTextPreference.OnBindEditTextListener() {
                 @Override
                 public void onBindEditText(@NonNull EditText editText) {
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-
                 }
             });
 
@@ -74,19 +59,27 @@ public class SettingsActivity extends BaseActivity {
             themeListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    recreateActivities();
+                    StartActivity.THEME_CHANGED_FLAG = true;
+                    SingleActivity.THEME_CHANGED_FLAG = true;
+                    MatchActivity.THEME_CHANGED_FLAG = true;
+                    recreateActivity();
+                    return true;
+                }
+            });
+
+            CheckBoxPreference checkBoxPref = findPreference("coloredCells");
+            checkBoxPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    SingleActivity.CELLS_COLORING_CHANGED_FLAG = true;
                     return true;
                 }
             });
         }
 
-        private void recreateActivities() {
 
-            StartActivity.THEME_CHANGED_FLAG = true;
-            SingleActivity.THEME_CHANGED_FLAG = true;
-            MatchActivity.THEME_CHANGED_FLAG = true;
-            SettingsActivity.THEME_CHANGED_FLAG = true;
 
+        private void recreateActivity() {
             Activity activity = getActivity();
             Intent intent = activity.getIntent();
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

@@ -33,14 +33,22 @@ public class SingleActivity extends BaseActivity {
     private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean THEME_CHANGED_FLAG = false;
+    static boolean CELLS_COLORING_CHANGED_FLAG;
+
 
     @Override
     protected void onResume() {
+        super.onResume();
         if(THEME_CHANGED_FLAG){
             THEME_CHANGED_FLAG = false;
             recreate();
         }
-        super.onResume();
+        if(CELLS_COLORING_CHANGED_FLAG){
+            CELLS_COLORING_CHANGED_FLAG = false;
+            for (int i=0;i<NUMBER_OF_ENDS;i++) {
+                end[i].updateCells();
+            }
+        }
     }
 
 

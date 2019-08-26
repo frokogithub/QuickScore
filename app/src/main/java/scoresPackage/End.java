@@ -2,12 +2,15 @@ package scoresPackage;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Vibrator;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quickscore.BaseActivity;
 import com.example.quickscore.R;
 
 import java.util.Arrays;
@@ -33,8 +36,9 @@ public class End {
     private OnEraseListener eraseListener;
     private OnScoreBoardClickListener scoreClicklistener;
     private int sum=0;
-    private boolean isEditable = true;
+    //private boolean isEditable = true;
     private int emptyCells;
+    //private static boolean COLORED_CELLS_FLAG;
 
 
 
@@ -71,7 +75,7 @@ public class End {
             cellArray[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                   if(!((TextView)view).getText().toString().equals("") && isEditable) eraseCell(view);
+                   if(!((TextView)view).getText().toString().equals("")) eraseCell(view);
                    return false;
                 }
             });
@@ -81,6 +85,7 @@ public class End {
                     if(scoreClicklistener!=null) scoreClicklistener.onScoreBoardClick();
                 }
             });
+            //colorizeCells(i, false);
 
         }
 
@@ -117,8 +122,9 @@ public class End {
         prepareArray(scoreArray);
         for(int i=0; i<emptyCells; i++){
             cellArray[arrowsInEnd-emptyCells].setText(null);
+            colorizeCells(arrowsInEnd-emptyCells, false);
         }
-        updateCells(false);
+        updateCells();
 
         sum = 0;
         sumTextV.setText(null);
@@ -130,16 +136,12 @@ public class End {
     public void addScore(int score){
             scoreArray[arrowsInEnd-emptyCells] = score;
             emptyCells--;
-            //if (cellIndex > 0) prepareArray(scoreArray);
             if (emptyCells < arrowsInEnd) prepareArray(scoreArray);
-            updateCells(true);
-
+            updateCells();
     }
 
 
-    private void updateCells(boolean scoreEntered){
-
-
+    public void updateCells(){
         for(int i = 0; i<arrowsInEnd-emptyCells; i++){
                 if(scoreArray[i]==11){
                     cellArray[i].setText("X");
@@ -148,12 +150,29 @@ public class End {
                 }else{
                    cellArray[i].setText(String.valueOf(scoreArray[i]));
                 }
+                if(BaseActivity.COLORED_CELLS_FLAG) colorizeCells(i, true);
         }
 
         if (isFull()){
                 showSum();
                 if(indexListener != null) indexListener.onChange();
         }
+    }
+
+    private void colorizeCells(int index, boolean hasColor){
+        TypedValue tV = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+
+        if(hasColor){
+            if(scoreArray[index]==11 || scoreArray[index]==10 ||  scoreArray[index]==9) theme.resolveAttribute(R.attr.cell_yellow_color, tV, true);
+            if(scoreArray[index]==8 || scoreArray[index]==7)                            theme.resolveAttribute(R.attr.cell_red_color, tV, true);
+            if(scoreArray[index]==6 || scoreArray[index]==5)                            theme.resolveAttribute(R.attr.cell_blue_color, tV, true);
+            if(scoreArray[index]==4 || scoreArray[index]==3)                            theme.resolveAttribute(R.attr.cell_black_color, tV, true);
+            if(scoreArray[index]==2 || scoreArray[index]==1 || scoreArray[index]==0)    theme.resolveAttribute(R.attr.cell_white_color, tV, true);
+        }else{
+            theme.resolveAttribute(R.attr.background_color, tV, true);
+        }
+        cellArray[index].setBackgroundColor(tV.data);
     }
 
     private void prepareArray(int[] array){
@@ -205,9 +224,6 @@ public class End {
         markTopLine.setBackgroundResource(color);
     }
 
-    public void setEditable(boolean state){
-        isEditable = state;
-    }
 
     public void clear(){
         for(int i=0;i<arrowsInEnd;i++){
@@ -216,6 +232,7 @@ public class End {
             emptyCells = arrowsInEnd;
             sum = 0;
             sumTextV.setText(null);
+            colorizeCells(i, false);
         }
     }
 
