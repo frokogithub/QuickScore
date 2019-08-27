@@ -36,9 +36,7 @@ public class End {
     private OnEraseListener eraseListener;
     private OnScoreBoardClickListener scoreClicklistener;
     private int sum=0;
-    //private boolean isEditable = true;
     private int emptyCells;
-    //private static boolean COLORED_CELLS_FLAG;
 
 
 
@@ -85,8 +83,8 @@ public class End {
                     if(scoreClicklistener!=null) scoreClicklistener.onScoreBoardClick();
                 }
             });
-            //colorizeCells(i, false);
 
+            scoreArray[i]=-1;
         }
 
         sumTextV = view.findViewById(R.id.tv_sum);
@@ -116,7 +114,7 @@ public class End {
 
         String s = cell.getTag().toString();
         int erasedCellIndex = Integer.parseInt(s);
-        scoreArray[erasedCellIndex] = 0;
+        scoreArray[erasedCellIndex] = -1;
         emptyCells++;
 
         prepareArray(scoreArray);
@@ -140,10 +138,22 @@ public class End {
             updateCells();
     }
 
+    public void fillEnd(int[] endScores, int _emptyCells){
+        scoreArray = endScores;
+//        for (int i=0;i<arrowsInEnd;i++) {
+//            if(scoreArray[i] != -1) emptyCells--;
+//        }
+        emptyCells = _emptyCells;
+        prepareArray(scoreArray);
+        updateCells();
+    }
+
 
     public void updateCells(){
         for(int i = 0; i<arrowsInEnd-emptyCells; i++){
-                if(scoreArray[i]==11){
+                if(scoreArray[i]==-1){
+                    cellArray[i].setText(null);
+                }else if(scoreArray[i]==11){
                     cellArray[i].setText("X");
                 }else if(scoreArray[i]==0){
                     cellArray[i].setText("M");
@@ -169,6 +179,7 @@ public class End {
             if(scoreArray[index]==6 || scoreArray[index]==5)                            theme.resolveAttribute(R.attr.cell_blue_color, tV, true);
             if(scoreArray[index]==4 || scoreArray[index]==3)                            theme.resolveAttribute(R.attr.cell_black_color, tV, true);
             if(scoreArray[index]==2 || scoreArray[index]==1 || scoreArray[index]==0)    theme.resolveAttribute(R.attr.cell_white_color, tV, true);
+            if(scoreArray[index]==-1)                                                   theme.resolveAttribute(R.attr.background_color, tV, true);
         }else{
             theme.resolveAttribute(R.attr.background_color, tV, true);
         }
@@ -198,10 +209,12 @@ public class End {
     private void showSum(){
         sum=0;
         for(int i=0; i<arrowsInEnd;i++){
-            if(scoreArray[i]==11){
-                sum += 10;
-            }else{
-                sum += scoreArray[i];
+            if(scoreArray[i]>-1){
+                if(scoreArray[i]==11){
+                    sum += 10;
+                }else{
+                    sum += scoreArray[i];
+                }
             }
         }
         sumTextV.setText(String.valueOf(sum));
@@ -213,6 +226,10 @@ public class End {
 
     public int getEmptyCellsAmount(){
         return emptyCells;
+    }
+
+    public int[] getScores(){
+        return scoreArray;
     }
 
 
@@ -227,7 +244,7 @@ public class End {
 
     public void clear(){
         for(int i=0;i<arrowsInEnd;i++){
-            scoreArray[i]=0;
+            scoreArray[i]=-1;
             cellArray[i].setText(null);
             emptyCells = arrowsInEnd;
             sum = 0;

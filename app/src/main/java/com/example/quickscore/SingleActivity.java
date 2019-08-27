@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
@@ -35,6 +38,22 @@ public class SingleActivity extends BaseActivity {
     static boolean THEME_CHANGED_FLAG = false;
     static boolean CELLS_COLORING_CHANGED_FLAG;
 
+    private int[] tempScoreArray;
+    private Bundle bundleScores;
+
+
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_single);
+
+        setInitialState();
+        initEnds();
+//        activateFirstIncompleteEnd();
+        initButtons();
+    }
 
     @Override
     protected void onResume() {
@@ -49,22 +68,34 @@ public class SingleActivity extends BaseActivity {
                 end[i].updateCells();
             }
         }
+
+        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+            String arrName = "scores"+i;
+            String emptyCellsName = "emptyCells" +i;
+            tempScoreArray = getIntent().getIntArrayExtra(arrName);
+            int emptyCells = getIntent().getIntExtra(emptyCellsName, 6);
+            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
+        }
+        activateFirstIncompleteEnd();
     }
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single);
+    protected void onPause() {
+        super.onPause();
+        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+            tempScoreArray = end[i].getScores();
+            String arrName = "scores"+i;
+            getIntent().putExtra(arrName,tempScoreArray);
 
-
-        setInitialState();
-        initEnds();
-        activateFirstIncompleteEnd();
-        initButtons();
-
+            int emptyCells = end[i].getEmptyCellsAmount();
+            String emptyCellsName = "emptyCells" +i;
+            getIntent().putExtra(emptyCellsName,emptyCells);
+        }
 
     }
+
+
 
     private void setInitialState(){
         insertDummy=findViewById(R.id.cl_insert_dummy);
@@ -310,36 +341,9 @@ public class SingleActivity extends BaseActivity {
     } // initButtons
 
 
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//        if(event.getAction()==MotionEvent.ACTION_DOWN){
-//            switch(v.getId()){
-//                case R.id.bX:
-//
-//                    enterScore(11);
-//                    break;
-//                case R.id.b10:
-//                    enterScore(10);
-//                    break;
-//                case R.id.b9:
-//                    enterScore(9);
-//                    break;
-//                case R.id.b8:
-//                    enterScore(8);
-//                    break;
-//            }
-//            v.setPressed(true);
-//        }else if(event.getAction()==MotionEvent.ACTION_UP){
-//            v.setPressed(false);
-//            v.performClick();
-//        }
-//
-//        return true;
-//    }
-
 
     private void enterScore (int score){
-        if(scoringStatus < 2 /*activeRow<NUMBER_OF_ENDS*/)end[activeRow].addScore(score);
+        if(scoringStatus < 2)end[activeRow].addScore(score);
     }
 
     private void markEnd(){
@@ -381,6 +385,12 @@ public class SingleActivity extends BaseActivity {
         scoringStatus = 0;
     }
 
+//    private void fillEnds(){
+//        //for (int i=0;i<NUMBER_OF_ENDS;i++) {
+//            end[0].fillEnd(tempScoreArray);
+//        //}
+//
+//    }
 
 
     private void printToast(String s){
