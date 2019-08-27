@@ -1,6 +1,5 @@
 package com.example.quickscore;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
@@ -37,6 +35,7 @@ public class SingleActivity extends BaseActivity {
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean THEME_CHANGED_FLAG = false;
     static boolean CELLS_COLORING_CHANGED_FLAG;
+    static boolean RECREATE_FLAG;
 
     private int[] tempScoreArray;
     private Bundle bundleScores;
@@ -58,16 +57,21 @@ public class SingleActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(THEME_CHANGED_FLAG){
-            THEME_CHANGED_FLAG = false;
+//        if(THEME_CHANGED_FLAG){
+//            THEME_CHANGED_FLAG = false;
+//            recreate();
+//        }
+
+        if(RECREATE_FLAG){
+            RECREATE_FLAG = false;
             recreate();
         }
-        if(CELLS_COLORING_CHANGED_FLAG){
-            CELLS_COLORING_CHANGED_FLAG = false;
-            for (int i=0;i<NUMBER_OF_ENDS;i++) {
-                end[i].updateCells();
-            }
-        }
+//        if(CELLS_COLORING_CHANGED_FLAG){
+//            CELLS_COLORING_CHANGED_FLAG = false;
+//            for (int i=0;i<NUMBER_OF_ENDS;i++) {
+//                end[i].updateCells();
+//            }
+//        }
 
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             String arrName = "scores"+i;
