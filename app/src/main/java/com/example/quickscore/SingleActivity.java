@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -24,7 +25,7 @@ public class SingleActivity extends BaseActivity {
     private final static int OUTDOOR_ARROWS_IN_END = 6;
     private final static int INDOOR_NUMBER_OF_ENDS = 10;
     private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
-    private int EventType = 2; //1 indoor, 2 outdoor,
+    private int eventType = 2; //1 indoor, 2 outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int activeRow = 0;
@@ -48,38 +49,35 @@ public class SingleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
-        setInitialState();
-        initEnds();
-//        activateFirstIncompleteEnd();
-        initButtons();
+//        setInitialState();
+//        initEnds();
+//        initButtons();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        if(THEME_CHANGED_FLAG){
-//            THEME_CHANGED_FLAG = false;
-//            recreate();
-//        }
 
         if(RECREATE_FLAG){
             RECREATE_FLAG = false;
             recreate();
         }
-//        if(CELLS_COLORING_CHANGED_FLAG){
-//            CELLS_COLORING_CHANGED_FLAG = false;
-//            for (int i=0;i<NUMBER_OF_ENDS;i++) {
-//                end[i].updateCells();
-//            }
-//        }
+
+        Intent intent = getIntent();
+        if(intent.hasExtra("eventType")) eventType = intent.getIntExtra("eventType", 0);
+
+        setInitialState();
+        initEnds();
 
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             String arrName = "scores"+i;
             String emptyCellsName = "emptyCells" +i;
-            tempScoreArray = getIntent().getIntArrayExtra(arrName);
-            int emptyCells = getIntent().getIntExtra(emptyCellsName, 6);
+            tempScoreArray = intent.getIntArrayExtra(arrName);
+            int emptyCells = intent.getIntExtra(emptyCellsName, 6);
             if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
         }
+
+        initButtons();
         activateFirstIncompleteEnd();
     }
 
@@ -87,16 +85,18 @@ public class SingleActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        Intent intent = getIntent();
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             tempScoreArray = end[i].getScores();
             String arrName = "scores"+i;
-            getIntent().putExtra(arrName,tempScoreArray);
+            intent.putExtra(arrName,tempScoreArray);
 
             int emptyCells = end[i].getEmptyCellsAmount();
             String emptyCellsName = "emptyCells" +i;
-            getIntent().putExtra(emptyCellsName,emptyCells);
+            intent.putExtra(emptyCellsName,emptyCells);
         }
-
+        intent.putExtra("eventType", eventType);
     }
 
 
@@ -104,7 +104,7 @@ public class SingleActivity extends BaseActivity {
     private void setInitialState(){
         insertDummy=findViewById(R.id.cl_insert_dummy);
         insertDummy.removeAllViews();
-        switch (EventType){
+        switch (eventType){
             case 1:
                 ARROWS_IN_END = INDOOR_ARROWS_IN_END;
                 NUMBER_OF_ENDS = INDOOR_NUMBER_OF_ENDS;
@@ -131,7 +131,7 @@ public class SingleActivity extends BaseActivity {
         end = new End[NUMBER_OF_ENDS+1];
 
         int endHorizontalLineId=0, endViewId=0;
-        switch (EventType){
+        switch (eventType){
             case 1:
                 endHorizontalLineId = R.layout.end_horizontal_line;
                 endViewId = R.layout.end_3arrows;
@@ -326,12 +326,12 @@ public class SingleActivity extends BaseActivity {
         bInOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (EventType){
+                switch (eventType){
                     case 1:
-                        EventType = 2;
+                        eventType = 2;
                         break;
                     case 2:
-                        EventType = 1;
+                        eventType = 1;
                         break;
                     default:
                         break;
