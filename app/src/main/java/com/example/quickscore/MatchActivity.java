@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -44,14 +45,8 @@ public class MatchActivity extends BaseActivity {
     private String archerBName = "Archer B";
     static boolean THEME_CHANGED_FLAG = false;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(THEME_CHANGED_FLAG){
-            THEME_CHANGED_FLAG = false;
-            recreate();
-        }
-    }
+    static boolean RECREATE_FLAG;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,8 +55,66 @@ public class MatchActivity extends BaseActivity {
 
         setInitialState();
         initEnds();
-        activateFirstIncompleteEnd(true, true);
+//        activateFirstIncompleteEnd(true, true);
         initButtons();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(RECREATE_FLAG){
+            RECREATE_FLAG = false;
+            recreate();
+        }
+
+//        if(THEME_CHANGED_FLAG){
+//            THEME_CHANGED_FLAG = false;
+//            recreate();
+//        }
+
+        Intent intent = getIntent();
+        int [] tempScoreArrayA, tempScoreArrayB;
+        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+            String arrNameA = "scoresA"+i;
+            String arrNameB = "scoresB"+i;
+            String emptyCellsNameA = "emptyCellsA" +i;
+            String emptyCellsNameB = "emptyCellsB" +i;
+            tempScoreArrayA = intent.getIntArrayExtra(arrNameA);
+            tempScoreArrayB = intent.getIntArrayExtra(arrNameB);
+            int emptyCellsA = intent.getIntExtra(emptyCellsNameA, 6);
+            int emptyCellsB = intent.getIntExtra(emptyCellsNameB, 6);
+            if(endA[i]!=null && tempScoreArrayA!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
+            if(endB[i]!=null && tempScoreArrayB!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
+        }
+
+//        initButtons();
+        activateFirstIncompleteEnd(true, true);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Intent intent = getIntent();
+        int [] tempScoreArrayA, tempScoreArrayB;
+        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+            tempScoreArrayA = endA[i].getScores();
+            tempScoreArrayB = endB[i].getScores();
+            String arrNameA = "scoresA"+i;
+            String arrNameB = "scoresB"+i;
+            intent.putExtra(arrNameA,tempScoreArrayA);
+            intent.putExtra(arrNameB,tempScoreArrayB);
+
+            int emptyCellsA = endA[i].getEmptyCellsAmount();
+            int emptyCellsB = endB[i].getEmptyCellsAmount();
+            String emptyCellsNameA = "emptyCellsA" +i;
+            String emptyCellsNameB = "emptyCellsB" +i;
+            intent.putExtra(emptyCellsNameA,emptyCellsA);
+            intent.putExtra(emptyCellsNameB,emptyCellsB);
+        }
     }
 
     private void setInitialState(){

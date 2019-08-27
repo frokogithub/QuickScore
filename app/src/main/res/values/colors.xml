@@ -36,8 +36,8 @@
     <color name="dark_theme_text_low_contrast">#8D8D8D</color>
     <color name="dark_theme_text_middle_contrast">#CFCFCF</color>
     <color name="dark_theme_text_high_contrast">#FFFFFF</color>
-    <color name="dark_theme_inner_mark">#961111</color>
-    <color name="dark_theme_outer_mark">#6B200E</color>
+    <color name="dark_theme_inner_mark">#DA0F0F</color>
+    <color name="dark_theme_outer_mark">#A32709</color>
     <color name="dark_theme_lines">#FFFFFF</color>
     <color name="dark_theme_cell_outline">#919191</color>
     <color name="dark_theme_sum_cell">#222222</color>

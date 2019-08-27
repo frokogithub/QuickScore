@@ -62,7 +62,7 @@ public class SettingsActivity extends BaseActivity {
                     StartActivity.THEME_CHANGED_FLAG = true;
 //                    SingleActivity.THEME_CHANGED_FLAG = true;
                     SingleActivity.RECREATE_FLAG = true;
-                    MatchActivity.THEME_CHANGED_FLAG = true;
+                    MatchActivity.RECREATE_FLAG = true;
                     recreateActivity();
                     return true;
                 }
@@ -74,6 +74,7 @@ public class SettingsActivity extends BaseActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
 //                    SingleActivity.CELLS_COLORING_CHANGED_FLAG = true;
                     SingleActivity.RECREATE_FLAG = true;
+                    MatchActivity.RECREATE_FLAG = true;
                     return true;
                 }
             });
