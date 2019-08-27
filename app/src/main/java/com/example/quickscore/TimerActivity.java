@@ -63,7 +63,7 @@ public class TimerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
+        if(timer!=null) timer.cancel();
     }
 
     private void initTimer(){
