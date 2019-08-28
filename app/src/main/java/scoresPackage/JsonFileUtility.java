@@ -26,7 +26,7 @@ public class JsonFileUtility {
     }
 
     public void saveJson(JSONObject jsonObject){
-        String FILENAME = "hello_file";
+        String FILENAME = "JSONScoresArray";
 
         String jsonString;
 
@@ -66,7 +66,7 @@ public class JsonFileUtility {
 
         try {
 
-            String FILENAME = "hello_file";
+            String FILENAME = "JSONScoresArray";
 
             byte[] bytes = new byte[1024];
 
@@ -96,6 +96,7 @@ public class JsonFileUtility {
     }
 
     public void showFiles(){
+
         String path = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
         Log.d("Files", "Path: " + path);
         File directory = new File(path);

@@ -13,10 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
 import scoresPackage.End;
+import scoresPackage.JsonFileUtility;
 
 
 public class SingleActivity extends BaseActivity {
@@ -190,6 +196,7 @@ public class SingleActivity extends BaseActivity {
             scoringStatus = 2;
         }
 
+        makeJSON();//##################################################################################################################################3
     }// doIfEndIsFull()
 
     private void doIfCellErased(int endIndex){
@@ -389,12 +396,53 @@ public class SingleActivity extends BaseActivity {
         scoringStatus = 0;
     }
 
-//    private void fillEnds(){
-//        //for (int i=0;i<NUMBER_OF_ENDS;i++) {
-//            end[0].fillEnd(tempScoreArray);
-//        //}
-//
-//    }
+
+    void makeJSON (){
+
+        JSONObject jsonScores = new JSONObject();
+        try {
+            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
+                String jEndName = "end"+endIndex;
+                JSONArray jsonArray = new JSONArray();
+                int[] tempArray = end[endIndex].getScores();
+                for (int arrowIndex=0;arrowIndex<ARROWS_IN_END;arrowIndex++) {
+                    jsonArray.put(tempArray[arrowIndex]);
+                }
+                jsonScores.put(jEndName, jsonArray);
+            }
+        }catch (org.json.JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
+        jfile.saveJson(jsonScores);
+
+
+        JSONObject jsonLoadedScores = jfile.loadJson();
+        try {
+            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
+                String jEndName = "end"+endIndex;
+                JSONArray jsonArray = jsonLoadedScores.getJSONArray(jEndName);
+                int[] tempArray = new int[ARROWS_IN_END];
+                for (int arrowIndex = 0; arrowIndex <ARROWS_IN_END; arrowIndex++) {
+
+                    tempArray[arrowIndex] = jsonArray.getInt(arrowIndex);
+                    Log.i("End",String.valueOf(jsonArray.getInt(arrowIndex)));
+                }
+            }
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+    }
+
+
 
 
     private void printToast(String s){
@@ -404,6 +452,7 @@ public class SingleActivity extends BaseActivity {
     private void printLog(String s){
         Log.i("Kroko",s);
     }
+
 }
 
 

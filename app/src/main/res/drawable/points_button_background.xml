@@ -3,7 +3,8 @@
     android:shape="rectangle">
 
     <solid android:color="?attr/background_color"/>
+
     <stroke android:width="@dimen/buttons_outline_dim" android:color="?attr/text_low_contrast_color"/>
     <corners
-        android:radius="2dp" />
+        android:radius="3dp" />
 </shape>

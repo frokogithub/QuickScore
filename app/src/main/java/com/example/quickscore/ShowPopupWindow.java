@@ -217,8 +217,10 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            printToast("go Load");
                                             popupWindow.dismiss();
+                                            Intent in = new Intent(context,LoadActivity.class);
+                                            in.putExtra("actName", activityName);
+                                            activity.startActivity(in);
                                         }
                                     });
 
