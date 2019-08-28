@@ -110,7 +110,8 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             command = "NEW";
                                             popupWindow.dismiss();
-                                            showSaveDialog();
+                                            if(menuListener!=null) menuListener.onMenuItemClick(command);
+//                                            showSaveDialog();
                                         }
                                     });
                                     bSecondRound.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +162,7 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             command = "NEW";
                                             popupWindow.dismiss();
-                                            showSaveDialog();
+//                                            showSaveDialog();
                                         }
                                     });
 
@@ -257,37 +258,37 @@ public class ShowPopupWindow {
     }
 
 
-    private void showSaveDialog() {
-        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-        ViewGroup viewGroup = activity.findViewById(android.R.id.content);
-
-        View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setView(dialogView);
-        final AlertDialog saveDialog = builder.create();
-        saveDialog.show();
-
-        Button bSave = dialogView.findViewById(R.id.bSave);
-        Button bDsave = dialogView.findViewById(R.id.bdont_save);
-
-        bSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveDialog.dismiss();
-                printToast("Let's save");
-                if(menuListener!=null) menuListener.onMenuItemClick(command);
-            }
-        });
-
-        bDsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveDialog.dismiss();
-                printToast("Fuck this fuckin' file");
-                if(menuListener!=null) menuListener.onMenuItemClick(command);
-            }
-        });
-    }
+//    private void showSaveDialog() {
+//        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
+//        ViewGroup viewGroup = activity.findViewById(android.R.id.content);
+//
+//        View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//        builder.setView(dialogView);
+//        final AlertDialog saveDialog = builder.create();
+//        saveDialog.show();
+//
+//        Button bSave = dialogView.findViewById(R.id.bSave);
+//        Button bDsave = dialogView.findViewById(R.id.bdont_save);
+//
+//        bSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                saveDialog.dismiss();
+//                printToast("Let's save");
+//                if(menuListener!=null) menuListener.onMenuItemClick(command);
+//            }
+//        });
+//
+//        bDsave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                saveDialog.dismiss();
+//                printToast("Fuck this fuckin' file");
+//                if(menuListener!=null) menuListener.onMenuItemClick(command);
+//            }
+//        });
+//    }
 
     private void printToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();

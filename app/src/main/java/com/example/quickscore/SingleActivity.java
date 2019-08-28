@@ -15,12 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
+import interfacesPackage.OnSaveAlertItemClik;
 import scoresPackage.End;
 import scoresPackage.JsonFileUtility;
 
@@ -103,6 +106,11 @@ public class SingleActivity extends BaseActivity {
             intent.putExtra(emptyCellsName,emptyCells);
         }
         intent.putExtra("eventType", eventType);
+    }
+
+    @Override
+    public void onBackPressed() {
+        showSaveAlert("BACK");
     }
 
 
@@ -196,7 +204,6 @@ public class SingleActivity extends BaseActivity {
             scoringStatus = 2;
         }
 
-        makeJSON();//##################################################################################################################################3
     }// doIfEndIsFull()
 
     private void doIfCellErased(int endIndex){
@@ -322,7 +329,8 @@ public class SingleActivity extends BaseActivity {
                     @Override
                     public void onMenuItemClick(String command) {
                         if(command.equals("NEW")){
-                            clearEnds();
+                            showSaveAlert("NEW");
+                            //clearEnds();
                         }
                     }
                 });
@@ -352,6 +360,42 @@ public class SingleActivity extends BaseActivity {
     } // initButtons
 
 
+    private void showSaveAlert(final String command){
+        final String filename = "single"+dateString();
+        final SaveAlert saveAlert = new SaveAlert(this, filename);
+        saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
+            @Override
+            public void onItemClick(boolean choice) {
+                if(choice){
+                    makeJsonFile(saveAlert.getFilename());
+                    postSaveAlert(command);
+                }else{
+                    printToast("nie sejwuj");
+                    postSaveAlert(command);
+                }
+            }
+        });
+    }//showSaveAlert()
+
+    private String dateString(){
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
+        Date dt = new Date();
+        return sd.format(dt);
+    }//dateString()
+
+    private void postSaveAlert(String command){
+        switch (command){
+            case "NEW":
+                clearEnds();
+                break;
+            case "BACK":
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
 
     private void enterScore (int score){
         if(scoringStatus < 2)end[activeRow].addScore(score);
@@ -397,7 +441,7 @@ public class SingleActivity extends BaseActivity {
     }
 
 
-    void makeJSON (){
+    void makeJsonFile(String filename){
 
         JSONObject jsonScores = new JSONObject();
         try {
@@ -415,31 +459,25 @@ public class SingleActivity extends BaseActivity {
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
-        jfile.saveJson(jsonScores);
-
-
-        JSONObject jsonLoadedScores = jfile.loadJson();
-        try {
-            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
-                String jEndName = "end"+endIndex;
-                JSONArray jsonArray = jsonLoadedScores.getJSONArray(jEndName);
-                int[] tempArray = new int[ARROWS_IN_END];
-                for (int arrowIndex = 0; arrowIndex <ARROWS_IN_END; arrowIndex++) {
-
-                    tempArray[arrowIndex] = jsonArray.getInt(arrowIndex);
-                    Log.i("End",String.valueOf(jsonArray.getInt(arrowIndex)));
-                }
-            }
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-
-
-
-
-
+        jfile.saveJson(jsonScores, filename);
+//
+//
+//        JSONObject jsonLoadedScores = jfile.loadJson();
+//        try {
+//            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
+//                String jEndName = "end"+endIndex;
+//                JSONArray jsonArray = jsonLoadedScores.getJSONArray(jEndName);
+//                int[] tempArray = new int[ARROWS_IN_END];
+//                for (int arrowIndex = 0; arrowIndex <ARROWS_IN_END; arrowIndex++) {
+//
+//                    tempArray[arrowIndex] = jsonArray.getInt(arrowIndex);
+//                    Log.i("End",String.valueOf(jsonArray.getInt(arrowIndex)));
+//                }
+//            }
+//
+//        }catch (JSONException e){
+//            e.printStackTrace();
+//        }
     }
 
 

@@ -25,8 +25,8 @@ public class JsonFileUtility {
         this.context = context;
     }
 
-    public void saveJson(JSONObject jsonObject){
-        String FILENAME = "JSONScoresArray";
+    public void saveJson(JSONObject jsonObject, String filename){
+        String FILENAME = filename;
 
         String jsonString;
 
@@ -59,14 +59,14 @@ public class JsonFileUtility {
     }
 
 
-    public JSONObject loadJson(){
+    public JSONObject loadJson(String fileName){
 
         JSONObject jo = null;
         String receivedString = "";
 
         try {
 
-            String FILENAME = "JSONScoresArray";
+            String FILENAME = fileName;
 
             byte[] bytes = new byte[1024];
 
@@ -108,19 +108,33 @@ public class JsonFileUtility {
         }
     }
 
+    public String[] getFilesNames(){
 
-    private void dateToString(){
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        String dateString = sd.format(now);
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        String[] filesNames;
+        if(files!=null){
+            filesNames = new String[files.length];
+            for (int i = 0; i < files.length; i++)
+            {
+                filesNames[i] = files[i].getName();
+            }
+        }else{
+//            filesNames = {"No saved files"};
+            filesNames = new String[1];
+            filesNames[0] = "No saved files";
+        }
+
+        return filesNames;
     }
-    void dateToString_2(){
+
+    private String dateString(){
         SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
         //Calendar calendar = Calendar.getInstance();
         //Date now = calendar.getTime();
 
         Date dt = new Date();
-        String dateStr = sd.format(dt);
+        return sd.format(dt);
     }
 }

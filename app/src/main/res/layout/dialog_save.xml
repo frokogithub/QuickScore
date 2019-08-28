@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/et_file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toStartOf="@+id/bdont_save"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/et_file_name" />
 
     <Button
         android:id="@+id/bdont_save"

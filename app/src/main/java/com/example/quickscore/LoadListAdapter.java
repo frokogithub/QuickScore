@@ -5,14 +5,22 @@ import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
-class LoadListAdapter implements ListAdapter {
+import interfacesPackage.OnLoadItemClickListener;
+
+class LoadListAdapter extends BaseAdapter {
     ArrayList<LoadRowData> arrayList;
     Context context;
+
+    OnLoadItemClickListener onLoadItemClickListener;
+
     public LoadListAdapter(Context context, ArrayList<LoadRowData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
@@ -48,7 +56,7 @@ class LoadListAdapter implements ListAdapter {
         return false;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LoadRowData loadRowData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -56,6 +64,15 @@ class LoadListAdapter implements ListAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(onLoadItemClickListener!=null) onLoadItemClickListener.onLoadItemClick(position, false);
+                }
+            });
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(onLoadItemClickListener!=null) onLoadItemClickListener.onLoadItemClick(position, true);
+
+                    return false;
                 }
             });
             TextView tittle = convertView.findViewById(R.id.file_name);
@@ -76,5 +93,9 @@ class LoadListAdapter implements ListAdapter {
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    public void setOnLoadClickListener(OnLoadItemClickListener listener){
+        onLoadItemClickListener = listener;
     }
 }
