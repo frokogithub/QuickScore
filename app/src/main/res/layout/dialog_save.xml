@@ -8,14 +8,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="408dp"
-        android:layout_height="194dp"
+        android:layout_width="0dp"
+        android:layout_height="188dp"
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499">
 
     </LinearLayout>
 
@@ -24,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:text="SAVE BEFORE EXIT?"
+        android:text="Save before exit?"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -40,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="File name"
@@ -50,26 +52,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/bSave"
+        android:id="@+id/bdont_save"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="SAVE"
-        app:layout_constraintEnd_toStartOf="@+id/bdont_save"
+        android:layout_marginTop="8dp"
+        android:text="DON'T_SAVE"
+        app:layout_constraintEnd_toStartOf="@+id/bSave"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_file_name" />
 
     <Button
-        android:id="@+id/bdont_save"
+        android:id="@+id/bSave"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="DON'T SAVE"
-        app:layout_constraintBottom_toBottomOf="@+id/bSave"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="@+id/bdont_save"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/bSave" />
+        app:layout_constraintStart_toEndOf="@+id/bdont_save"
+        app:layout_constraintTop_toTopOf="@+id/bdont_save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

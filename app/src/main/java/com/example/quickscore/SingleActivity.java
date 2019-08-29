@@ -445,6 +445,7 @@ public class SingleActivity extends BaseActivity {
 
         JSONObject jsonScores = new JSONObject();
         try {
+            jsonScores.put("ActivityType", "Single");
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
                 String jEndName = "end"+endIndex;
                 JSONArray jsonArray = new JSONArray();

@@ -4,13 +4,16 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class LoadActivity extends BaseActivity {
     LoadListAdapter loadListAdapter;
     ArrayList<LoadRowData> arrayList;
     int editedPosition;
+    static boolean LIST_LONG_CLICKED_FLAG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,11 @@ public class LoadActivity extends BaseActivity {
 
         arrayList = new ArrayList<>();
 
-        for (int i=0;i<filesNames.length;i++) {
-            arrayList.add(new LoadRowData(filesNames[i], icon));
+//        for (int i=0;i<filesNames.length;i++) {
+//            arrayList.add(new LoadRowData(filesNames[i], icon));
+//        }
+        for (String name:filesNames) {
+            arrayList.add(new LoadRowData(name, icon));
         }
         loadListAdapter = new LoadListAdapter(this, arrayList);
         list = findViewById(R.id.list);
@@ -59,18 +66,19 @@ public class LoadActivity extends BaseActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
+                if(LIST_LONG_CLICKED_FLAG){
+                    LIST_LONG_CLICKED_FLAG = false;
+                }else{
+                    loadFile(filesNames[position]);
+                }
             }
         });
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                LIST_LONG_CLICKED_FLAG = true;
                 editedPosition = position;
                 showDeleteAlert();
-//                arrayList.remove(position);
-//                list.requestLayout();
-//                loadListAdapter.notifyDataSetChanged();
-//                Toast.makeText(getApplicationContext(),String.valueOf(position), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -78,12 +86,24 @@ public class LoadActivity extends BaseActivity {
 
     private void loadFile(String fileName){
         JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
-        Toast.makeText(getApplicationContext(),String.valueOf(jsonObject), Toast.LENGTH_SHORT).show();
+        String activityType = "";
+        try {
+            activityType = jsonObject.getString("ActivityType");
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        if(activityType.equals("Single")){
+            Intent intent = new Intent(getApplicationContext(),SingleActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+//        Toast.makeText(getApplicationContext(),String.valueOf(jsonObject), Toast.LENGTH_SHORT).show();
         //ToDo: do SingleActivity lub MatchActivity
     }
 
     private void delete(String fileName){
-//        String fileName = filesNames[editedPosition];
         JsonFileUtility jsonFileUtility = new JsonFileUtility(getApplicationContext());
         jsonFileUtility.deleteJfile(fileName);
     }
@@ -106,7 +126,6 @@ public class LoadActivity extends BaseActivity {
                             loadListAdapter = new LoadListAdapter(context, arrayList);
                             list.setAdapter(loadListAdapter);
                         }
-
                         delete(fileName);
                     }
                 });
@@ -120,7 +139,7 @@ public class LoadActivity extends BaseActivity {
     }
     private void showNoFilesAlert(){
         AlertDialog alertDialog = new AlertDialog.Builder(LoadActivity.this).create();
-        alertDialog.setTitle("No saved files");
+        alertDialog.setTitle("No files");
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -128,6 +147,12 @@ public class LoadActivity extends BaseActivity {
                         finish();
                     }
                 });
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                finish();
+            }
+        });
         alertDialog.show();
     }
 }
