@@ -34,16 +34,20 @@ public class LoadActivity extends BaseActivity {
         setContentView(R.layout.activity_load);
 
         context = this;
-
-//        list = findViewById(R.id.list);
         icon = getDrawable(R.drawable.arch_icon);
 
-        makeLoadList();
+
+        JsonFileUtility jFileUtil = new JsonFileUtility(context);
+        filesNames = jFileUtil.getFilesNames();
+        if(filesNames[0].equals("No files")){
+            showNoFilesAlert();
+        }else{
+            makeLoadList();
+        }
     }
 
     private void makeLoadList(){
-        JsonFileUtility jFileUtil = new JsonFileUtility(context);
-        filesNames = jFileUtil.getFilesNames();
+
         arrayList = new ArrayList<>();
 
         for (int i=0;i<filesNames.length;i++) {
@@ -94,8 +98,14 @@ public class LoadActivity extends BaseActivity {
                         dialog.dismiss();
                         String fileName = arrayList.get(editedPosition).fileName;
                         arrayList.remove(editedPosition);
-                        loadListAdapter = new LoadListAdapter(context, arrayList);
-                        list.setAdapter(loadListAdapter);
+                        if(arrayList.size()==0){
+                            list.requestLayout();
+                            loadListAdapter.notifyDataSetChanged();
+                            showNoFilesAlert();
+                        }else{
+                            loadListAdapter = new LoadListAdapter(context, arrayList);
+                            list.setAdapter(loadListAdapter);
+                        }
 
                         delete(fileName);
                     }
@@ -104,6 +114,18 @@ public class LoadActivity extends BaseActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+    private void showNoFilesAlert(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoadActivity.this).create();
+        alertDialog.setTitle("No saved files");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
                     }
                 });
         alertDialog.show();

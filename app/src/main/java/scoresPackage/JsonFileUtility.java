@@ -20,7 +20,7 @@ import static android.content.ContentValues.TAG;
 public class JsonFileUtility {
 
     private  Context context;
-    private final String FOLDERNAME = "quickscore_savings";
+    private final String FOLDERNAME = "QUICKSCORE SAVINGS";
 
     public JsonFileUtility(Context context){
 
@@ -116,7 +116,7 @@ public class JsonFileUtility {
         File directory = new File(path);
         File[] files = directory.listFiles();
         String[] filesNames;
-        if(files!=null){
+        if(files.length>0){
             filesNames = new String[files.length];
             for (int i = 0; i < files.length; i++)
             {
@@ -125,7 +125,7 @@ public class JsonFileUtility {
         }else{
 //            filesNames = {"No saved files"};
             filesNames = new String[1];
-            filesNames[0] = "No saved files";
+            filesNames[0] = "No files";
         }
 
         return filesNames;
