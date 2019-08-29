@@ -1,12 +1,11 @@
 package com.example.quickscore;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,15 +13,14 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import interfacesPackage.OnLoadItemClickListener;
 import scoresPackage.JsonFileUtility;
 
 public class LoadActivity extends BaseActivity {
 
 
+    Context context;
     Drawable icon;
     ListView list;
     String[] filesNames;
@@ -35,6 +33,7 @@ public class LoadActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
+        context = this;
 
 //        list = findViewById(R.id.list);
         icon = getDrawable(R.drawable.arch_icon);
@@ -43,7 +42,7 @@ public class LoadActivity extends BaseActivity {
     }
 
     private void makeLoadList(){
-        JsonFileUtility jFileUtil = new JsonFileUtility(getApplicationContext());
+        JsonFileUtility jFileUtil = new JsonFileUtility(context);
         filesNames = jFileUtil.getFilesNames();
         arrayList = new ArrayList<>();
 
@@ -74,13 +73,13 @@ public class LoadActivity extends BaseActivity {
     }
 
     private void loadFile(String fileName){
-        JSONObject jsonObject = new JsonFileUtility(getApplicationContext()).loadJson(fileName);
+        JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
         Toast.makeText(getApplicationContext(),String.valueOf(jsonObject), Toast.LENGTH_SHORT).show();
         //ToDo: do SingleActivity lub MatchActivity
     }
 
-    private void delFile(){
-        String fileName = filesNames[editedPosition];
+    private void delete(String fileName){
+//        String fileName = filesNames[editedPosition];
         JsonFileUtility jsonFileUtility = new JsonFileUtility(getApplicationContext());
         jsonFileUtility.deleteJfile(fileName);
     }
@@ -93,10 +92,12 @@ public class LoadActivity extends BaseActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        String fileName = arrayList.get(editedPosition).fileName;
                         arrayList.remove(editedPosition);
-                        list.requestLayout();
-                        loadListAdapter.notifyDataSetChanged();
-                        delFile();
+                        loadListAdapter = new LoadListAdapter(context, arrayList);
+                        list.setAdapter(loadListAdapter);
+
+                        delete(fileName);
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",

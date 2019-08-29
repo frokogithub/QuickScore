@@ -22,10 +22,10 @@ class LoadListAdapter extends BaseAdapter {
     OnLoadItemClickListener onLoadItemClickListener;
 
 
-    private static class ViewHolder {
-        TextView fileName;
-        ImageView icon;
-    }
+//    private static class ViewHolder {
+//        TextView fileName;
+//        ImageView icon;
+//    }
 
 
     public LoadListAdapter(Context context, ArrayList<LoadRowData> arrayList) {
@@ -65,24 +65,24 @@ class LoadListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LoadRowData loadRowData = arrayList.get(position);
-//        LoadRowData loadRowData = arrayList.get(position);
-        ViewHolder viewHolder;
+
+//        ViewHolder viewHolder;
         if(convertView == null) {
-            viewHolder = new ViewHolder();
+//            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.load_list_row,  null, true);
 
-            viewHolder.fileName = convertView.findViewById(R.id.file_name);
-            viewHolder.icon = convertView.findViewById(R.id.icon);
-//            TextView tittle = convertView.findViewById(R.id.file_name);
-//            ImageView icon = convertView.findViewById(R.id.icon);
-//            tittle.setText(loadRowData.fileName);
-//            icon.setImageDrawable(loadRowData.icon);
-        }else{
-            viewHolder = (ViewHolder) convertView.getTag();
+//            viewHolder.fileName = convertView.findViewById(R.id.file_name);
+//            viewHolder.icon = convertView.findViewById(R.id.icon);
+            TextView tittle = convertView.findViewById(R.id.file_name);
+            ImageView icon = convertView.findViewById(R.id.icon);
+            tittle.setText(loadRowData.fileName);
+            icon.setImageDrawable(loadRowData.icon);
+//        }else{
+//            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.fileName.setText(loadRowData.fileName);
-        viewHolder.icon.setImageDrawable(loadRowData.icon);
+//        viewHolder.fileName.setText(loadRowData.fileName);
+//        viewHolder.icon.setImageDrawable(loadRowData.icon);
         return convertView;
     }
     @Override
