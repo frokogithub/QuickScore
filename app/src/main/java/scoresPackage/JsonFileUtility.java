@@ -116,17 +116,23 @@ public class JsonFileUtility {
         File directory = new File(path);
         File[] files = directory.listFiles();
         String[] filesNames;
-        if(files.length>0){
-            filesNames = new String[files.length];
-            for (int i = 0; i < files.length; i++)
-            {
-                filesNames[i] = files[i].getName();
+        if(files!=null){
+            if(files.length>0){
+                filesNames = new String[files.length];
+                for (int i = 0; i < files.length; i++)
+                {
+                    filesNames[i] = files[i].getName();
+                }
+            }else{
+//            filesNames = {"No saved files"};
+                filesNames = new String[1];
+                filesNames[0] = "No files";
             }
         }else{
-//            filesNames = {"No saved files"};
             filesNames = new String[1];
             filesNames[0] = "No files";
         }
+
 
         return filesNames;
     }

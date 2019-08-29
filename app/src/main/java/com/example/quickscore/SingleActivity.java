@@ -361,7 +361,7 @@ public class SingleActivity extends BaseActivity {
 
 
     private void showSaveAlert(final String command){
-        final String filename = "single"+dateString();
+        final String filename = "single\n"+dateString();
         final SaveAlert saveAlert = new SaveAlert(this, filename);
         saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
             @Override

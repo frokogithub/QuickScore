@@ -7,11 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +28,7 @@ public class LoadActivity extends BaseActivity {
     LoadListAdapter loadListAdapter;
     ArrayList<LoadRowData> arrayList;
     int editedPosition;
-    static boolean LIST_LONG_CLICKED_FLAG = false;
+    boolean isLongClickAchieved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +64,8 @@ public class LoadActivity extends BaseActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if(LIST_LONG_CLICKED_FLAG){
-                    LIST_LONG_CLICKED_FLAG = false;
+                if(isLongClickAchieved){
+                    isLongClickAchieved = false;
                 }else{
                     loadFile(filesNames[position]);
                 }
@@ -76,7 +74,7 @@ public class LoadActivity extends BaseActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                LIST_LONG_CLICKED_FLAG = true;
+                isLongClickAchieved = true;
                 editedPosition = position;
                 showDeleteAlert();
                 return false;
