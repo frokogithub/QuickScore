@@ -21,6 +21,13 @@ class LoadListAdapter extends BaseAdapter {
 
     OnLoadItemClickListener onLoadItemClickListener;
 
+
+    private static class ViewHolder {
+        TextView fileName;
+        ImageView icon;
+    }
+
+
     public LoadListAdapter(Context context, ArrayList<LoadRowData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
@@ -58,28 +65,24 @@ class LoadListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LoadRowData loadRowData = arrayList.get(position);
+//        LoadRowData loadRowData = arrayList.get(position);
+        ViewHolder viewHolder;
         if(convertView == null) {
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.load_list_row, null);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(onLoadItemClickListener!=null) onLoadItemClickListener.onLoadItemClick(position, false);
-                }
-            });
-            convertView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if(onLoadItemClickListener!=null) onLoadItemClickListener.onLoadItemClick(position, true);
+            viewHolder = new ViewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.load_list_row,  null, true);
 
-                    return false;
-                }
-            });
-            TextView tittle = convertView.findViewById(R.id.file_name);
-            ImageView icon = convertView.findViewById(R.id.icon);
-            tittle.setText(loadRowData.fileName);
-            icon.setImageDrawable(loadRowData.icon);
+            viewHolder.fileName = convertView.findViewById(R.id.file_name);
+            viewHolder.icon = convertView.findViewById(R.id.icon);
+//            TextView tittle = convertView.findViewById(R.id.file_name);
+//            ImageView icon = convertView.findViewById(R.id.icon);
+//            tittle.setText(loadRowData.fileName);
+//            icon.setImageDrawable(loadRowData.icon);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.fileName.setText(loadRowData.fileName);
+        viewHolder.icon.setImageDrawable(loadRowData.icon);
         return convertView;
     }
     @Override

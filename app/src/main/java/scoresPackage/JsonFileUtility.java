@@ -2,6 +2,8 @@ package scoresPackage;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
@@ -129,12 +131,21 @@ public class JsonFileUtility {
         return filesNames;
     }
 
-    private String dateString(){
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
-        //Calendar calendar = Calendar.getInstance();
-        //Date now = calendar.getTime();
+    public void deleteJfile(String filename){
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME + File.separator + filename;
 
-        Date dt = new Date();
-        return sd.format(dt);
+        try{
+            File fileToDelete = new File(path);
+            if(fileToDelete.exists()){
+                boolean resault = fileToDelete.delete();
+//                if(resault) System.out.println("Deleted file: " + fileToDelete.getName());
+            }else{
+                System.out.println("Can't delete file: " + fileToDelete.getName());
+            }
+
+        }catch (Exception e){
+            Log.e("Files", "Exception while deleting file " + e.getMessage());
+        }
     }
+
 }
