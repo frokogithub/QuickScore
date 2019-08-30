@@ -105,10 +105,11 @@ public class SingleActivity extends BaseActivity {
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             String arrayKey = "endScores"+i;
             String emptyCellsKey = "emptyCells" +i;
-            int[] tempScoreArray = new int[ARROWS_IN_END];
+            int[] tempScoreArray = null;
             int emptyCells = 0;
 
             if(intent.hasExtra("loadedJsonObject")){
+                tempScoreArray = new int[ARROWS_IN_END];
                 try {
                     JSONArray jsonArray = jsonObject.getJSONArray(arrayKey);
                     for (int a=0; a<ARROWS_IN_END; a++) {
