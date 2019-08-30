@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -34,7 +35,8 @@ public class SingleActivity extends BaseActivity {
     private final static int OUTDOOR_ARROWS_IN_END = 6;
     private final static int INDOOR_NUMBER_OF_ENDS = 10;
     private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
-    private int eventType = 2; //1 indoor, 2 outdoor,
+//    private int eventType = 2; //1 indoor, 2 outdoor,
+    private String eventType = "outdoor"; //1 indoor, 2 outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int activeRow = 0;
@@ -43,11 +45,9 @@ public class SingleActivity extends BaseActivity {
     private TextView totalSum;
     private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
-    static boolean THEME_CHANGED_FLAG = false;
-    static boolean CELLS_COLORING_CHANGED_FLAG;
     static boolean RECREATE_FLAG;
 
-    private int[] tempScoreArray;
+//    private int[] tempScoreArray;
     private Bundle bundleScores;
 
 
@@ -57,10 +57,6 @@ public class SingleActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
-
-//        setInitialState();
-//        initEnds();
-//        initButtons();
     }
 
     @Override
@@ -73,32 +69,74 @@ public class SingleActivity extends BaseActivity {
         }
 
         Intent intent = getIntent();
-        if(intent.hasExtra("eventType")) eventType = intent.getIntExtra("eventType", 0);
+        if(intent.hasExtra("eventType")) eventType = intent.getStringExtra("eventType");
 
         setInitialState();
         initEnds();
 
-        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-            String arrName = "scores"+i;
-            String emptyCellsName = "emptyCells" +i;
-            tempScoreArray = intent.getIntArrayExtra(arrName);
-            int emptyCells = intent.getIntExtra(emptyCellsName, 6);
-            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
-        }
+        fillScores();
+
+//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+//            String arrayKey = "endScores"+i;
+//            String emptyCellsKey = "emptyCells" +i;
+//            int[] tempScoreArray = null;
+//            int emptyCells = 0;
+//            if(intent.hasExtra(arrayKey)) tempScoreArray = intent.getIntArrayExtra(arrayKey);
+//            if(intent.hasExtra(emptyCellsKey)) emptyCells = intent.getIntExtra(emptyCellsKey, 6);
+//            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
+//        }
 
         initButtons();
         activateFirstIncompleteEnd();
     }
 
+    private void fillScores(){
+
+        Intent intent = getIntent();
+        JSONObject jsonObject = null;
+        if(intent.hasExtra("loadedJsonObject")){
+            try {
+                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+            String arrayKey = "endScores"+i;
+            String emptyCellsKey = "emptyCells" +i;
+            int[] tempScoreArray = new int[ARROWS_IN_END];
+            int emptyCells = 0;
+
+            if(intent.hasExtra("loadedJsonObject")){
+                try {
+                    JSONArray jsonArray = jsonObject.getJSONArray(arrayKey);
+                    for (int a=0; a<ARROWS_IN_END; a++) {
+                        tempScoreArray[a] = jsonArray.getInt(a);
+                    }
+                    emptyCells = jsonObject.getInt(emptyCellsKey);
+                    System.out.println(jsonObject);
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }else{
+                if(intent.hasExtra(arrayKey)) tempScoreArray = intent.getIntArrayExtra(arrayKey);
+                if(intent.hasExtra(emptyCellsKey)) emptyCells = intent.getIntExtra(emptyCellsKey, 6);
+
+            }
+            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
+        }
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
 
+        int[] tempScoreArray;
         Intent intent = getIntent();
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             tempScoreArray = end[i].getScores();
-            String arrName = "scores"+i;
+            String arrName = "endScores"+i;
             intent.putExtra(arrName,tempScoreArray);
 
             int emptyCells = end[i].getEmptyCellsAmount();
@@ -113,19 +151,17 @@ public class SingleActivity extends BaseActivity {
         showSaveAlert("BACK");
     }
 
-
-
     private void setInitialState(){
         insertDummy=findViewById(R.id.cl_insert_dummy);
         insertDummy.removeAllViews();
         switch (eventType){
-            case 1:
+            case "indoor":
                 ARROWS_IN_END = INDOOR_ARROWS_IN_END;
                 NUMBER_OF_ENDS = INDOOR_NUMBER_OF_ENDS;
                 View ins3 = LayoutInflater.from(this).inflate(R.layout.cl_insert_3arr, null);
                 insertDummy.addView(ins3);
                 break;
-            case 2:
+            case "outdoor":
                 ARROWS_IN_END = OUTDOOR_ARROWS_IN_END;
                 NUMBER_OF_ENDS = OUTDOOR_NUMBER_OF_ENDS;
                 View ins6 = LayoutInflater.from(this).inflate(R.layout.cl_insert_6arr, null);
@@ -146,11 +182,11 @@ public class SingleActivity extends BaseActivity {
 
         int endHorizontalLineId=0, endViewId=0;
         switch (eventType){
-            case 1:
+            case "indoor":
                 endHorizontalLineId = R.layout.end_horizontal_line;
                 endViewId = R.layout.end_3arrows;
                 break;
-            case 2:
+            case "outdoor":
                 endHorizontalLineId = R.layout.end_horizontal_line_6arr;
                 endViewId = R.layout.end_6arrows;
                 break;
@@ -342,11 +378,11 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 switch (eventType){
-                    case 1:
-                        eventType = 2;
+                    case "indoor":
+                        eventType = "outdoor";
                         break;
-                    case 2:
-                        eventType = 1;
+                    case "outdoor":
+                        eventType = "indoor";
                         break;
                     default:
                         break;
@@ -367,7 +403,11 @@ public class SingleActivity extends BaseActivity {
             @Override
             public void onItemClick(boolean choice) {
                 if(choice){
-                    makeJsonFile(saveAlert.getFilename());
+                    String eventTypePrefix = "";
+                    if(eventType.equals("indoor")) eventTypePrefix = "i";
+                    if(eventType.equals("outdoor")) eventTypePrefix = "o";
+                    String fullFileName = "s" + eventTypePrefix + saveAlert.getFilename();
+                    makeJsonFile(fullFileName);
                     postSaveAlert(command);
                 }else{
                     printToast("nie sejwuj");
@@ -431,7 +471,6 @@ public class SingleActivity extends BaseActivity {
     private  void clearEnds(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             end[i].clear();
-            //unmarkEnd();
         }
         unmarkEnd();
         activeRow = 0;
@@ -443,24 +482,32 @@ public class SingleActivity extends BaseActivity {
 
     void makeJsonFile(String filename){
 
-        JSONObject jsonScores = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonScores.put("ActivityType", "Single");
+//            jsonObject.put("activityType", "single");
+//            jsonObject.put("eventType", eventType);
+//            jsonObject.put("divisionType", "");
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
-                String jEndName = "end"+endIndex;
-                JSONArray jsonArray = new JSONArray();
+                String jEndScoresKey = "endScores"+endIndex;
+                String jEmptyCellsKey = "emptyCells"+endIndex;
+
                 int[] tempArray = end[endIndex].getScores();
+
+                JSONArray jsonEndScores = new JSONArray();
                 for (int arrowIndex=0;arrowIndex<ARROWS_IN_END;arrowIndex++) {
-                    jsonArray.put(tempArray[arrowIndex]);
+                    jsonEndScores.put(tempArray[arrowIndex]);
                 }
-                jsonScores.put(jEndName, jsonArray);
+                jsonObject.put(jEndScoresKey, jsonEndScores);
+
+                int emptyCells = end[endIndex].getEmptyCellsAmount();
+                jsonObject.put(jEmptyCellsKey, emptyCells);
             }
         }catch (org.json.JSONException e){
             e.printStackTrace();
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
-        jfile.saveJson(jsonScores, filename);
+        jfile.saveJson(jsonObject, filename);
 //
 //
 //        JSONObject jsonLoadedScores = jfile.loadJson();

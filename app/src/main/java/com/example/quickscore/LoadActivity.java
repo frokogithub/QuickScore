@@ -50,13 +50,20 @@ public class LoadActivity extends BaseActivity {
 
     private void makeLoadList(){
 
+        Drawable iconSingle, iconMatch;
+        iconSingle = getDrawable(R.drawable.load_single_ic);
+        iconMatch = getDrawable(R.drawable.load_mach_ic);
         arrayList = new ArrayList<>();
 
-//        for (int i=0;i<filesNames.length;i++) {
-//            arrayList.add(new LoadRowData(filesNames[i], icon));
-//        }
-        for (String name:filesNames) {
-            arrayList.add(new LoadRowData(name, icon));
+        for (String fileName:filesNames) {
+//            String subFileName = fileName.substring(0);
+//            char firstChar
+            if(fileName.charAt(0)=='s'){
+                arrayList.add(new LoadRowData(fileName, iconSingle));
+            }else{
+                arrayList.add(new LoadRowData(fileName, iconMatch));
+            }
+
         }
         loadListAdapter = new LoadListAdapter(this, arrayList);
         list = findViewById(R.id.list);
@@ -84,21 +91,26 @@ public class LoadActivity extends BaseActivity {
 
     private void loadFile(String fileName){
         JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
-        String activityType = "";
-        try {
-            activityType = jsonObject.getString("ActivityType");
-        }catch (JSONException e){
-            e.printStackTrace();
+        Intent intent = null;
+        if(fileName.charAt(0)=='s'){
+            intent = new Intent(getApplicationContext(),SingleActivity.class);
+            if(fileName.charAt(1)=='o'){
+                intent.putExtra("eventType", "outdoor");
+            }else if(fileName.charAt(1)=='i'){
+                intent.putExtra("eventType", "indoor");
+            }
+        }else if(fileName.charAt(0)=='m'){
+            intent = new Intent(getApplicationContext(),MatchActivity.class);
+            if(fileName.charAt(1)=='r'){
+                intent.putExtra("division", "recurve");
+            }else if(fileName.charAt(1)=='c'){
+                intent.putExtra("division", "compound");
+            }
         }
 
-        if(activityType.equals("Single")){
-            Intent intent = new Intent(getApplicationContext(),SingleActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-//        Toast.makeText(getApplicationContext(),String.valueOf(jsonObject), Toast.LENGTH_SHORT).show();
-        //ToDo: do SingleActivity lub MatchActivity
+        if(jsonObject!=null) intent.putExtra("loadedJsonObject", jsonObject.toString());
+        if(intent!=null) startActivity(intent);
+        finish();
     }
 
     private void delete(String fileName){

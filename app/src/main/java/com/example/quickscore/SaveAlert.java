@@ -18,15 +18,15 @@ public class SaveAlert {
     private EditText etFileName;
 
 
-    public SaveAlert(Activity activity, String filename) {
-        this.filename = filename;
+    public SaveAlert(Activity activity, String fileName) {
+//        this.filename = filename;
         //before inflating the custom alert dialog layout, we will get the current activity viewgroup
         ViewGroup viewGroup = activity.findViewById(android.R.id.content);
 
         View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
 
         etFileName = dialogView.findViewById(R.id.et_file_name);
-        etFileName.setText(filename);
+        etFileName.setText(fileName);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(dialogView);
