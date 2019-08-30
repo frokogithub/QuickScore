@@ -162,6 +162,7 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             command = "NEW";
                                             popupWindow.dismiss();
+                                            if(menuListener!=null) menuListener.onMenuItemClick(command);
 //                                            showSaveDialog();
                                         }
                                     });

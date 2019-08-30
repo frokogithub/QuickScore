@@ -14,22 +14,31 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
+import interfacesPackage.OnSaveAlertItemClik;
 import interfacesPackage.OnScoreBoardClickListener;
 import scoresPackage.End;
+import scoresPackage.JsonFileUtility;
 
 public class MatchActivity extends BaseActivity {
 
 
-    private int division = 1; //1 recurve, 2 compound
+    private String division = "recurve";
     private static  int ARROWS_IN_END = 3;
     private static  int NUMBER_OF_ENDS = 5;
     private int activeRow = 0;
     private int activeArcher;
-    private static End[] endA;
-    private static End[] endB;
+    private  End[] endA;
+    private  End[] endB;
     private ViewGroup endsDummyA;
     private ViewGroup endsDummyB;
     private ViewGroup outerMarkA;
@@ -43,7 +52,7 @@ public class MatchActivity extends BaseActivity {
     private int scoringStatus = 0;
     private String archerAName = "Archer A";
     private String archerBName = "Archer B";
-    static boolean THEME_CHANGED_FLAG = false;
+    boolean isSaved = true;
 
     static boolean RECREATE_FLAG;
 
@@ -52,11 +61,10 @@ public class MatchActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
-
-        setInitialState();
-        initEnds();
-//        activateFirstIncompleteEnd(true, true);
-        initButtons();
+//
+//        setInitialState();
+//        initEnds();
+//        initButtons();
     }
 
     @Override
@@ -68,29 +76,66 @@ public class MatchActivity extends BaseActivity {
             recreate();
         }
 
-//        if(THEME_CHANGED_FLAG){
-//            THEME_CHANGED_FLAG = false;
-//            recreate();
-//        }
+
 
         Intent intent = getIntent();
-        int [] tempScoreArrayA, tempScoreArrayB;
+        if(intent.hasExtra("division")) division = intent.getStringExtra("division");
+
+        setInitialState();
+        initEnds();
+
+        fillScores();
+
+        initButtons();
+        activateFirstIncompleteEnd(true, true);
+    }
+
+    private void fillScores(){
+
+        Intent intent = getIntent();
+        JSONObject jsonObject = null;
+        if(intent.hasExtra("loadedJsonObject")){
+            try {
+                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
-            String arrNameA = "scoresA"+i;
-            String arrNameB = "scoresB"+i;
-            String emptyCellsNameA = "emptyCellsA" +i;
-            String emptyCellsNameB = "emptyCellsB" +i;
-            tempScoreArrayA = intent.getIntArrayExtra(arrNameA);
-            tempScoreArrayB = intent.getIntArrayExtra(arrNameB);
-            int emptyCellsA = intent.getIntExtra(emptyCellsNameA, 6);
-            int emptyCellsB = intent.getIntExtra(emptyCellsNameB, 6);
+            String arrayKeyA = "endScores"+i+"A";
+            String arrayKeyB = "endScores"+i+"B";
+            String emptyCellsKeyA = "emptyCells" +i+"A";
+            String emptyCellsKeyB = "emptyCells" +i+"B";
+            int[] tempScoreArrayA = null;
+            int[] tempScoreArrayB = null;
+            int emptyCellsA = 0;
+            int emptyCellsB = 0;
+
+            if(intent.hasExtra("loadedJsonObject")){
+                tempScoreArrayA = new int[ARROWS_IN_END];
+                tempScoreArrayB = new int[ARROWS_IN_END];
+                try {
+                    JSONArray jsonArrayA = jsonObject.getJSONArray(arrayKeyA);
+                    JSONArray jsonArrayB = jsonObject.getJSONArray(arrayKeyB);
+                    for (int a=0; a<ARROWS_IN_END; a++) {
+                        tempScoreArrayA[a] = jsonArrayA.getInt(a);
+                        tempScoreArrayB[a] = jsonArrayB.getInt(a);
+                    }
+                    emptyCellsA = jsonObject.getInt(emptyCellsKeyA);
+                    emptyCellsB = jsonObject.getInt(emptyCellsKeyB);
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }else{
+                if(intent.hasExtra(arrayKeyA)) tempScoreArrayA = intent.getIntArrayExtra(arrayKeyA);
+                if(intent.hasExtra(arrayKeyB)) tempScoreArrayB = intent.getIntArrayExtra(arrayKeyB);
+                if(intent.hasExtra(emptyCellsKeyA)) emptyCellsA = intent.getIntExtra(emptyCellsKeyA, 6);
+                if(intent.hasExtra(emptyCellsKeyB)) emptyCellsB = intent.getIntExtra(emptyCellsKeyB, 6);
+            }
             if(endA[i]!=null && tempScoreArrayA!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
             if(endB[i]!=null && tempScoreArrayB!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
         }
-
-//        initButtons();
-        activateFirstIncompleteEnd(true, true);
-
 
     }
 
@@ -103,8 +148,8 @@ public class MatchActivity extends BaseActivity {
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             tempScoreArrayA = endA[i].getScores();
             tempScoreArrayB = endB[i].getScores();
-            String arrNameA = "scoresA"+i;
-            String arrNameB = "scoresB"+i;
+            String arrNameA = "endScoresA"+i;
+            String arrNameB = "endScoresB"+i;
             intent.putExtra(arrNameA,tempScoreArrayA);
             intent.putExtra(arrNameB,tempScoreArrayB);
 
@@ -114,6 +159,14 @@ public class MatchActivity extends BaseActivity {
             String emptyCellsNameB = "emptyCellsB" +i;
             intent.putExtra(emptyCellsNameA,emptyCellsA);
             intent.putExtra(emptyCellsNameB,emptyCellsB);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if(!isSaved){
+            showSaveAlert("BACK");
+        }else{
+            finish();
         }
     }
 
@@ -209,10 +262,6 @@ public class MatchActivity extends BaseActivity {
                     public void onScoreBoardClick() {
                         unmarkEnd();
                         activateFirstIncompleteEnd(true, false);
-//                        printToast("A clicked");
-//                        unmarkEnd();
-//                        activeArcher = 0;
-//                        markEnd();
                     }
                 });
 
@@ -221,10 +270,6 @@ public class MatchActivity extends BaseActivity {
                     public void onScoreBoardClick() {
                         unmarkEnd();
                         activateFirstIncompleteEnd(false, true);
-//                        printToast("B clicked");
-//                        unmarkEnd();
-//                        activeArcher = 1;
-//                        markEnd();
                     }
                 });
     }//addEndsListeners()
@@ -283,7 +328,7 @@ public class MatchActivity extends BaseActivity {
     void initButtons(){
 
         Button bX=findViewById(R.id.bX);
-        if(division==1) bX.setText("");
+        if(division.equals("recurve")) bX.setText("");
         Button bM=findViewById(R.id.bM);
         Button b1=findViewById(R.id.b1);
         Button b2=findViewById(R.id.b2);
@@ -296,7 +341,7 @@ public class MatchActivity extends BaseActivity {
         Button b9=findViewById(R.id.b9);
         Button b10=findViewById(R.id.b10);
 
-        if(division!=1) bX.setOnClickListener(new View.OnClickListener() {
+        if(division.equals("compound")) bX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterScore(11);
@@ -375,13 +420,14 @@ public class MatchActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, MatchActivity.this);
+                final ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, MatchActivity.this);
                 showPopupWindow.setOnMenuItemClick(new OnMenuItemClickListener() {
                     @Override
                     public void onMenuItemClick(String command) {
                         switch (command){
                             case "NEW":
-                                clearEnds();
+                                if(!isSaved) showSaveAlert(command);
+//                                clearEnds();
                                 break;
                             case "TIMER":
 
@@ -403,15 +449,18 @@ public class MatchActivity extends BaseActivity {
     } // initButtons
 
     private void enterScore (int score){
-        switch (activeArcher){
-            case 0:
-                if(scoringStatus<2)endA[activeRow].addScore(score);
-                break;
-            case 1:
-                if(scoringStatus<2)endB[activeRow].addScore(score);
-                break;
-            default:
-                break;
+        if(scoringStatus<2){
+            switch (activeArcher){
+                case 0:
+                    endA[activeRow].addScore(score);
+                    break;
+                case 1:
+                    endB[activeRow].addScore(score);
+                    break;
+                default:
+                    break;
+            }
+            isSaved = false;
         }
     }
 
@@ -503,7 +552,83 @@ public class MatchActivity extends BaseActivity {
         scoringStatus = 0;
     }
 
+    private void showSaveAlert(final String command){
+        final String filename = "match\n"+dateString();
+        final SaveAlert saveAlert = new SaveAlert(this, filename);
+        saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
+            @Override
+            public void onItemClick(boolean choice) {
+                if(choice){
+                    String eventTypePrefix = "";
+                    if(division.equals("recurve")) eventTypePrefix = "r";
+                    if(division.equals("compound")) eventTypePrefix = "c";
+                    String fullFileName = "m" + eventTypePrefix + saveAlert.getFilename();
+                    makeJsonFile(fullFileName);
+                    postSaveAlert(command);
+                }else{
+                    printToast("nie sejwuj");
+                    postSaveAlert(command);
+                }
+            }
+        });
+    }//showSaveAlert()
 
+    private String dateString(){
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
+        Date dt = new Date();
+        return sd.format(dt);
+    }//dateString()
+
+    private void postSaveAlert(String command){
+        switch (command){
+            case "NEW":
+                isSaved = true;
+                clearEnds();
+                break;
+            case "BACK":
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    void makeJsonFile(String filename){
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
+                String jEndScoresKeyA = "endScores"+endIndex+"A";
+                String jEndScoresKeyB = "endScores"+endIndex+"B";
+                String jEmptyCellsKeyA = "emptyCells"+endIndex+"A";
+                String jEmptyCellsKeyB = "emptyCells"+endIndex+"B";
+
+                int[] tempArrayA = endA[endIndex].getScores();
+                int[] tempArrayB = endB[endIndex].getScores();
+
+                JSONArray jsonEndScoresA = new JSONArray();
+                JSONArray jsonEndScoresB = new JSONArray();
+                for (int arrowIndex=0;arrowIndex<ARROWS_IN_END;arrowIndex++) {
+                    jsonEndScoresA.put(tempArrayA[arrowIndex]);
+                    jsonEndScoresB.put(tempArrayB[arrowIndex]);
+                }
+                jsonObject.put(jEndScoresKeyA, jsonEndScoresA);
+                jsonObject.put(jEndScoresKeyB, jsonEndScoresB);
+
+                int emptyCellsA = endA[endIndex].getEmptyCellsAmount();
+                int emptyCellsB = endB[endIndex].getEmptyCellsAmount();
+                jsonObject.put(jEmptyCellsKeyA, emptyCellsA);
+                jsonObject.put(jEmptyCellsKeyB, emptyCellsB);
+            }
+        }catch (org.json.JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
+        jfile.saveJson(jsonObject, filename);
+        isSaved = true;
+    }
 
     private void printToast(String s){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();

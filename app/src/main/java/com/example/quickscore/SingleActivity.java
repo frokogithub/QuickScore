@@ -46,6 +46,7 @@ public class SingleActivity extends BaseActivity {
     private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean RECREATE_FLAG;
+    boolean isSaved = true;
 
 //    private int[] tempScoreArray;
     private Bundle bundleScores;
@@ -75,16 +76,6 @@ public class SingleActivity extends BaseActivity {
         initEnds();
 
         fillScores();
-
-//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-//            String arrayKey = "endScores"+i;
-//            String emptyCellsKey = "emptyCells" +i;
-//            int[] tempScoreArray = null;
-//            int emptyCells = 0;
-//            if(intent.hasExtra(arrayKey)) tempScoreArray = intent.getIntArrayExtra(arrayKey);
-//            if(intent.hasExtra(emptyCellsKey)) emptyCells = intent.getIntExtra(emptyCellsKey, 6);
-//            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
-//        }
 
         initButtons();
         activateFirstIncompleteEnd();
@@ -149,7 +140,11 @@ public class SingleActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        showSaveAlert("BACK");
+        if(!isSaved){
+            showSaveAlert("BACK");
+        }else{
+            finish();
+        }
     }
 
     private void setInitialState(){
@@ -366,7 +361,7 @@ public class SingleActivity extends BaseActivity {
                     @Override
                     public void onMenuItemClick(String command) {
                         if(command.equals("NEW")){
-                            showSaveAlert("NEW");
+                            if(!isSaved) showSaveAlert("NEW");
                             //clearEnds();
                         }
                     }
@@ -427,6 +422,7 @@ public class SingleActivity extends BaseActivity {
     private void postSaveAlert(String command){
         switch (command){
             case "NEW":
+                isSaved = true;
                 clearEnds();
                 break;
             case "BACK":
@@ -439,7 +435,10 @@ public class SingleActivity extends BaseActivity {
     }
 
     private void enterScore (int score){
-        if(scoringStatus < 2)end[activeRow].addScore(score);
+        if(scoringStatus < 2){
+            end[activeRow].addScore(score);
+            isSaved = false;
+        }
     }
 
     private void markEnd(){
@@ -485,9 +484,6 @@ public class SingleActivity extends BaseActivity {
 
         JSONObject jsonObject = new JSONObject();
         try {
-//            jsonObject.put("activityType", "single");
-//            jsonObject.put("eventType", eventType);
-//            jsonObject.put("divisionType", "");
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
                 String jEndScoresKey = "endScores"+endIndex;
                 String jEmptyCellsKey = "emptyCells"+endIndex;
@@ -509,24 +505,7 @@ public class SingleActivity extends BaseActivity {
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
         jfile.saveJson(jsonObject, filename);
-//
-//
-//        JSONObject jsonLoadedScores = jfile.loadJson();
-//        try {
-//            for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
-//                String jEndName = "end"+endIndex;
-//                JSONArray jsonArray = jsonLoadedScores.getJSONArray(jEndName);
-//                int[] tempArray = new int[ARROWS_IN_END];
-//                for (int arrowIndex = 0; arrowIndex <ARROWS_IN_END; arrowIndex++) {
-//
-//                    tempArray[arrowIndex] = jsonArray.getInt(arrowIndex);
-//                    Log.i("End",String.valueOf(jsonArray.getInt(arrowIndex)));
-//                }
-//            }
-//
-//        }catch (JSONException e){
-//            e.printStackTrace();
-//        }
+        isSaved = true;
     }
 
 
