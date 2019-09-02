@@ -22,7 +22,7 @@ public class LoadActivity extends BaseActivity {
 
 
     Context context;
-    Drawable icon;
+//    Drawable icon;
     ListView list;
     String[] filesNames;
     LoadListAdapter loadListAdapter;
@@ -36,7 +36,7 @@ public class LoadActivity extends BaseActivity {
         setContentView(R.layout.activity_load);
 
         context = this;
-        icon = getDrawable(R.drawable.arch_icon);
+//        icon = getDrawable(R.drawable.arch_icon);
 
 
         JsonFileUtility jFileUtil = new JsonFileUtility(context);

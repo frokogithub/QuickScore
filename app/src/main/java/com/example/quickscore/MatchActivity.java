@@ -103,10 +103,10 @@ public class MatchActivity extends BaseActivity {
         }
 
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
-            String arrayKeyA = "endScores"+i+"A";
-            String arrayKeyB = "endScores"+i+"B";
-            String emptyCellsKeyA = "emptyCells" +i+"A";
-            String emptyCellsKeyB = "emptyCells" +i+"B";
+            String arrayKeyA = "endScoresA"+i;
+            String arrayKeyB = "endScoresB"+i;
+            String emptyCellsKeyA = "emptyCellsA" +i;
+            String emptyCellsKeyB = "emptyCellsB" +i;
             int[] tempScoreArrayA = null;
             int[] tempScoreArrayB = null;
             int emptyCellsA = 0;
@@ -155,8 +155,8 @@ public class MatchActivity extends BaseActivity {
 
             int emptyCellsA = endA[i].getEmptyCellsAmount();
             int emptyCellsB = endB[i].getEmptyCellsAmount();
-            String emptyCellsNameA = "emptyCellsA" +i;
-            String emptyCellsNameB = "emptyCellsB" +i;
+            String emptyCellsNameA = "emptyCellsA"+i;
+            String emptyCellsNameB = "emptyCellsB"+i;
             intent.putExtra(emptyCellsNameA,emptyCellsA);
             intent.putExtra(emptyCellsNameB,emptyCellsB);
         }
@@ -173,6 +173,8 @@ public class MatchActivity extends BaseActivity {
     private void setInitialState(){
         endsDummyA = findViewById(R.id.A_ends_dummy);
         endsDummyB = findViewById(R.id.B_ends_dummy);
+        endsDummyA.removeAllViews();
+        endsDummyB.removeAllViews();
 
         tvTotalScoreA = findViewById(R.id.A_tv_total_score);
         tvTotalScoreB = findViewById(R.id.B_tv_total_score);
@@ -195,12 +197,12 @@ public class MatchActivity extends BaseActivity {
         endA = new End[NUMBER_OF_ENDS+1];
         endB = new End[NUMBER_OF_ENDS+1];
 
-         int AendHorizontalLineId, BendHorizontalLineId;
-         int AendViewId, BendViewId;
-         AendHorizontalLineId = R.layout.a_end_horizontal_line;
-         BendHorizontalLineId = R.layout.b_end_horizontal_line;
-         AendViewId = R.layout.a_end_3arrows;
-         BendViewId = R.layout.b_end_3arrows;
+        int AendHorizontalLineId, BendHorizontalLineId;
+        int AendViewId, BendViewId;
+        AendHorizontalLineId = R.layout.a_end_horizontal_line;
+        BendHorizontalLineId = R.layout.b_end_horizontal_line;
+        AendViewId = R.layout.a_end_3arrows;
+        BendViewId = R.layout.b_end_3arrows;
 
         for(int i=0; i<NUMBER_OF_ENDS+1; i++){
             if(i<NUMBER_OF_ENDS){
@@ -231,52 +233,52 @@ public class MatchActivity extends BaseActivity {
     }//initEnds()
 
     private void addEndsListeners(int i){
-                endA[i].setOnIndexListener(new OnChangeIndexListener() {
-                    @Override
-                    public void onChange() {
-                        doIfEndIsFull();
-                    }
-                });
-                endB[i].setOnIndexListener(new OnChangeIndexListener() {
-                    @Override
-                    public void onChange() {
-                        doIfEndIsFull();
-                    }
-                });
+        endA[i].setOnIndexListener(new OnChangeIndexListener() {
+            @Override
+            public void onChange() {
+                doIfEndIsFull();
+            }
+        });
+        endB[i].setOnIndexListener(new OnChangeIndexListener() {
+            @Override
+            public void onChange() {
+                doIfEndIsFull();
+            }
+        });
 
-                endA[i].setOnEraseListener(new OnEraseListener() {
-                    @Override
-                    public void onErase(int index) {
-                        doIfCellErased(0, index);
-                    }
-                });
+        endA[i].setOnEraseListener(new OnEraseListener() {
+            @Override
+            public void onErase(int index) {
+                doIfCellErased(0, index);
+            }
+        });
 
-                endB[i].setOnEraseListener(new OnEraseListener() {
-                    @Override
-                    public void onErase(int index) {
-                        doIfCellErased(1, index);
-                    }
-                });
-                endA[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
-                    @Override
-                    public void onScoreBoardClick() {
-                        unmarkEnd();
-                        activateFirstIncompleteEnd(true, false);
-                    }
-                });
+        endB[i].setOnEraseListener(new OnEraseListener() {
+            @Override
+            public void onErase(int index) {
+                doIfCellErased(1, index);
+            }
+        });
+        endA[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
+            @Override
+            public void onScoreBoardClick() {
+                unmarkEnd();
+                activateFirstIncompleteEnd(true, false);
+            }
+        });
 
-                endB[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
-                    @Override
-                    public void onScoreBoardClick() {
-                        unmarkEnd();
-                        activateFirstIncompleteEnd(false, true);
-                    }
-                });
+        endB[i].setOnScoreBoardClickListener(new OnScoreBoardClickListener() {
+            @Override
+            public void onScoreBoardClick() {
+                unmarkEnd();
+                activateFirstIncompleteEnd(false, true);
+            }
+        });
     }//addEndsListeners()
 
     private void doIfEndIsFull(){
         if(endA[activeRow].isFull() && endB[activeRow].isFull()){
-                updateTotalScore();
+            updateTotalScore();
         }
         unmarkEnd();
         if(scoringStatus<2)activateFirstIncompleteEnd(true, true);
@@ -599,10 +601,10 @@ public class MatchActivity extends BaseActivity {
         JSONObject jsonObject = new JSONObject();
         try {
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
-                String jEndScoresKeyA = "endScores"+endIndex+"A";
-                String jEndScoresKeyB = "endScores"+endIndex+"B";
-                String jEmptyCellsKeyA = "emptyCells"+endIndex+"A";
-                String jEmptyCellsKeyB = "emptyCells"+endIndex+"B";
+                String jEndScoresKeyA = "endScoresA"+endIndex;
+                String jEndScoresKeyB = "endScores"+endIndex;
+                String jEmptyCellsKeyA = "emptyCellsA"+endIndex;
+                String jEmptyCellsKeyB = "emptyCells"+endIndex;
 
                 int[] tempArrayA = endA[endIndex].getScores();
                 int[] tempArrayB = endB[endIndex].getScores();
