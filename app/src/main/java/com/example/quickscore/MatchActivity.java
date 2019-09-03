@@ -170,8 +170,6 @@ public class MatchActivity extends BaseActivity {
     }
 
 
-
-
     private void setInitialState(){
 
         rootView = findViewById(R.id.bckgd);
@@ -430,22 +428,21 @@ public class MatchActivity extends BaseActivity {
                     public void onMenuItemClick(String command) {
                         switch (command){
                             case "NEW":
-                                if(!isSaved) showSaveAlert(command);
-//                                clearEnds();
+                                if(!isSaved){
+                                    showSaveAlert(command);
+                                }else{
+                                    clearEnds();
+                                }
                                 break;
-                            case "TIMER":
-
-                                break;
-                            case "SAVE":
-                                printToast("Save start");
-                                break;
-                            case "SETTINGS":
-                                printToast("Settings start");
-                                break;
+//                            case "TIMER":
+//                                break;
+//                            case "SAVE":
+//                                printToast("Save start");
+//                                break;
+//                            case "SETTINGS":
+//                                printToast("Settings start");
+//                                break;
                         }
-//                        if(command.equals("NEW")){
-//                            clearEnds();
-//                        }
                     }
                 });
             }

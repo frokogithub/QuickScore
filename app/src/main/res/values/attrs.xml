@@ -25,6 +25,7 @@
     <attr name="cell_blue_color" format="reference"/>
     <attr name="cell_black_color" format="reference"/>
     <attr name="cell_white_color" format="reference"/>
+    <attr name="record_color" format="reference"/>
 
     <attr name="start_button_background" format="reference"/>
 

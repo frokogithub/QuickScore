@@ -43,6 +43,7 @@ public class SingleActivity extends BaseActivity {
     private static End[] end;
     private ViewGroup endsDummy;
     private TextView totalSum;
+    private TextView record;
     private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean RECREATE_FLAG;
@@ -169,6 +170,7 @@ public class SingleActivity extends BaseActivity {
         activeRow = 0;
         totalSum = findViewById(R.id.tv_total);
         totalSum.setText("0");
+        record = findViewById(R.id.tv_record);
     }
 
 
@@ -361,8 +363,11 @@ public class SingleActivity extends BaseActivity {
                     @Override
                     public void onMenuItemClick(String command) {
                         if(command.equals("NEW")){
-                            if(!isSaved) showSaveAlert("NEW");
-                            //clearEnds();
+                            if(!isSaved){
+                                showSaveAlert("NEW");
+                            }else{
+                                newBoard();
+                            }
                         }
                     }
                 });
@@ -394,6 +399,12 @@ public class SingleActivity extends BaseActivity {
 
     private void showSaveAlert(final String command){
         final String filename = "single\n"+dateString();
+
+
+//        final String filename = "single"
+//                + System.getProperty("line.separator")
+//                + dateString();
+
         final SaveAlert saveAlert = new SaveAlert(this, filename);
         saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
             @Override
@@ -423,7 +434,7 @@ public class SingleActivity extends BaseActivity {
         switch (command){
             case "NEW":
                 isSaved = true;
-                clearEnds();
+                newBoard();
                 break;
             case "BACK":
                 finish();
@@ -461,14 +472,34 @@ public class SingleActivity extends BaseActivity {
 
 
     private void updateTotalSum(){
-        int s=0;
+        int total=0;
         for(int i = 0; i< activeRow+1; i++){
-            s += end[i].getSum();
+            total += end[i].getSum();
         }
-        totalSum.setText(String.valueOf(s));
+        totalSum.setText(String.valueOf(total));
+        if(activeRow==NUMBER_OF_ENDS-1) checkRecord(total);
     }
 
-    private  void clearEnds(){
+    private void checkRecord(int total){
+        switch (eventType){
+            case "indoor":
+                if(total > pref.getInt("indoor_record",0)){
+                    record.setText("NEW\nRECORD!");
+                    pref.edit().putInt("indoor_record",total).apply();
+                }
+                break;
+            case "outdoor":
+                if(total > pref.getInt("outdoor_record",0)){
+                    record.setText("NEW RECORD!");
+                    pref.edit().putInt("outdoor_record",total).apply();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private  void newBoard(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             end[i].clear();
         }
@@ -477,6 +508,7 @@ public class SingleActivity extends BaseActivity {
         markEnd();
         totalSum.setText("0");
         scoringStatus = 0;
+        record.setText("");
     }
 
 

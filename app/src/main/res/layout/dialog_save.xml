@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textImeMultiLine"
-        android:maxLines="2"
+        android:maxLines="3"
         android:text="File name"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/textView3"

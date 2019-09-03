@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 
 import android.content.Context;
@@ -22,7 +23,6 @@ public class LoadActivity extends BaseActivity {
 
 
     Context context;
-//    Drawable icon;
     ListView list;
     String[] filesNames;
     LoadListAdapter loadListAdapter;
@@ -30,14 +30,27 @@ public class LoadActivity extends BaseActivity {
     int editedPosition;
     boolean isLongClickAchieved = false;
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        context = this;
-//        icon = getDrawable(R.drawable.arch_icon);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Load");
+            actionBar.setElevation(0);
+            actionBar.show();
+        }
 
+        context = this;
 
         JsonFileUtility jFileUtil = new JsonFileUtility(context);
         filesNames = jFileUtil.getFilesNames();
@@ -56,8 +69,6 @@ public class LoadActivity extends BaseActivity {
         arrayList = new ArrayList<>();
 
         for (String fileName:filesNames) {
-//            String subFileName = fileName.substring(0);
-//            char firstChar
             if(fileName.charAt(0)=='s'){
                 arrayList.add(new LoadRowData(fileName, iconSingle));
             }else{

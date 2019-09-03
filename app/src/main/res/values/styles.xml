@@ -26,6 +26,7 @@
         <item name="cell_blue_color">@color/light_theme_cell_blue</item>
         <item name="cell_black_color">@color/light_theme_cell_black</item>
         <item name="cell_white_color">@color/light_theme_cell_white</item>
+        <item name="record_color">@color/light_theme_record</item>
     </style>
 
 
@@ -56,6 +57,7 @@
         <item name="cell_blue_color">@color/dark_theme_cell_blue</item>
         <item name="cell_black_color">@color/dark_theme_cell_black</item>
         <item name="cell_white_color">@color/dark_theme_cell_white</item>
+        <item name="record_color">@color/dark_theme_record</item>
     </style>
 
 

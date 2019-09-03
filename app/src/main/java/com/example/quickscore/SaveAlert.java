@@ -25,6 +25,8 @@ public class SaveAlert {
 
         View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
 
+//        fileName.indexOf(\n)
+
         etFileName = dialogView.findViewById(R.id.et_file_name);
         etFileName.setText(fileName);
 
