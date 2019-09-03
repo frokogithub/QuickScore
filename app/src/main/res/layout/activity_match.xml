@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background_color"
+    android:descendantFocusability="beforeDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".StartActivity">
 
 
@@ -276,35 +279,34 @@
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/B_tv_total_score"></LinearLayout>
 
-    <EditText
+    <com.example.quickscore.CustomEditText
         android:id="@+id/tv_archer_A"
         android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="?attr/background_color"
-        android:cursorVisible="false"
+        android:cursorVisible="true"
         android:ems="5"
+        android:focusable="auto"
         android:gravity="center"
-        android:inputType="textPersonName"
-        android:selectAllOnFocus="true"
-        android:text="Archer A"
+        android:hint="Archer A"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="@+id/A_ends_dummy"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <EditText
+    <com.example.quickscore.CustomEditText
         android:id="@+id/tv_archer_B"
         android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="?attr/background_color"
-        android:cursorVisible="false"
+        android:cursorVisible="true"
         android:ems="5"
         android:gravity="center"
-        android:inputType="textPersonName"
-        android:selectAllOnFocus="true"
-        android:text="Archer B"
+        android:hint="Archer B"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/B_ends_dummy"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 

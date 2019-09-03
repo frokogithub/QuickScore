@@ -1,9 +1,11 @@
 package com.example.quickscore;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
+import androidx.constraintlayout.widget.ConstraintLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import interfacesPackage.OnChangeIndexListener;
 import interfacesPackage.OnEraseListener;
 import interfacesPackage.OnMenuItemClickListener;
@@ -48,11 +47,11 @@ public class MatchActivity extends BaseActivity {
     private TextView tvTotalScoreB;
     private TextView tvArcherA;
     private TextView tvArcherB;
-    private TextView tvFocusDummy;
     private int scoringStatus = 0;
     private String archerAName = "Archer A";
     private String archerBName = "Archer B";
     boolean isSaved = true;
+    ConstraintLayout rootView;
 
     static boolean RECREATE_FLAG;
 
@@ -170,7 +169,13 @@ public class MatchActivity extends BaseActivity {
         }
     }
 
+
+
+
     private void setInitialState(){
+
+        rootView = findViewById(R.id.bckgd);
+
         endsDummyA = findViewById(R.id.A_ends_dummy);
         endsDummyB = findViewById(R.id.B_ends_dummy);
         endsDummyA.removeAllViews();
@@ -181,11 +186,8 @@ public class MatchActivity extends BaseActivity {
         tvTotalScoreA.setText("0");
         tvTotalScoreB.setText("0");
 
-
         tvArcherA = findViewById(R.id.tv_archer_A);
         tvArcherB = findViewById(R.id.tv_archer_B);
-        tvArcherA.setText(archerAName);
-        tvArcherB.setText(archerBName);
 
         outerMarkA = findViewById(R.id.A_outer_mark);
         outerMarkB = findViewById(R.id.B_outer_mark);
@@ -639,5 +641,6 @@ public class MatchActivity extends BaseActivity {
     private void printLog(String s){
         Log.i("Kroko",s);
     }
+
 }
 
