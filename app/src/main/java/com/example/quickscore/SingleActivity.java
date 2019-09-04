@@ -211,8 +211,6 @@ public class SingleActivity extends BaseActivity {
         }
     }//initEnds()
 
-
-
     private void addEndsListeners(int i){
         end[i].setOnIndexListener(new OnChangeIndexListener() {
             @Override
@@ -251,8 +249,6 @@ public class SingleActivity extends BaseActivity {
         markEnd();
     }//doIfCellErased()
 
-
-
     private void activateFirstIncompleteEnd(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             if(end[i].getEmptyCellsAmount()>0){
@@ -262,8 +258,6 @@ public class SingleActivity extends BaseActivity {
             }
         }
     }
-
-
 
 
     void initButtons(){
@@ -400,11 +394,6 @@ public class SingleActivity extends BaseActivity {
     private void showSaveAlert(final String command){
         final String filename = "single\n"+dateString();
 
-
-//        final String filename = "single"
-//                + System.getProperty("line.separator")
-//                + dateString();
-
         final SaveAlert saveAlert = new SaveAlert(this, filename);
         saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
             @Override
@@ -473,14 +462,16 @@ public class SingleActivity extends BaseActivity {
 
     private void updateTotalSum(){
         int total=0;
-        for(int i = 0; i< activeRow+1; i++){
+        for(int i = 0; i< NUMBER_OF_ENDS; i++){//i< activeRow+1
             total += end[i].getSum();
         }
         totalSum.setText(String.valueOf(total));
-        if(activeRow==NUMBER_OF_ENDS-1) checkRecord(total);
+        if(end[NUMBER_OF_ENDS-1].getSum()>0) checkRecord(total);
+//        if(activeRow==NUMBER_OF_ENDS-1) checkRecord(total);
     }
 
     private void checkRecord(int total){
+        record.setText("");
         switch (eventType){
             case "indoor":
                 if(total > pref.getInt("indoor_record",0)){
