@@ -601,9 +601,9 @@ public class MatchActivity extends BaseActivity {
         try {
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
                 String jEndScoresKeyA = "endScoresA"+endIndex;
-                String jEndScoresKeyB = "endScores"+endIndex;
+                String jEndScoresKeyB = "endScoresB"+endIndex;
                 String jEmptyCellsKeyA = "emptyCellsA"+endIndex;
-                String jEmptyCellsKeyB = "emptyCells"+endIndex;
+                String jEmptyCellsKeyB = "emptyCellsB"+endIndex;
 
                 int[] tempArrayA = endA[endIndex].getScores();
                 int[] tempArrayB = endB[endIndex].getScores();
