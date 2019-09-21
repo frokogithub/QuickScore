@@ -1,4 +1,5 @@
-<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:title="Apperence"
@@ -33,6 +34,14 @@
         app:layout="@layout/settings_header"
         app:iconSpaceReserved="false">
 
+        <com.example.quickscore.CustomDialogPreferenceCompat
+            app:layout="@layout/settings_row"
+            app:key="set_times"
+            app:title="Set Times"
+            app:iconSpaceReserved="false"
+            />
+
+        <!--
         <EditTextPreference
             app:layout="@layout/settings_row"
             app:defaultValue="100"
@@ -47,6 +56,7 @@
             app:title="Shooting Time  (seconds)"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true"/>
+        -->
         <CheckBoxPreference
             app:layout="@layout/settings_row"
             app:defaultValue="true"
@@ -55,6 +65,7 @@
             app:summaryOn="On"
             app:summaryOff="Off"
             app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

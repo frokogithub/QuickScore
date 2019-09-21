@@ -60,10 +60,6 @@ public class MatchActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
-//
-//        setInitialState();
-//        initEnds();
-//        initButtons();
     }
 
     @Override
@@ -74,7 +70,6 @@ public class MatchActivity extends BaseActivity {
             RECREATE_FLAG = false;
             recreate();
         }
-
 
 
         Intent intent = getIntent();
