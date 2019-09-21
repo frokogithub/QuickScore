@@ -2,35 +2,18 @@ package com.example.quickscore;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.preference.CheckBoxPreference;
-import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.PreferenceViewHolder;
-import androidx.preference.SeekBarPreference;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class SettingsActivity extends BaseActivity {
 
-    //static boolean THEME_CHANGED_FLAG = false;
     @Override
     public boolean onSupportNavigateUp() {
         finish();

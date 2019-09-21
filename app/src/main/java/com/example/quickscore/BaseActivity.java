@@ -56,6 +56,9 @@ public class BaseActivity extends AppCompatActivity {
         prefEditor.putInt("outdoor_record", 0);
         prefEditor.putInt("indoor_record", 0);
         prefEditor.putBoolean("coloredCells", false);
+        prefEditor.putInt("prepare_time", 10);
+        prefEditor.putInt("indoor_time", 120);
+        prefEditor.putInt("outdoor_time", 240);
         prefEditor.apply();
     }
 }
