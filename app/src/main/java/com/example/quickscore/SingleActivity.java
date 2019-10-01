@@ -1,5 +1,6 @@
 package com.example.quickscore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,18 +49,34 @@ public class SingleActivity extends BaseActivity {
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean RECREATE_FLAG;
     boolean isSaved = true;
+    private JSONObject scoresJSON = null;
+    boolean isRefilled = true;
 
-//    private int[] tempScoreArray;
-    private Bundle bundleScores;
+    private static final String TEMP_JSON_FILENAME = "tempJSON";
+    private static final String KEY_LOADED_FILENAME = "loadedFileName";
+    private static final String KEY_IS_REFILLED = "isRefilled";
+    private static final String KEY_EVENT_TYPE = "eventType";
 
 
+
+
+    // Starter Pattern
+    public static void start(Context context, boolean _isRefilled, String _loadedFileName) {
+        Intent starter = new Intent(context, SingleActivity.class);
+        starter.putExtra(KEY_IS_REFILLED,_isRefilled);
+        starter.putExtra(KEY_LOADED_FILENAME,_loadedFileName);
+        context.startActivity(starter);
+    }
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
+
     }
+
+
 
     @Override
     protected void onResume() {
@@ -70,53 +87,63 @@ public class SingleActivity extends BaseActivity {
             recreate();
         }
 
+
         Intent intent = getIntent();
-        if(intent.hasExtra("eventType")) eventType = intent.getStringExtra("eventType");
+        if(intent.hasExtra(KEY_IS_REFILLED)){
+            isRefilled = intent.getBooleanExtra(KEY_IS_REFILLED, true);
+        }else{
+            isRefilled = true;
+        }
+
+
+        printToast("isRefilled: "+String.valueOf(isRefilled));
+
+        String jsonName;
+        if(intent.hasExtra(KEY_LOADED_FILENAME)){
+            jsonName = intent.getStringExtra(KEY_LOADED_FILENAME);
+        }else{
+            jsonName = TEMP_JSON_FILENAME;
+        }
+        boolean loadFromTempFolder = jsonName.equals(TEMP_JSON_FILENAME);
+        scoresJSON = new JsonFileUtility(getApplicationContext()).loadJson(jsonName, loadFromTempFolder);
+        try {
+            if(scoresJSON!=null){
+                eventType = scoresJSON.getString(KEY_EVENT_TYPE);
+            }else{
+                eventType = "outdoor"; // TODO: wziąć z preferences
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
 
         setInitialState();
         initEnds();
 
-        fillScores();
+        if(isRefilled && scoresJSON !=null) fillScores();
 
         initButtons();
         activateFirstIncompleteEnd();
     }
 
     private void fillScores(){
-
-        Intent intent = getIntent();
-        JSONObject jsonObject = null;
-        if(intent.hasExtra("loadedJsonObject")){
-            try {
-                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             String arrayKey = "endScores"+i;
             String emptyCellsKey = "emptyCells" +i;
             int[] tempScoreArray = null;
             int emptyCells = 0;
+            tempScoreArray = new int[ARROWS_IN_END];
 
-            if(intent.hasExtra("loadedJsonObject")){
-                tempScoreArray = new int[ARROWS_IN_END];
-                try {
-                    JSONArray jsonArray = jsonObject.getJSONArray(arrayKey);
-                    for (int a=0; a<ARROWS_IN_END; a++) {
-                        tempScoreArray[a] = jsonArray.getInt(a);
-                    }
-                    emptyCells = jsonObject.getInt(emptyCellsKey);
-                    System.out.println(jsonObject);
-                }catch (JSONException e){
-                    e.printStackTrace();
+            try {
+                JSONArray jsonArray = scoresJSON.getJSONArray(arrayKey);
+                for (int a = 0; a < ARROWS_IN_END; a++) {
+                    tempScoreArray[a] = jsonArray.getInt(a);
                 }
-            }else{
-                if(intent.hasExtra(arrayKey)) tempScoreArray = intent.getIntArrayExtra(arrayKey);
-                if(intent.hasExtra(emptyCellsKey)) emptyCells = intent.getIntExtra(emptyCellsKey, 6);
-
+                emptyCells = scoresJSON.getInt(emptyCellsKey);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
             if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
         }
     }
@@ -125,19 +152,12 @@ public class SingleActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
 
-        int[] tempScoreArray;
+        makeJsonFile(TEMP_JSON_FILENAME);
         Intent intent = getIntent();
-        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-            tempScoreArray = end[i].getScores();
-            String arrName = "endScores"+i;
-            intent.putExtra(arrName,tempScoreArray);
-
-            int emptyCells = end[i].getEmptyCellsAmount();
-            String emptyCellsName = "emptyCells" +i;
-            intent.putExtra(emptyCellsName,emptyCells);
-        }
-        intent.putExtra("eventType", eventType);
+        intent.putExtra(KEY_IS_REFILLED, true);
+        intent.putExtra(KEY_LOADED_FILENAME, TEMP_JSON_FILENAME);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -395,6 +415,7 @@ public class SingleActivity extends BaseActivity {
         final String filename = "single\n"+dateString();
 
         final SaveAlert saveAlert = new SaveAlert(this, filename);
+//        System.out.println("kkk: przed SaveAlert - "+filename);//**********************************************************************************
         saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
             @Override
             public void onItemClick(boolean choice) {
@@ -403,6 +424,7 @@ public class SingleActivity extends BaseActivity {
                     if(eventType.equals("indoor")) eventTypePrefix = "i";
                     if(eventType.equals("outdoor")) eventTypePrefix = "o";
                     String fullFileName = "s" + eventTypePrefix + saveAlert.getFilename();
+//                    System.out.println("kkk: przed makeJsonFile - "+filename);//**********************************************************************************
                     makeJsonFile(fullFileName);
                     postSaveAlert(command);
                 }else{
@@ -505,8 +527,18 @@ public class SingleActivity extends BaseActivity {
 
     void makeJsonFile(String filename){
 
+        boolean saveToTempFolder = filename.equals(TEMP_JSON_FILENAME);
+//        if(filename.equals(TEMP_JSON_FILENAME)){
+//            saveToTempFolder = true;
+//        }else{
+//            saveToTempFolder = false;
+//        }
         JSONObject jsonObject = new JSONObject();
+
         try {
+
+            jsonObject.put(KEY_EVENT_TYPE, eventType);
+
             for (int endIndex=0;endIndex<NUMBER_OF_ENDS;endIndex++) {
                 String jEndScoresKey = "endScores"+endIndex;
                 String jEmptyCellsKey = "emptyCells"+endIndex;
@@ -527,7 +559,8 @@ public class SingleActivity extends BaseActivity {
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
-        jfile.saveJson(jsonObject, filename);
+        System.out.println("kkk: przed saveJson - "+filename);//**********************************************************************************
+        jfile.saveJson(jsonObject, filename, saveToTempFolder );
         isSaved = true;
     }
 

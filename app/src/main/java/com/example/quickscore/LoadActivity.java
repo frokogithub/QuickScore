@@ -5,15 +5,11 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -69,12 +65,12 @@ public class LoadActivity extends BaseActivity {
         arrayList = new ArrayList<>();
 
         for (String fileName:filesNames) {
+            // wybór ikony Single, Match. "tempJSON" pomija
             if(fileName.charAt(0)=='s'){
                 arrayList.add(new LoadRowData(fileName, iconSingle));
-            }else{
+            }else if(fileName.charAt(0)=='m'){
                 arrayList.add(new LoadRowData(fileName, iconMatch));
             }
-
         }
         loadListAdapter = new LoadListAdapter(this, arrayList);
         list = findViewById(R.id.list);
@@ -85,7 +81,7 @@ public class LoadActivity extends BaseActivity {
                 if(isLongClickAchieved){
                     isLongClickAchieved = false;
                 }else{
-                    loadFile(filesNames[position]);
+                    startFileInActivity(filesNames[position]);
                 }
             }
         });
@@ -100,29 +96,45 @@ public class LoadActivity extends BaseActivity {
         });
     }
 
-    private void loadFile(String fileName){
-        JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
-        Intent intent = null;
+//    private void startFileInActivity(String fileName){
+//        JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
+//        Intent intent = null;
+//        if(fileName.charAt(0)=='s'){
+//            intent = new Intent(getApplicationContext(),SingleActivity.class);
+//            if(fileName.charAt(1)=='o'){
+//                intent.putExtra("eventType", "outdoor");
+//            }else if(fileName.charAt(1)=='i'){
+//                intent.putExtra("eventType", "indoor");
+//            }
+//        }else if(fileName.charAt(0)=='m'){
+//            intent = new Intent(getApplicationContext(),MatchActivity.class);
+//            if(fileName.charAt(1)=='r'){
+//                intent.putExtra("division", "recurve");
+//            }else if(fileName.charAt(1)=='c'){
+//                intent.putExtra("division", "compound");
+//            }
+//        }
+//
+//        intent.putExtra("loadedFileName", fileName);
+//        if(intent!=null) startActivity(intent);
+//        finish();
+//    }
+
+
+    private void startFileInActivity(String fileName){
         if(fileName.charAt(0)=='s'){
-            intent = new Intent(getApplicationContext(),SingleActivity.class);
-            if(fileName.charAt(1)=='o'){
-                intent.putExtra("eventType", "outdoor");
-            }else if(fileName.charAt(1)=='i'){
-                intent.putExtra("eventType", "indoor");
-            }
+            SingleActivity.start(LoadActivity.this,true, fileName);
         }else if(fileName.charAt(0)=='m'){
-            intent = new Intent(getApplicationContext(),MatchActivity.class);
-            if(fileName.charAt(1)=='r'){
-                intent.putExtra("division", "recurve");
-            }else if(fileName.charAt(1)=='c'){
-                intent.putExtra("division", "compound");
-            }
+            MatchActivity.start(LoadActivity.this,true, fileName);
         }
 
-        if(jsonObject!=null) intent.putExtra("loadedJsonObject", jsonObject.toString());
-        if(intent!=null) startActivity(intent);
         finish();
     }
+
+
+
+
+
 
     private void delete(String fileName){
         JsonFileUtility jsonFileUtility = new JsonFileUtility(getApplicationContext());

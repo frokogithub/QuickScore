@@ -21,21 +21,28 @@ public class JsonFileUtility {
 
     private  Context context;
     private final String FOLDERNAME = "QUICKSCORE SAVINGS";
+    private final String TEMP_FOLDERNAME = "QUICKSCORE TEMP";
 
     public JsonFileUtility(Context context){
 
         this.context = context;
     }
 
-    public void saveJson(JSONObject jsonObject, String filename){
-        String FILENAME = filename;
+    public void saveJson(JSONObject jsonObject, String filename, boolean saveToTempFolder){
+//        String FILENAME = filename;
 
         String jsonString;
 
         jsonString = String.valueOf(jsonObject);
 
         try {
-            String folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
+            String folder;
+            if(saveToTempFolder){
+                folder = context.getFilesDir().getAbsolutePath() + File.separator + TEMP_FOLDERNAME;
+            }else{
+                folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
+            }
+//            String folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
 
             File subFolder = new File(folder);
 
@@ -48,7 +55,7 @@ public class JsonFileUtility {
 
             }
 
-            FileOutputStream outputStream = new FileOutputStream(new File(subFolder, FILENAME));
+            FileOutputStream outputStream = new FileOutputStream(new File(subFolder, filename));
 
             outputStream.write(jsonString.getBytes());
             outputStream.close();
@@ -61,22 +68,30 @@ public class JsonFileUtility {
     }
 
 
-    public JSONObject loadJson(String fileName){
+    public JSONObject loadJson(String fileName, boolean loadFromTempFolder){
 
         JSONObject jo = null;
         String receivedString = "";
 
         try {
 
-            String FILENAME = fileName;
+//            String FILENAME = fileName;
 
             byte[] bytes = new byte[1024];
 
-            String folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
+            String folder;
+            if(loadFromTempFolder){
+                folder = context.getFilesDir().getAbsolutePath() + File.separator + TEMP_FOLDERNAME;
+            }else{
+                folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
+            }
+
+//            String folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
 
             File subFolder = new File(folder);
 
-            FileInputStream outputStream = new FileInputStream(new File(subFolder, FILENAME));
+            System.out.println("kkk: przed FleInputStream - "+fileName);//**********************************************************************************
+            FileInputStream outputStream = new FileInputStream(new File(subFolder, fileName));
 
             outputStream.read(bytes);
             outputStream.close();

@@ -1,6 +1,7 @@
 package com.example.quickscore;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,13 @@ public class MatchActivity extends BaseActivity {
     static boolean RECREATE_FLAG;
 
 
+    // Starter Pattern
+    public static void start(Context context, boolean _isRefilled, String _loadedFileName) {
+        Intent starter = new Intent(context, SingleActivity.class);
+        starter.putExtra("isRefilled",_isRefilled);
+        starter.putExtra("loadedFileName",_loadedFileName);
+        context.startActivity(starter);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -622,7 +630,7 @@ public class MatchActivity extends BaseActivity {
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
-        jfile.saveJson(jsonObject, filename);
+        //jfile.saveJson(jsonObject, filename);
         isSaved = true;
     }
 

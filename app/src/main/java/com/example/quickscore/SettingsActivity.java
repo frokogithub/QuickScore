@@ -102,9 +102,7 @@ public class SettingsActivity extends BaseActivity {
             // If it was one of our cutom Preferences, show its dialog
             if (dialogFragment != null) {
                 dialogFragment.setTargetFragment(this, 0);
-                dialogFragment.show(this.getFragmentManager(),
-                        "tag");
-
+                dialogFragment.show(this.getFragmentManager(), "tag");
             }else {
                 super.onDisplayPreferenceDialog(preference);
             }
