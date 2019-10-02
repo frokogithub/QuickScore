@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +57,9 @@ public class MatchActivity extends BaseActivity {
 
 
     // Starter Pattern
-    public static void start(Context context, boolean _isRefilled, String _loadedFileName) {
+    public static void start(Context context, boolean isFileLoaded, String _loadedFileName) {
         Intent starter = new Intent(context, SingleActivity.class);
-        starter.putExtra("isRefilled",_isRefilled);
+        starter.putExtra("isRefilled", isFileLoaded);
         starter.putExtra("loadedFileName",_loadedFileName);
         context.startActivity(starter);
     }

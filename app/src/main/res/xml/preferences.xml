@@ -19,7 +19,7 @@
         <CheckBoxPreference
             app:layout="@layout/settings_row"
             app:defaultValue="true"
-            app:key="coloredCells"
+            app:key="colored_cells"
             app:title="Colored Scores"
             app:summaryOn="On"
             app:summaryOff="Off"

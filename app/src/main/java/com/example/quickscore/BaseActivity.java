@@ -17,6 +17,15 @@ public class BaseActivity extends AppCompatActivity {
 
     SharedPreferences pref;
     public static boolean COLORED_CELLS_FLAG;
+    public static final String KEY_PREF_THEME = "theme";
+    public static final String KEY_PREF_COLORED_CELLS = "colored_cells";
+    public static final String KEY_PREF_APP_VERSION = "app_version";
+    public static final String KEY_PREF_OUTDOOR_RECORD = "outdoor_record";
+    public static final String KEY_PREF_INDOOR_RECORD = "indoor_record";
+    public static final String KEY_PREF_PREPARE_TIME = "prepare_time";
+    public static final String KEY_PREF_INDOOR_TIME = "indoor_time";
+    public static final String KEY_PREF_OUTDOOR_TIME = "outdoor_time";
+    public static final String KEY_PREF_CLOSED_BY_USER = "closed_by_user";
 
 
     @Override
@@ -32,33 +41,34 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        COLORED_CELLS_FLAG = pref.getBoolean("coloredCells", false);
+        COLORED_CELLS_FLAG = pref.getBoolean(KEY_PREF_COLORED_CELLS, false);
     }
 
     public void updateTheme() {
             //pref =  getSharedPreferences("Settings", MODE_PRIVATE);
 //            pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-            if(pref.getString("theme", "").equals("DARK")) setTheme(R.style.QuickScoreDarkTheme);
-            if(pref.getString("theme", "").equals("LIGHT")) setTheme(R.style.QuickScoreLightTheme);
+            if(pref.getString(KEY_PREF_THEME, "").equals("DARK")) setTheme(R.style.QuickScoreDarkTheme);
+            if(pref.getString(KEY_PREF_THEME, "").equals("LIGHT")) setTheme(R.style.QuickScoreLightTheme);
     }
 
     private void checkFirstRun() {
         int currentVersion = BuildConfig.VERSION_CODE;
-        int savedVersion = pref.getInt("version_code", -1);
+        int savedVersion = pref.getInt(KEY_PREF_APP_VERSION, -1);
         if (savedVersion == -1) firstRunPreferencesSetup();//Toast.makeText(getApplicationContext(), String.valueOf(BuildConfig.VERSION_CODE), Toast.LENGTH_SHORT).show();
-        if (currentVersion > savedVersion) pref.edit().putInt("version_code", currentVersion).apply();
+        if (currentVersion > savedVersion) pref.edit().putInt(KEY_PREF_APP_VERSION, currentVersion).apply();
     }
 
     private void firstRunPreferencesSetup(){
         SharedPreferences.Editor prefEditor = pref.edit();
-        prefEditor.putString("theme", "LIGHT");
-        prefEditor.putInt("outdoor_record", 0);
-        prefEditor.putInt("indoor_record", 0);
-        prefEditor.putBoolean("coloredCells", false);
-        prefEditor.putInt("prepare_time", 10);
-        prefEditor.putInt("indoor_time", 120);
-        prefEditor.putInt("outdoor_time", 240);
+        prefEditor.putString(KEY_PREF_THEME, "LIGHT");
+        prefEditor.putInt(KEY_PREF_OUTDOOR_RECORD, 0);
+        prefEditor.putInt(KEY_PREF_INDOOR_RECORD, 0);
+        prefEditor.putBoolean(KEY_PREF_COLORED_CELLS, false);
+        prefEditor.putInt(KEY_PREF_PREPARE_TIME, 10);
+        prefEditor.putInt(KEY_PREF_INDOOR_TIME, 120);
+        prefEditor.putInt(KEY_PREF_OUTDOOR_TIME, 240);
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, false);
         prefEditor.apply();
     }
 }

@@ -2,6 +2,7 @@ package com.example.quickscore;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,7 +37,6 @@ public class SingleActivity extends BaseActivity {
     private final static int OUTDOOR_ARROWS_IN_END = 6;
     private final static int INDOOR_NUMBER_OF_ENDS = 10;
     private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
-//    private int eventType = 2; //1 indoor, 2 outdoor,
     private String eventType = "outdoor"; //1 indoor, 2 outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
@@ -54,16 +54,16 @@ public class SingleActivity extends BaseActivity {
 
     private static final String TEMP_JSON_FILENAME = "tempJSON";
     private static final String KEY_LOADED_FILENAME = "loadedFileName";
-    private static final String KEY_IS_REFILLED = "isRefilled";
+    private static final String KEY_IS_FILE_LOADED = "isFileLoaded";
     private static final String KEY_EVENT_TYPE = "eventType";
 
 
 
 
     // Starter Pattern
-    public static void start(Context context, boolean _isRefilled, String _loadedFileName) {
+    public static void start(Context context, boolean isFileLoaded, String _loadedFileName) {
         Intent starter = new Intent(context, SingleActivity.class);
-        starter.putExtra(KEY_IS_REFILLED,_isRefilled);
+        starter.putExtra(KEY_IS_FILE_LOADED, isFileLoaded);
         starter.putExtra(KEY_LOADED_FILENAME,_loadedFileName);
         context.startActivity(starter);
     }
@@ -87,23 +87,29 @@ public class SingleActivity extends BaseActivity {
             recreate();
         }
 
+        boolean wereClosedByUser = pref.getBoolean(KEY_PREF_CLOSED_BY_USER, false);
+        //zeruję flagę
+        SharedPreferences.Editor prefEditor = pref.edit();
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, false);
+        prefEditor.apply();
+
+
 
         Intent intent = getIntent();
-        if(intent.hasExtra(KEY_IS_REFILLED)){
-            isRefilled = intent.getBooleanExtra(KEY_IS_REFILLED, true);
-        }else{
-            isRefilled = true;
-        }
-
-
-        printToast("isRefilled: "+String.valueOf(isRefilled));
-
         String jsonName;
-        if(intent.hasExtra(KEY_LOADED_FILENAME)){
+
+        boolean isFileLoaded = intent.getBooleanExtra(KEY_IS_FILE_LOADED,false);
+
+        if(wereClosedByUser){
             jsonName = intent.getStringExtra(KEY_LOADED_FILENAME);
         }else{
             jsonName = TEMP_JSON_FILENAME;
         }
+
+        System.out.println("kkk closedByUser:  "+wereClosedByUser);
+        System.out.println("kkk isLoaded:  "+isFileLoaded);
+        System.out.println("kkk jsonName:  "+jsonName);
+
         boolean loadFromTempFolder = jsonName.equals(TEMP_JSON_FILENAME);
         scoresJSON = new JsonFileUtility(getApplicationContext()).loadJson(jsonName, loadFromTempFolder);
         try {
@@ -120,7 +126,7 @@ public class SingleActivity extends BaseActivity {
         setInitialState();
         initEnds();
 
-        if(isRefilled && scoresJSON !=null) fillScores();
+        if((!wereClosedByUser || isFileLoaded) && scoresJSON!=null) fillScores();
 
         initButtons();
         activateFirstIncompleteEnd();
@@ -153,9 +159,9 @@ public class SingleActivity extends BaseActivity {
         super.onPause();
 
         makeJsonFile(TEMP_JSON_FILENAME);
-        Intent intent = getIntent();
-        intent.putExtra(KEY_IS_REFILLED, true);
-        intent.putExtra(KEY_LOADED_FILENAME, TEMP_JSON_FILENAME);
+//        Intent intent = getIntent();
+//        intent.putExtra(KEY_IS_FILE_LOADED, true);
+//        intent.putExtra(KEY_LOADED_FILENAME, TEMP_JSON_FILENAME);
     }
 
 
@@ -164,6 +170,11 @@ public class SingleActivity extends BaseActivity {
         if(!isSaved){
             showSaveAlert("BACK");
         }else{
+            //zamknięcie przez użytkownika
+            SharedPreferences.Editor prefEditor = pref.edit();
+            prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, true);
+            prefEditor.apply();
+
             finish();
         }
     }
@@ -415,7 +426,6 @@ public class SingleActivity extends BaseActivity {
         final String filename = "single\n"+dateString();
 
         final SaveAlert saveAlert = new SaveAlert(this, filename);
-//        System.out.println("kkk: przed SaveAlert - "+filename);//**********************************************************************************
         saveAlert.setOnSaveAlertItemClickListener(new OnSaveAlertItemClik() {
             @Override
             public void onItemClick(boolean choice) {
@@ -424,7 +434,6 @@ public class SingleActivity extends BaseActivity {
                     if(eventType.equals("indoor")) eventTypePrefix = "i";
                     if(eventType.equals("outdoor")) eventTypePrefix = "o";
                     String fullFileName = "s" + eventTypePrefix + saveAlert.getFilename();
-//                    System.out.println("kkk: przed makeJsonFile - "+filename);//**********************************************************************************
                     makeJsonFile(fullFileName);
                     postSaveAlert(command);
                 }else{
@@ -448,6 +457,10 @@ public class SingleActivity extends BaseActivity {
                 newBoard();
                 break;
             case "BACK":
+                //zamknięcie przez użytkownika
+                SharedPreferences.Editor prefEditor = pref.edit();
+                prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, true);
+                prefEditor.apply();
                 finish();
                 break;
 
@@ -496,15 +509,15 @@ public class SingleActivity extends BaseActivity {
         record.setText("");
         switch (eventType){
             case "indoor":
-                if(total > pref.getInt("indoor_record",0)){
+                if(total > pref.getInt(KEY_PREF_INDOOR_RECORD,0)){
                     record.setText("NEW\nRECORD!");
-                    pref.edit().putInt("indoor_record",total).apply();
+                    pref.edit().putInt(KEY_PREF_INDOOR_RECORD,total).apply();
                 }
                 break;
             case "outdoor":
-                if(total > pref.getInt("outdoor_record",0)){
+                if(total > pref.getInt(KEY_PREF_OUTDOOR_RECORD,0)){
                     record.setText("NEW RECORD!");
-                    pref.edit().putInt("outdoor_record",total).apply();
+                    pref.edit().putInt(KEY_PREF_OUTDOOR_RECORD,total).apply();
                 }
                 break;
             default:
@@ -559,7 +572,6 @@ public class SingleActivity extends BaseActivity {
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
-        System.out.println("kkk: przed saveJson - "+filename);//**********************************************************************************
         jfile.saveJson(jsonObject, filename, saveToTempFolder );
         isSaved = true;
     }

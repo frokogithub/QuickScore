@@ -89,8 +89,6 @@ public class JsonFileUtility {
 //            String folder = context.getFilesDir().getAbsolutePath() + File.separator + FOLDERNAME;
 
             File subFolder = new File(folder);
-
-            System.out.println("kkk: przed FleInputStream - "+fileName);//**********************************************************************************
             FileInputStream outputStream = new FileInputStream(new File(subFolder, fileName));
 
             outputStream.read(bytes);

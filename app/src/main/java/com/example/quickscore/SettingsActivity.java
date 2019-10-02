@@ -54,7 +54,8 @@ public class SettingsActivity extends BaseActivity {
 //                }
 //            });
 
-            ListPreference themeListPref = findPreference("theme");
+
+            ListPreference themeListPref = findPreference(KEY_PREF_THEME);
             themeListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -67,7 +68,7 @@ public class SettingsActivity extends BaseActivity {
                 }
             });
 
-            CheckBoxPreference checkBoxPref = findPreference("coloredCells");
+            CheckBoxPreference checkBoxPref = findPreference(KEY_PREF_COLORED_CELLS);
             checkBoxPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
