@@ -25,7 +25,8 @@ public class BaseActivity extends AppCompatActivity {
     public static final String KEY_PREF_PREPARE_TIME = "prepare_time";
     public static final String KEY_PREF_INDOOR_TIME = "indoor_time";
     public static final String KEY_PREF_OUTDOOR_TIME = "outdoor_time";
-    public static final String KEY_PREF_CLOSED_BY_USER = "closed_by_user";
+    public static final String KEY_PREF_CLOSED_BY_USER_Single = "closed_by_user_single";
+    public static final String KEY_PREF_CLOSED_BY_USER_Match = "closed_by_user_match";
 
 
     @Override
@@ -45,9 +46,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void updateTheme() {
-            //pref =  getSharedPreferences("Settings", MODE_PRIVATE);
-//            pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
             if(pref.getString(KEY_PREF_THEME, "").equals("DARK")) setTheme(R.style.QuickScoreDarkTheme);
             if(pref.getString(KEY_PREF_THEME, "").equals("LIGHT")) setTheme(R.style.QuickScoreLightTheme);
     }
@@ -55,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     private void checkFirstRun() {
         int currentVersion = BuildConfig.VERSION_CODE;
         int savedVersion = pref.getInt(KEY_PREF_APP_VERSION, -1);
-        if (savedVersion == -1) firstRunPreferencesSetup();//Toast.makeText(getApplicationContext(), String.valueOf(BuildConfig.VERSION_CODE), Toast.LENGTH_SHORT).show();
+        if (savedVersion == -1) firstRunPreferencesSetup();
         if (currentVersion > savedVersion) pref.edit().putInt(KEY_PREF_APP_VERSION, currentVersion).apply();
     }
 
@@ -68,7 +66,8 @@ public class BaseActivity extends AppCompatActivity {
         prefEditor.putInt(KEY_PREF_PREPARE_TIME, 10);
         prefEditor.putInt(KEY_PREF_INDOOR_TIME, 120);
         prefEditor.putInt(KEY_PREF_OUTDOOR_TIME, 240);
-        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, false);
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, false);
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, false);
         prefEditor.apply();
     }
 }

@@ -52,19 +52,19 @@ public class SingleActivity extends BaseActivity {
     private JSONObject scoresJSON = null;
     boolean isRefilled = true;
 
-    private static final String TEMP_JSON_FILENAME = "tempJSON";
+    private static final String TEMP_JSON_FILENAME = "Single_tempJSON";
     private static final String KEY_LOADED_FILENAME = "loadedFileName";
-    private static final String KEY_IS_FILE_LOADED = "isFileLoaded";
+    private static final String KEY_IS_FILE_LOADED = "Single_isFileLoaded";
     private static final String KEY_EVENT_TYPE = "eventType";
 
 
 
 
     // Starter Pattern
-    public static void start(Context context, boolean isFileLoaded, String _loadedFileName) {
+    public static void start(Context context, boolean isFileLoaded, String loadedFileName) {
         Intent starter = new Intent(context, SingleActivity.class);
         starter.putExtra(KEY_IS_FILE_LOADED, isFileLoaded);
-        starter.putExtra(KEY_LOADED_FILENAME,_loadedFileName);
+        starter.putExtra(KEY_LOADED_FILENAME, loadedFileName);
         context.startActivity(starter);
     }
 
@@ -87,10 +87,10 @@ public class SingleActivity extends BaseActivity {
             recreate();
         }
 
-        boolean wereClosedByUser = pref.getBoolean(KEY_PREF_CLOSED_BY_USER, false);
+        boolean wereClosedByUser = pref.getBoolean(KEY_PREF_CLOSED_BY_USER_Single, false);
         //zeruję flagę
         SharedPreferences.Editor prefEditor = pref.edit();
-        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, false);
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, false);
         prefEditor.apply();
 
 
@@ -157,11 +157,7 @@ public class SingleActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         makeJsonFile(TEMP_JSON_FILENAME);
-//        Intent intent = getIntent();
-//        intent.putExtra(KEY_IS_FILE_LOADED, true);
-//        intent.putExtra(KEY_LOADED_FILENAME, TEMP_JSON_FILENAME);
     }
 
 
@@ -172,7 +168,7 @@ public class SingleActivity extends BaseActivity {
         }else{
             //zamknięcie przez użytkownika
             SharedPreferences.Editor prefEditor = pref.edit();
-            prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, true);
+            prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, true);
             prefEditor.apply();
 
             finish();
@@ -459,7 +455,7 @@ public class SingleActivity extends BaseActivity {
             case "BACK":
                 //zamknięcie przez użytkownika
                 SharedPreferences.Editor prefEditor = pref.edit();
-                prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER, true);
+                prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, true);
                 prefEditor.apply();
                 finish();
                 break;

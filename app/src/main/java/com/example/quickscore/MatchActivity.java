@@ -3,6 +3,7 @@ package com.example.quickscore;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -42,7 +43,7 @@ public class MatchActivity extends BaseActivity {
     private ViewGroup endsDummyB;
     private ViewGroup outerMarkA;
     private ViewGroup outerMarkB;
-    private ViewGroup parent;
+//    private ViewGroup parent;
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
     private TextView tvArcherA;
@@ -52,15 +53,20 @@ public class MatchActivity extends BaseActivity {
     private String archerBName = "Archer B";
     boolean isSaved = true;
     ConstraintLayout rootView;
+    private JSONObject scoresJSON = null;
 
     static boolean RECREATE_FLAG;
 
+    private static final String TEMP_JSON_FILENAME = "Match_tempJSON";
+    private static final String KEY_LOADED_FILENAME = "loadedFileName";
+    private static final String KEY_IS_FILE_LOADED = "Match_isFileLoaded";
+    private static final String KEY_DIVISION = "division";
 
     // Starter Pattern
-    public static void start(Context context, boolean isFileLoaded, String _loadedFileName) {
-        Intent starter = new Intent(context, SingleActivity.class);
-        starter.putExtra("isRefilled", isFileLoaded);
-        starter.putExtra("loadedFileName",_loadedFileName);
+    public static void start(Context context, boolean isFileLoaded, String loadedFileName) {
+        Intent starter = new Intent(context, MatchActivity.class);
+        starter.putExtra(KEY_IS_FILE_LOADED, isFileLoaded);
+        starter.putExtra(KEY_LOADED_FILENAME,loadedFileName);
         context.startActivity(starter);
     }
     @Override
@@ -78,14 +84,47 @@ public class MatchActivity extends BaseActivity {
             recreate();
         }
 
+        boolean wereClosedByUser = pref.getBoolean(KEY_PREF_CLOSED_BY_USER_Match, false);
+        //zeruję flagę
+        SharedPreferences.Editor prefEditor = pref.edit();
+        prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, false);
+        prefEditor.apply();
 
         Intent intent = getIntent();
-        if(intent.hasExtra("division")) division = intent.getStringExtra("division");
+        String jsonName;
+
+        boolean isFileLoaded = intent.getBooleanExtra(KEY_IS_FILE_LOADED,false);
+
+        if(wereClosedByUser){
+            jsonName = intent.getStringExtra(KEY_LOADED_FILENAME);
+        }else{
+            jsonName = TEMP_JSON_FILENAME;
+        }
+
+        System.out.println("kkk closedByUser:  "+wereClosedByUser);
+        System.out.println("kkk isLoaded:  "+isFileLoaded);
+        System.out.println("kkk jsonName:  "+jsonName);
+
+        boolean loadFromTempFolder = jsonName.equals(TEMP_JSON_FILENAME);
+        scoresJSON = new JsonFileUtility(getApplicationContext()).loadJson(jsonName, loadFromTempFolder);
+        try {
+            if(scoresJSON!=null){
+                division = scoresJSON.getString(KEY_DIVISION);
+            }else{
+                division = "recurve"; // TODO: wziąć z preferences
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+//        Intent intent = getIntent();
+//        if(intent.hasExtra("division")) division = intent.getStringExtra("division");
 
         setInitialState();
         initEnds();
 
-        fillScores();
+        if((!wereClosedByUser || isFileLoaded) && scoresJSON!=null) fillScores();
 
         initButtons();
         activateFirstIncompleteEnd(true, true);
@@ -93,50 +132,78 @@ public class MatchActivity extends BaseActivity {
 
     private void fillScores(){
 
-        Intent intent = getIntent();
-        JSONObject jsonObject = null;
-        if(intent.hasExtra("loadedJsonObject")){
-            try {
-                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
+//        Intent intent = getIntent();
+//        JSONObject jsonObject = null;
+//        if(intent.hasExtra("loadedJsonObject")){
+//            try {
+//                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
+//            }catch (JSONException e){
+//                e.printStackTrace();
+//            }
+//        }
 
-        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+        int[] tempScoreArrayA = null;
+        int[] tempScoreArrayB = null;
+        int emptyCellsA = 0;
+        int emptyCellsB = 0;
+        for (int i=0;i<NUMBER_OF_ENDS;i++){
             String arrayKeyA = "endScoresA"+i;
             String arrayKeyB = "endScoresB"+i;
             String emptyCellsKeyA = "emptyCellsA" +i;
             String emptyCellsKeyB = "emptyCellsB" +i;
-            int[] tempScoreArrayA = null;
-            int[] tempScoreArrayB = null;
-            int emptyCellsA = 0;
-            int emptyCellsB = 0;
 
-            if(intent.hasExtra("loadedJsonObject")){
-                tempScoreArrayA = new int[ARROWS_IN_END];
-                tempScoreArrayB = new int[ARROWS_IN_END];
-                try {
-                    JSONArray jsonArrayA = jsonObject.getJSONArray(arrayKeyA);
-                    JSONArray jsonArrayB = jsonObject.getJSONArray(arrayKeyB);
-                    for (int a=0; a<ARROWS_IN_END; a++) {
-                        tempScoreArrayA[a] = jsonArrayA.getInt(a);
-                        tempScoreArrayB[a] = jsonArrayB.getInt(a);
-                    }
-                    emptyCellsA = jsonObject.getInt(emptyCellsKeyA);
-                    emptyCellsB = jsonObject.getInt(emptyCellsKeyB);
-                }catch (JSONException e){
-                    e.printStackTrace();
+            tempScoreArrayA = new int[ARROWS_IN_END];
+            tempScoreArrayB = new int[ARROWS_IN_END];
+            try {
+                JSONArray jsonArrayA = scoresJSON.getJSONArray(arrayKeyA);
+                JSONArray jsonArrayB = scoresJSON.getJSONArray(arrayKeyB);
+                for (int a=0; a<ARROWS_IN_END; a++) {
+                    tempScoreArrayA[a] = jsonArrayA.getInt(a);
+                    tempScoreArrayB[a] = jsonArrayB.getInt(a);
                 }
-            }else{
-                if(intent.hasExtra(arrayKeyA)) tempScoreArrayA = intent.getIntArrayExtra(arrayKeyA);
-                if(intent.hasExtra(arrayKeyB)) tempScoreArrayB = intent.getIntArrayExtra(arrayKeyB);
-                if(intent.hasExtra(emptyCellsKeyA)) emptyCellsA = intent.getIntExtra(emptyCellsKeyA, 6);
-                if(intent.hasExtra(emptyCellsKeyB)) emptyCellsB = intent.getIntExtra(emptyCellsKeyB, 6);
+                emptyCellsA = scoresJSON.getInt(emptyCellsKeyA);
+                emptyCellsB = scoresJSON.getInt(emptyCellsKeyB);
+            }catch (JSONException e){
+                e.printStackTrace();
             }
-            if(endA[i]!=null && tempScoreArrayA!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
-            if(endB[i]!=null && tempScoreArrayB!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
+            if(endA[i]!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
+            if(endB[i]!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
         }
+
+//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+//            String arrayKeyA = "endScoresA"+i;
+//            String arrayKeyB = "endScoresB"+i;
+//            String emptyCellsKeyA = "emptyCellsA" +i;
+//            String emptyCellsKeyB = "emptyCellsB" +i;
+//            int[] tempScoreArrayA = null;
+//            int[] tempScoreArrayB = null;
+//            int emptyCellsA = 0;
+//            int emptyCellsB = 0;
+//
+//            if(intent.hasExtra("loadedJsonObject")){
+//                tempScoreArrayA = new int[ARROWS_IN_END];
+//                tempScoreArrayB = new int[ARROWS_IN_END];
+//                try {
+//                    JSONArray jsonArrayA = jsonObject.getJSONArray(arrayKeyA);
+//                    JSONArray jsonArrayB = jsonObject.getJSONArray(arrayKeyB);
+//                    for (int a=0; a<ARROWS_IN_END; a++) {
+//                        tempScoreArrayA[a] = jsonArrayA.getInt(a);
+//                        tempScoreArrayB[a] = jsonArrayB.getInt(a);
+//                    }
+//                    emptyCellsA = jsonObject.getInt(emptyCellsKeyA);
+//                    emptyCellsB = jsonObject.getInt(emptyCellsKeyB);
+//                }catch (JSONException e){
+//                    e.printStackTrace();
+//                }
+//            }else{
+//                if(intent.hasExtra(arrayKeyA)) tempScoreArrayA = intent.getIntArrayExtra(arrayKeyA);
+//                if(intent.hasExtra(arrayKeyB)) tempScoreArrayB = intent.getIntArrayExtra(arrayKeyB);
+//                if(intent.hasExtra(emptyCellsKeyA)) emptyCellsA = intent.getIntExtra(emptyCellsKeyA, 6);
+//                if(intent.hasExtra(emptyCellsKeyB)) emptyCellsB = intent.getIntExtra(emptyCellsKeyB, 6);
+//            }
+//            if(endA[i]!=null && tempScoreArrayA!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
+//            if(endB[i]!=null && tempScoreArrayB!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
+//        }
 
     }
 
@@ -144,29 +211,35 @@ public class MatchActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
 
-        Intent intent = getIntent();
-        int [] tempScoreArrayA, tempScoreArrayB;
-        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-            tempScoreArrayA = endA[i].getScores();
-            tempScoreArrayB = endB[i].getScores();
-            String arrNameA = "endScoresA"+i;
-            String arrNameB = "endScoresB"+i;
-            intent.putExtra(arrNameA,tempScoreArrayA);
-            intent.putExtra(arrNameB,tempScoreArrayB);
+        makeJsonFile(TEMP_JSON_FILENAME);
 
-            int emptyCellsA = endA[i].getEmptyCellsAmount();
-            int emptyCellsB = endB[i].getEmptyCellsAmount();
-            String emptyCellsNameA = "emptyCellsA"+i;
-            String emptyCellsNameB = "emptyCellsB"+i;
-            intent.putExtra(emptyCellsNameA,emptyCellsA);
-            intent.putExtra(emptyCellsNameB,emptyCellsB);
-        }
+//        Intent intent = getIntent();
+//        int [] tempScoreArrayA, tempScoreArrayB;
+//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
+//            tempScoreArrayA = endA[i].getScores();
+//            tempScoreArrayB = endB[i].getScores();
+//            String arrNameA = "endScoresA"+i;
+//            String arrNameB = "endScoresB"+i;
+//            intent.putExtra(arrNameA,tempScoreArrayA);
+//            intent.putExtra(arrNameB,tempScoreArrayB);
+//
+//            int emptyCellsA = endA[i].getEmptyCellsAmount();
+//            int emptyCellsB = endB[i].getEmptyCellsAmount();
+//            String emptyCellsNameA = "emptyCellsA"+i;
+//            String emptyCellsNameB = "emptyCellsB"+i;
+//            intent.putExtra(emptyCellsNameA,emptyCellsA);
+//            intent.putExtra(emptyCellsNameB,emptyCellsB);
+//        }
     }
     @Override
     public void onBackPressed() {
         if(!isSaved){
             showSaveAlert("BACK");
         }else{
+            //zamknięcie przez użytkownika
+            SharedPreferences.Editor prefEditor = pref.edit();
+            prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, true);
+            prefEditor.apply();
             finish();
         }
     }
@@ -436,14 +509,6 @@ public class MatchActivity extends BaseActivity {
                                     clearEnds();
                                 }
                                 break;
-//                            case "TIMER":
-//                                break;
-//                            case "SAVE":
-//                                printToast("Save start");
-//                                break;
-//                            case "SETTINGS":
-//                                printToast("Settings start");
-//                                break;
                         }
                     }
                 });
@@ -589,6 +654,10 @@ public class MatchActivity extends BaseActivity {
                 clearEnds();
                 break;
             case "BACK":
+                //zamknięcie przez użytkownika
+                SharedPreferences.Editor prefEditor = pref.edit();
+                prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, true);
+                prefEditor.apply();
                 finish();
                 break;
 
@@ -598,6 +667,8 @@ public class MatchActivity extends BaseActivity {
     }
 
     void makeJsonFile(String filename){
+
+        boolean saveToTempFolder = filename.equals(TEMP_JSON_FILENAME);
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -629,6 +700,7 @@ public class MatchActivity extends BaseActivity {
         }
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
+        jfile.saveJson(jsonObject, filename, saveToTempFolder );
         //jfile.saveJson(jsonObject, filename);
         isSaved = true;
     }

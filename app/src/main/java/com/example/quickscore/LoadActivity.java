@@ -65,7 +65,7 @@ public class LoadActivity extends BaseActivity {
         arrayList = new ArrayList<>();
 
         for (String fileName:filesNames) {
-            // wybór ikony Single, Match. "tempJSON" pomija
+            // wybór ikony Single, Match. "tempJSON" pomija w ogóle
             if(fileName.charAt(0)=='s'){
                 arrayList.add(new LoadRowData(fileName, iconSingle));
             }else if(fileName.charAt(0)=='m'){
@@ -96,30 +96,6 @@ public class LoadActivity extends BaseActivity {
         });
     }
 
-//    private void startFileInActivity(String fileName){
-//        JSONObject jsonObject = new JsonFileUtility(context).loadJson(fileName);
-//        Intent intent = null;
-//        if(fileName.charAt(0)=='s'){
-//            intent = new Intent(getApplicationContext(),SingleActivity.class);
-//            if(fileName.charAt(1)=='o'){
-//                intent.putExtra("eventType", "outdoor");
-//            }else if(fileName.charAt(1)=='i'){
-//                intent.putExtra("eventType", "indoor");
-//            }
-//        }else if(fileName.charAt(0)=='m'){
-//            intent = new Intent(getApplicationContext(),MatchActivity.class);
-//            if(fileName.charAt(1)=='r'){
-//                intent.putExtra("division", "recurve");
-//            }else if(fileName.charAt(1)=='c'){
-//                intent.putExtra("division", "compound");
-//            }
-//        }
-//
-//        intent.putExtra("loadedFileName", fileName);
-//        if(intent!=null) startActivity(intent);
-//        finish();
-//    }
-
 
     private void startFileInActivity(String fileName){
         if(fileName.charAt(0)=='s'){
@@ -130,10 +106,6 @@ public class LoadActivity extends BaseActivity {
 
         finish();
     }
-
-
-
-
 
 
     private void delete(String fileName){

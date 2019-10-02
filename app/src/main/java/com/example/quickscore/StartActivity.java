@@ -44,8 +44,9 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent in = new Intent(getApplicationContext(),MatchActivity.class);
-                startActivity(in);
+//                Intent in = new Intent(getApplicationContext(),MatchActivity.class);
+//                startActivity(in);
+                MatchActivity.start(StartActivity.this, false, "");
             }
         });
 
