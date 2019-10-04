@@ -48,7 +48,7 @@ public class StartActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                new ShowPopupWindow(arg0, StartActivity.this);
+                new ShowPopupWindow(arg0, StartActivity.this, "");
             }
         });
 

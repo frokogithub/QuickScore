@@ -53,7 +53,7 @@ public class SingleActivity extends BaseActivity {
     private static final String TEMP_JSON_FILENAME = "Single_tempJSON";
     private static final String KEY_LOADED_FILENAME = "loadedFileName";
     private static final String KEY_IS_FILE_LOADED = "Single_isFileLoaded";
-    private static final String KEY_EVENT_TYPE = "eventType";
+    private static final String KEY_EVENT_TYPE = "event_type";
 
 
 
@@ -106,9 +106,6 @@ public class SingleActivity extends BaseActivity {
             jsonName = TEMP_JSON_FILENAME;
         }
 
-        System.out.println("kkk closedByUser:  "+wereClosedByUser);
-        System.out.println("kkk isLoaded:  "+isFileLoaded);
-        System.out.println("kkk jsonName:  "+jsonName);
 
         boolean loadFromTempFolder = jsonName.equals(TEMP_JSON_FILENAME);
         scoresJSON = new JsonFileUtility(getApplicationContext()).loadJson(jsonName, loadFromTempFolder);
@@ -116,7 +113,7 @@ public class SingleActivity extends BaseActivity {
             if(scoresJSON!=null){
                 eventType = scoresJSON.getString(KEY_EVENT_TYPE);
             }else{
-                eventType = "outdoor"; // TODO: wziąć z preferences
+                eventType = pref.getString(KEY_PREF_DEFAULT_EVENT_TYPE, "outdoor");
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -379,7 +376,7 @@ public class SingleActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, SingleActivity.this);
+                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, SingleActivity.this, eventType);
                 showPopupWindow.setOnMenuItemClick(new OnMenuItemClickListener() {
                     @Override
                     public void onMenuItemClick(String command) {
@@ -441,7 +438,7 @@ public class SingleActivity extends BaseActivity {
     }//showSaveAlert()
 
     private String dateString(){
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm", java.util.Locale.getDefault());
         Date dt = new Date();
         return sd.format(dt);
     }//dateString()

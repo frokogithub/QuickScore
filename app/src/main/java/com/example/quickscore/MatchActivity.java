@@ -74,7 +74,7 @@ public class MatchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        System.out.println("kkk division: " + pref.getString(KEY_PREF_DEFAULT_DIVISION, "pusty"));
+//        System.out.println("kkk division: " + pref.getString(KEY_PREF_DEFAULT_DIVISION, "pusty"));
 
         if(RECREATE_FLAG){
             RECREATE_FLAG = false;
@@ -104,7 +104,7 @@ public class MatchActivity extends BaseActivity {
             if(scoresJSON!=null){
                 division = scoresJSON.getString(KEY_DIVISION);
             }else{
-                division = "recurve"; // TODO: wziąć z preferences
+                division = pref.getString(KEY_PREF_DEFAULT_DIVISION, "recurve"); //"recurve";
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -423,7 +423,7 @@ public class MatchActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                final ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, MatchActivity.this);
+                final ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, MatchActivity.this, "");
                 showPopupWindow.setOnMenuItemClick(new OnMenuItemClickListener() {
                     @Override
                     public void onMenuItemClick(String command) {

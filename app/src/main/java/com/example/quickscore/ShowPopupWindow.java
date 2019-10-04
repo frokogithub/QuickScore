@@ -1,6 +1,7 @@
 package com.example.quickscore;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -27,13 +28,16 @@ public class ShowPopupWindow {
     private final static int X_OFFSET = -380;
     private final static int Y_OFFSET = -20;
     private final static String KEY_ACTIVITY_NAME = "activity_name";
+    private String eventType;
 
 
-    public ShowPopupWindow(final View view, AppCompatActivity activity) {
+    public ShowPopupWindow(final View view, AppCompatActivity activity, String eventType) {
 
         this.activity = activity;
         this.view = view;
+        this.eventType = eventType;
         context = activity.getBaseContext();
+
 
         setBackgroundAlfa(0.2f);
         initPopUp();
@@ -117,9 +121,10 @@ public class ShowPopupWindow {
 
                                         @Override
                                         public void onClick(View v) {
-                                            Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
-                                            activity.startActivity(in);
+//                                            Intent in = new Intent(context,TimerActivity.class);
+//                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
+//                                            activity.startActivity(in);
+                                            TimerActivity.start(activity, activityName, eventType);
                                             popupWindow.dismiss();
                                         }
                                     });
@@ -162,9 +167,11 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             popupWindow.dismiss();
-                                            Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
-                                            activity.startActivity(in);
+//                                            Intent in = new Intent(context,TimerActivity.class);
+//                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
+//                                            activity.startActivity(in);
+                                            TimerActivity.start(activity, activityName, eventType);
+
                                         }
                                     });
                                     bSave.setOnClickListener(new View.OnClickListener() {
@@ -199,9 +206,10 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             popupWindow.dismiss();
-                                            Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
-                                            activity.startActivity(in);
+//                                            Intent in = new Intent(context,TimerActivity.class);
+//                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
+//                                            activity.startActivity(in);
+                                            TimerActivity.start(activity, activityName, eventType);
                                         }
                                     });
                                     bLoad.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,7 @@
 package com.example.quickscore;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -36,15 +38,37 @@ public class TimerActivity extends BaseActivity {
 
     private boolean running = true;
 
+    private String timerEventType;
     private  String activityName;
     private final static String KEY_ACTIVITY_NAME = "activity_name";
+    private final static String KEY_EVENT_TYPE = "event_type";
+
+    public static void start(Context context, String activityName, String eventType) {
+        Intent starter = new Intent(context, TimerActivity.class);
+        starter.putExtra(KEY_ACTIVITY_NAME, activityName);
+        starter.putExtra(KEY_EVENT_TYPE, eventType);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        Intent intent = getIntent();
+        activityName = intent.getStringExtra(KEY_ACTIVITY_NAME);
+        String eventType = intent.getStringExtra(KEY_EVENT_TYPE);
+        String defaultEventType = pref.getString(KEY_PREF_DEFAULT_EVENT_TYPE, "outdoor");
+
+        if((activityName.equals("SingleActivity") && eventType.equals("outdoor")) || (activityName.equals("StartActivity") && defaultEventType.equals("outdoor"))){
+            SHOOTING_TIME = pref.getInt(KEY_PREF_OUTDOOR_TIME, 240);
+        }else{
+            SHOOTING_TIME = pref.getInt(KEY_PREF_INDOOR_TIME, 120);
+        }
         PREPARE_TIME = pref.getInt(KEY_PREF_PREPARE_TIME, 10);
+
+        System.out.println("kkk shooting: "+SHOOTING_TIME);
+
         initTimer();
     }
 
@@ -70,8 +94,7 @@ public class TimerActivity extends BaseActivity {
 
     private void initTimer(){
 
-        Intent intent = getIntent();
-        activityName = intent.getStringExtra(KEY_ACTIVITY_NAME);
+
 
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         sound1_id = soundPool.load(this, R.raw.whistle_1, 1);
