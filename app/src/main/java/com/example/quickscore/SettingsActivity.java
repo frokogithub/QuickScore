@@ -46,21 +46,11 @@ public class SettingsActivity extends BaseActivity {
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
 
-//            EditTextPreference etPref = findPreference("prepare_time");
-//            etPref.setOnBindEditTextListener(new androidx.preference.EditTextPreference.OnBindEditTextListener() {
-//                @Override
-//                public void onBindEditText(@NonNull EditText editText) {
-//                    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-//                }
-//            });
-
-
             ListPreference themeListPref = findPreference(KEY_PREF_THEME);
             themeListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     StartActivity.THEME_CHANGED_FLAG = true;
-//                    SingleActivity.THEME_CHANGED_FLAG = true;
                     SingleActivity.RECREATE_FLAG = true;
                     MatchActivity.RECREATE_FLAG = true;
                     recreateActivity();
@@ -72,21 +62,11 @@ public class SettingsActivity extends BaseActivity {
             checkBoxPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                    SingleActivity.CELLS_COLORING_CHANGED_FLAG = true;
                     SingleActivity.RECREATE_FLAG = true;
                     MatchActivity.RECREATE_FLAG = true;
                     return true;
                 }
             });
-//            Preference prepareTimePref = findPreference("prepare_time_test");
-
-
-
-////            SeekBar prepTimeSeekBar =
-//            TextView tt = getView().findViewById(R.id.title);
-//            tt.setText("fff");
-
-
         }
 
 
@@ -96,7 +76,6 @@ public class SettingsActivity extends BaseActivity {
             CustomDialogPreferenceCompat.CustomPreferenceDialogFragment dialogFragment = null;
             if (preference instanceof CustomDialogPreferenceCompat) {
 //                // Create a new instance of TimePreferenceDialogFragment with the key of the related
-//                // Preference
                 dialogFragment = CustomDialogPreferenceCompat.CustomPreferenceDialogFragment.newInstance(preference.getKey());
             }
 //

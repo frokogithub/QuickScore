@@ -18,7 +18,7 @@ public class TimerActivity extends BaseActivity {
     private int countingState; // 0 Start timera, 1 przygotowanie, 2 strzelanie, 3 ostrzeżenie, koniec strzelania
     private TextView tvCountdown;
     private TextView tvTapScreen;
-    private ViewGroup timerBackG;
+    ViewGroup timerBackG;
     private Button bReset;
     private Button bPause;
     private Timer timer;
@@ -32,11 +32,12 @@ public class TimerActivity extends BaseActivity {
     private int sound1_id;
     private int sound2_id;
     private int sound3_id;
-    private final float volume = 0.5f;
+    private float volume = 0.5f;
 
     private boolean running = true;
 
     private  String activityName;
+    private final static String KEY_ACTIVITY_NAME = "activity_name";
 
 
     @Override
@@ -69,7 +70,7 @@ public class TimerActivity extends BaseActivity {
     private void initTimer(){
 
         Intent intent = getIntent();
-        activityName = intent.getStringExtra("actName");
+        activityName = intent.getStringExtra(KEY_ACTIVITY_NAME);
 
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         sound1_id = soundPool.load(this, R.raw.whistle_1, 1);
@@ -111,65 +112,65 @@ public class TimerActivity extends BaseActivity {
         resetTimer();
     }//initTimer()
 
-  private void counting(){
-      timer = new Timer();
-      timer.scheduleAtFixedRate(new TimerTask() {
-          @Override
+    private void counting(){
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
             public void run() {
                 runOnUiThread(new Runnable()
-              {
-                  @Override
-                  public void run()
-                  {
-                      switch (countingState){
-                          case 0:
-                              bPause.setVisibility(View.VISIBLE);
-                              bReset.setVisibility(View.VISIBLE);
-                              tvCountdown.setVisibility(View.VISIBLE);
-                              tvTapScreen.setVisibility(View.INVISIBLE);
-                              soundPool.play(sound2_id, volume, volume, 1, 0, 1f);
-                              count = SETUP_TIME;
-                              countingState = 1;
-                              break;
-                          case 1:
-                              if(count==0){
-                                  timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_green));
-                                  soundPool.play(sound1_id, volume, volume, 1, 0, 1f);
-                                  count = SHOOTING_TIME;
-                                  countingState = 2;
-                              }
-                              break;
-                          case 2:
-                              if(count == WARNING_TIME){
-                                  timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_yellow));
-                                  countingState = 3;
-                              }
-                              break;
-                          case 3:
-                              if(count==0){
-                                  timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
-                                  timer.cancel();
-                                  tvCountdown.setText("");
-                                  soundPool.play(sound3_id, volume, volume, 1, 0, 1f);
-                                  bPause.setVisibility(View.INVISIBLE);
-                                  bReset.setVisibility(View.INVISIBLE);
-                                  countingState = 4;
-                                  if(activityName.equals("SingleActivity") || activityName.equals("MatchActivity")) finish();
-                                  return;
-                              }
-                              break;
-                          default:
-                              break;
-                      }
-                      tvCountdown.setText(String.valueOf(count));
-                      count--;
-                  }
-              });
+                {
+                    @Override
+                    public void run()
+                    {
+                        switch (countingState){
+                            case 0:
+                                bPause.setVisibility(View.VISIBLE);
+                                bReset.setVisibility(View.VISIBLE);
+                                tvCountdown.setVisibility(View.VISIBLE);
+                                tvTapScreen.setVisibility(View.INVISIBLE);
+                                soundPool.play(sound2_id, volume, volume, 1, 0, 1f);
+                                count = SETUP_TIME;
+                                countingState = 1;
+                                break;
+                            case 1:
+                                if(count==0){
+                                    timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_green));
+                                    soundPool.play(sound1_id, volume, volume, 1, 0, 1f);
+                                    count = SHOOTING_TIME;
+                                    countingState = 2;
+                                }
+                                break;
+                            case 2:
+                                if(count == WARNING_TIME){
+                                    timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_yellow));
+                                    countingState = 3;
+                                }
+                                break;
+                            case 3:
+                                if(count==0){
+                                    timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
+                                    timer.cancel();
+                                    tvCountdown.setText("");
+                                    soundPool.play(sound3_id, volume, volume, 1, 0, 1f);
+                                    bPause.setVisibility(View.INVISIBLE);
+                                    bReset.setVisibility(View.INVISIBLE);
+                                    countingState = 4;
+                                    if(activityName.equals("SingleActivity") || activityName.equals("MatchActivity")) finish();
+                                    return;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        tvCountdown.setText(String.valueOf(count));
+                        count--;
+                    }
+                });
             }
-      }, 0, 1000);
-  }
+        }, 0, 1000);
+    }
 
-  private void resetTimer(){
+    private void resetTimer(){
         if(timer!=null) timer.cancel();
         timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
         bPause.setVisibility(View.INVISIBLE);
@@ -177,6 +178,6 @@ public class TimerActivity extends BaseActivity {
         tvCountdown.setVisibility(View.INVISIBLE);
         tvTapScreen.setVisibility(View.VISIBLE);
         countingState = 0;
-  }
+    }
 }
 

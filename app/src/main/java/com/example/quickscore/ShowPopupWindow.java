@@ -26,6 +26,7 @@ public class ShowPopupWindow {
     private String  command;
     private final static int X_OFFSET = -380;
     private final static int Y_OFFSET = -20;
+    private final static String KEY_ACTIVITY_NAME = "activity_name";
 
 
     public ShowPopupWindow(final View view, AppCompatActivity activity) {
@@ -38,15 +39,10 @@ public class ShowPopupWindow {
         initPopUp();
         initButtons();
     }
+
     public void setOnMenuItemClick(OnMenuItemClickListener listener){
         menuListener = listener;
     }
-
-//    private  void newRound(){
-//        Intent intent = activity.getIntent();
-//        activity.finish();
-//        activity.startActivity(intent);
-//    }
 
     private void initPopUp(){
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -108,7 +104,6 @@ public class ShowPopupWindow {
                                             command = "NEW";
                                             popupWindow.dismiss();
                                             if(menuListener!=null) menuListener.onMenuItemClick(command);
-//                                            showSaveDialog();
                                         }
                                     });
                                     bSecondRound.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +118,7 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra("actName", activityName);
+                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
@@ -146,7 +141,6 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             Intent in = new Intent(context,SettingsActivity.class);
-                                            //in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
@@ -160,7 +154,6 @@ public class ShowPopupWindow {
                                             command = "NEW";
                                             popupWindow.dismiss();
                                             if(menuListener!=null) menuListener.onMenuItemClick(command);
-//                                            showSaveDialog();
                                         }
                                     });
 
@@ -170,7 +163,7 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra("actName", activityName);
+                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
                                             activity.startActivity(in);
                                         }
                                     });
@@ -195,7 +188,6 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             Intent in = new Intent(context,SettingsActivity.class);
-                                            //in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
@@ -208,7 +200,7 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,TimerActivity.class);
-                                            in.putExtra("actName", activityName);
+                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
                                             activity.startActivity(in);
                                         }
                                     });
@@ -218,7 +210,7 @@ public class ShowPopupWindow {
                                         public void onClick(View v) {
                                             popupWindow.dismiss();
                                             Intent in = new Intent(context,LoadActivity.class);
-                                            in.putExtra("actName", activityName);
+                                            in.putExtra(KEY_ACTIVITY_NAME, activityName);
                                             activity.startActivity(in);
                                         }
                                     });
@@ -238,7 +230,6 @@ public class ShowPopupWindow {
                                         @Override
                                         public void onClick(View v) {
                                             Intent in = new Intent(context,SettingsActivity.class);
-                                            //in.putExtra("actName", activityName);
                                             activity.startActivity(in);
                                             popupWindow.dismiss();
                                         }
@@ -254,39 +245,6 @@ public class ShowPopupWindow {
         ConstraintLayout layout_MainMenu = activity.findViewById( R.id.bckgd);
         layout_MainMenu.setAlpha(level);
     }
-
-
-//    private void showSaveDialog() {
-//        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-//        ViewGroup viewGroup = activity.findViewById(android.R.id.content);
-//
-//        View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_save, viewGroup, false);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//        builder.setView(dialogView);
-//        final AlertDialog saveDialog = builder.create();
-//        saveDialog.show();
-//
-//        Button bSave = dialogView.findViewById(R.id.bSave);
-//        Button bDsave = dialogView.findViewById(R.id.bdont_save);
-//
-//        bSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                saveDialog.dismiss();
-//                printToast("Let's save");
-//                if(menuListener!=null) menuListener.onMenuItemClick(command);
-//            }
-//        });
-//
-//        bDsave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                saveDialog.dismiss();
-//                printToast("Fuck this fuckin' file");
-//                if(menuListener!=null) menuListener.onMenuItemClick(command);
-//            }
-//        });
-//    }
 
     private void printToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();

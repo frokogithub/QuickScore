@@ -14,7 +14,6 @@ public class SeekBarUtil {
         mSeekbar.setOnSeekBarChangeListener(new CustomSeekBarListener(minVal, maxVal, intervalVal) {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //progress = ((int)Math.round(progress/interval))*interval;
                 int val;
                 if (interval == totalCount) {
                     val = max;

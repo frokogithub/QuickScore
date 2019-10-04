@@ -112,10 +112,6 @@ public class MatchActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-
-//        Intent intent = getIntent();
-//        if(intent.hasExtra("division")) division = intent.getStringExtra("division");
-
         setInitialState();
         initEnds();
 
@@ -126,16 +122,6 @@ public class MatchActivity extends BaseActivity {
     }
 
     private void fillScores(){
-
-//        Intent intent = getIntent();
-//        JSONObject jsonObject = null;
-//        if(intent.hasExtra("loadedJsonObject")){
-//            try {
-//                jsonObject = new JSONObject(intent.getStringExtra("loadedJsonObject"));
-//            }catch (JSONException e){
-//                e.printStackTrace();
-//            }
-//        }
 
         int[] tempScoreArrayA;
         int[] tempScoreArrayB;
@@ -164,42 +150,6 @@ public class MatchActivity extends BaseActivity {
             if(endA[i]!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
             if(endB[i]!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
         }
-
-//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-//            String arrayKeyA = "endScoresA"+i;
-//            String arrayKeyB = "endScoresB"+i;
-//            String emptyCellsKeyA = "emptyCellsA" +i;
-//            String emptyCellsKeyB = "emptyCellsB" +i;
-//            int[] tempScoreArrayA = null;
-//            int[] tempScoreArrayB = null;
-//            int emptyCellsA = 0;
-//            int emptyCellsB = 0;
-//
-//            if(intent.hasExtra("loadedJsonObject")){
-//                tempScoreArrayA = new int[ARROWS_IN_END];
-//                tempScoreArrayB = new int[ARROWS_IN_END];
-//                try {
-//                    JSONArray jsonArrayA = jsonObject.getJSONArray(arrayKeyA);
-//                    JSONArray jsonArrayB = jsonObject.getJSONArray(arrayKeyB);
-//                    for (int a=0; a<ARROWS_IN_END; a++) {
-//                        tempScoreArrayA[a] = jsonArrayA.getInt(a);
-//                        tempScoreArrayB[a] = jsonArrayB.getInt(a);
-//                    }
-//                    emptyCellsA = jsonObject.getInt(emptyCellsKeyA);
-//                    emptyCellsB = jsonObject.getInt(emptyCellsKeyB);
-//                }catch (JSONException e){
-//                    e.printStackTrace();
-//                }
-//            }else{
-//                if(intent.hasExtra(arrayKeyA)) tempScoreArrayA = intent.getIntArrayExtra(arrayKeyA);
-//                if(intent.hasExtra(arrayKeyB)) tempScoreArrayB = intent.getIntArrayExtra(arrayKeyB);
-//                if(intent.hasExtra(emptyCellsKeyA)) emptyCellsA = intent.getIntExtra(emptyCellsKeyA, 6);
-//                if(intent.hasExtra(emptyCellsKeyB)) emptyCellsB = intent.getIntExtra(emptyCellsKeyB, 6);
-//            }
-//            if(endA[i]!=null && tempScoreArrayA!=null) endA[i].fillEnd(tempScoreArrayA, emptyCellsA);
-//            if(endB[i]!=null && tempScoreArrayB!=null) endB[i].fillEnd(tempScoreArrayB, emptyCellsB);
-//        }
-
     }
 
     @Override
@@ -207,25 +157,8 @@ public class MatchActivity extends BaseActivity {
         super.onPause();
 
         makeJsonFile(TEMP_JSON_FILENAME);
-
-//        Intent intent = getIntent();
-//        int [] tempScoreArrayA, tempScoreArrayB;
-//        for (int i=0;i<NUMBER_OF_ENDS;i++) {
-//            tempScoreArrayA = endA[i].getScores();
-//            tempScoreArrayB = endB[i].getScores();
-//            String arrNameA = "endScoresA"+i;
-//            String arrNameB = "endScoresB"+i;
-//            intent.putExtra(arrNameA,tempScoreArrayA);
-//            intent.putExtra(arrNameB,tempScoreArrayB);
-//
-//            int emptyCellsA = endA[i].getEmptyCellsAmount();
-//            int emptyCellsB = endB[i].getEmptyCellsAmount();
-//            String emptyCellsNameA = "emptyCellsA"+i;
-//            String emptyCellsNameB = "emptyCellsB"+i;
-//            intent.putExtra(emptyCellsNameA,emptyCellsA);
-//            intent.putExtra(emptyCellsNameB,emptyCellsB);
-//        }
     }
+
     @Override
     public void onBackPressed() {
         if(!isSaved){
@@ -241,8 +174,6 @@ public class MatchActivity extends BaseActivity {
 
 
     private void setInitialState(){
-
-//        rootView = findViewById(R.id.bckgd);
 
         endsDummyA = findViewById(R.id.A_ends_dummy);
         endsDummyB = findViewById(R.id.B_ends_dummy);
@@ -302,6 +233,7 @@ public class MatchActivity extends BaseActivity {
         }
     }//initEnds()
 
+
     private void addEndsListeners(int i){
         endA[i].setOnIndexListener(new OnChangeIndexListener() {
             @Override
@@ -345,6 +277,7 @@ public class MatchActivity extends BaseActivity {
             }
         });
     }//addEndsListeners()
+
 
     private void doIfEndIsFull(){
         if(endA[activeRow].isFull() && endB[activeRow].isFull()){
@@ -567,11 +500,6 @@ public class MatchActivity extends BaseActivity {
 
 
     private void updateTotalScore(){
-//        int s=0;
-//        for(int i=0; i<activeRow ; i++){
-//            s += end[i].getSum();
-//        }
-//        totalSum.setText(String.valueOf(s));
         int scoreA = 0, scoreB = 0;
         for(int i=0;i<NUMBER_OF_ENDS;i++){
             if(endA[i].isFull() && endB[i].isFull()){
@@ -598,9 +526,8 @@ public class MatchActivity extends BaseActivity {
             unmarkEnd();
             printToast("Match End");
         }
-
-
     }
+
 
     private  void clearEnds(){
         for(int i=0;i<NUMBER_OF_ENDS;i++){
@@ -636,11 +563,13 @@ public class MatchActivity extends BaseActivity {
         });
     }//showSaveAlert()
 
+
     private String dateString(){
         SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd_HH.mm");
         Date dt = new Date();
         return sd.format(dt);
     }//dateString()
+
 
     private void postSaveAlert(String command){
         switch (command){
@@ -696,7 +625,6 @@ public class MatchActivity extends BaseActivity {
 
         JsonFileUtility jfile = new JsonFileUtility(getApplicationContext());
         jfile.saveJson(jsonObject, filename, saveToTempFolder );
-        //jfile.saveJson(jsonObject, filename);
         isSaved = true;
     }
 

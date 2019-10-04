@@ -32,8 +32,6 @@ public class StartActivity extends BaseActivity {
         b_Single.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent in = new Intent(getApplicationContext(),SingleActivity.class);
-//                startActivity(in);
                 SingleActivity.start(StartActivity.this, false, "");
             }
         });
@@ -42,9 +40,6 @@ public class StartActivity extends BaseActivity {
         b_Match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent in = new Intent(getApplicationContext(),MatchActivity.class);
-//                startActivity(in);
                 MatchActivity.start(StartActivity.this, false, "");
             }
         });

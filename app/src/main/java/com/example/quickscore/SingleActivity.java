@@ -37,15 +37,13 @@ public class SingleActivity extends BaseActivity {
     private final static int OUTDOOR_ARROWS_IN_END = 6;
     private final static int INDOOR_NUMBER_OF_ENDS = 10;
     private final static int OUTDOOR_NUMBER_OF_ENDS = 6;
-    private String eventType = "outdoor"; //1 indoor, 2 outdoor,
+    private String eventType = "outdoor"; // indoor,  outdoor,
     private static  int ARROWS_IN_END;
     private static  int NUMBER_OF_ENDS;
     private int activeRow = 0;
-    private static End[] end;
-//    private ViewGroup endsDummy;
+    private End[] end;
     private TextView totalSum;
     private TextView record;
-//    private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean RECREATE_FLAG;
     private boolean isSaved = true;
@@ -493,12 +491,11 @@ public class SingleActivity extends BaseActivity {
 
     private void updateTotalSum(){
         int total=0;
-        for(int i = 0; i< NUMBER_OF_ENDS; i++){//i< activeRow+1
+        for(int i = 0; i< NUMBER_OF_ENDS; i++){
             total += end[i].getSum();
         }
         totalSum.setText(String.valueOf(total));
         if(end[NUMBER_OF_ENDS-1].getSum()>0) checkRecord(total);
-//        if(activeRow==NUMBER_OF_ENDS-1) checkRecord(total);
     }
 
     private void checkRecord(int total){
@@ -537,11 +534,6 @@ public class SingleActivity extends BaseActivity {
     private void makeJsonFile(String filename){
 
         boolean saveToTempFolder = filename.equals(TEMP_JSON_FILENAME);
-//        if(filename.equals(TEMP_JSON_FILENAME)){
-//            saveToTempFolder = true;
-//        }else{
-//            saveToTempFolder = false;
-//        }
         JSONObject jsonObject = new JSONObject();
 
         try {
