@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,16 +42,12 @@ public class MatchActivity extends BaseActivity {
     private ViewGroup endsDummyB;
     private ViewGroup outerMarkA;
     private ViewGroup outerMarkB;
-//    private ViewGroup parent;
     private TextView tvTotalScoreA;
     private TextView tvTotalScoreB;
     private TextView tvArcherA;
     private TextView tvArcherB;
     private int scoringStatus = 0;
-    private String archerAName = "Archer A";
-    private String archerBName = "Archer B";
-    boolean isSaved = true;
-    ConstraintLayout rootView;
+    private boolean isSaved = true;
     private JSONObject scoresJSON = null;
 
     static boolean RECREATE_FLAG;
@@ -142,8 +137,8 @@ public class MatchActivity extends BaseActivity {
 //            }
 //        }
 
-        int[] tempScoreArrayA = null;
-        int[] tempScoreArrayB = null;
+        int[] tempScoreArrayA;
+        int[] tempScoreArrayB;
         int emptyCellsA = 0;
         int emptyCellsB = 0;
         for (int i=0;i<NUMBER_OF_ENDS;i++){
@@ -247,7 +242,7 @@ public class MatchActivity extends BaseActivity {
 
     private void setInitialState(){
 
-        rootView = findViewById(R.id.bckgd);
+//        rootView = findViewById(R.id.bckgd);
 
         endsDummyA = findViewById(R.id.A_ends_dummy);
         endsDummyB = findViewById(R.id.B_ends_dummy);
@@ -268,7 +263,7 @@ public class MatchActivity extends BaseActivity {
     }//setInitialState()
 
 
-    void initEnds(){
+    private void initEnds(){
         endA = new End[NUMBER_OF_ENDS+1];
         endB = new End[NUMBER_OF_ENDS+1];
 
@@ -402,7 +397,7 @@ public class MatchActivity extends BaseActivity {
         }
     }
 
-    void initButtons(){
+    private void initButtons(){
 
         Button bX=findViewById(R.id.bX);
         if(division.equals("recurve")) bX.setText("");
@@ -666,7 +661,7 @@ public class MatchActivity extends BaseActivity {
         }
     }
 
-    void makeJsonFile(String filename){
+    private void makeJsonFile(String filename){
 
         boolean saveToTempFolder = filename.equals(TEMP_JSON_FILENAME);
 

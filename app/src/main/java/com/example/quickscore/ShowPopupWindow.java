@@ -5,15 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -21,11 +17,11 @@ import interfacesPackage.OnMenuItemClickListener;
 
 public class ShowPopupWindow {
 
-    private Context context;
-    private Activity  activity;
+    private final Context context;
+    private final Activity  activity;
     private PopupWindow popupWindow;
     private View popupView;
-    private View view;
+    private final View view;
     private  OnMenuItemClickListener menuListener;
     private String  command;
     private final static int X_OFFSET = -380;
@@ -45,11 +41,12 @@ public class ShowPopupWindow {
     public void setOnMenuItemClick(OnMenuItemClickListener listener){
         menuListener = listener;
     }
-    private  void newRound(){
-        Intent intent = activity.getIntent();
-        activity.finish();
-        activity.startActivity(intent);
-    }
+
+//    private  void newRound(){
+//        Intent intent = activity.getIntent();
+//        activity.finish();
+//        activity.startActivity(intent);
+//    }
 
     private void initPopUp(){
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -89,7 +86,7 @@ public class ShowPopupWindow {
         Button bSecondRound = popupView.findViewById(R.id.b_second_round);
         TextView tvSecondRound = popupView.findViewById(R.id.tv_popup_second);
         Button bTimer = popupView.findViewById(R.id.b_timer);
-        TextView tvTimer = popupView.findViewById(R.id.tv_popup_timer);
+//        TextView tvTimer = popupView.findViewById(R.id.tv_popup_timer);
         Button bSave = popupView.findViewById(R.id.b_save);
         TextView tvSave = popupView.findViewById(R.id.tv_popup_save);
         Button bLoad = popupView.findViewById(R.id.b_load);
@@ -97,7 +94,7 @@ public class ShowPopupWindow {
         Button bBow = popupView.findViewById(R.id.b_bow);
         TextView tvBow = popupView.findViewById(R.id.tv_popup_bow);
         Button bSettings = popupView.findViewById(R.id.b_settings);
-        TextView tvSettings = popupView.findViewById(R.id.tv_popup_settings);
+//        TextView tvSettings = popupView.findViewById(R.id.tv_popup_settings);
 
 
 

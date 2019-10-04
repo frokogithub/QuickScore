@@ -15,7 +15,7 @@ public class SeekBarUtil {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //progress = ((int)Math.round(progress/interval))*interval;
-                int val = min;
+                int val;
                 if (interval == totalCount) {
                     val = max;
                 } else {
@@ -34,7 +34,7 @@ public class SeekBarUtil {
     }
 
     class CustomSeekBarListener implements SeekBar.OnSeekBarChangeListener {
-        int min=0,max=0,interval=1;
+        int min, max, interval;
         int totalCount;
         public CustomSeekBarListener(int min, int max, int interval) {
             this.min = min;

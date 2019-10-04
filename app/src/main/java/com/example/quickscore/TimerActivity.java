@@ -18,7 +18,7 @@ public class TimerActivity extends BaseActivity {
     private int countingState; // 0 Start timera, 1 przygotowanie, 2 strzelanie, 3 ostrzeżenie, koniec strzelania
     private TextView tvCountdown;
     private TextView tvTapScreen;
-    ViewGroup timerBackG;
+    private ViewGroup timerBackG;
     private Button bReset;
     private Button bPause;
     private Timer timer;
@@ -32,7 +32,7 @@ public class TimerActivity extends BaseActivity {
     private int sound1_id;
     private int sound2_id;
     private int sound3_id;
-    private float volume = 0.5f;
+    private final float volume = 0.5f;
 
     private boolean running = true;
 

@@ -14,8 +14,7 @@ import interfacesPackage.OnSaveAlertItemClik;
 public class SaveAlert {
 
     private OnSaveAlertItemClik saveAlertListener;
-    private String filename;
-    private EditText etFileName;
+    private final EditText etFileName;
 
 
     public SaveAlert(Activity activity, String fileName) {

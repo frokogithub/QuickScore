@@ -25,9 +25,9 @@ public class End {
     private int arrowsInEnd;
     private TextView[] cellArray;
     private TextView sumTextV;
-    private TextView indexTextV;
+//    private TextView indexTextV;
     private int[] scoreArray;
-    private  View view;
+//    private  View view;
     private int index;
     private LinearLayout markLeftLine;
     private LinearLayout markTopLine;
@@ -47,7 +47,7 @@ public class End {
 
     public End(Context context, int index, View view, View markLine, int arrowsInEnd) {
         this.context = context;
-        this.view = view;
+//        this.view = view;
         this.index = index;
         this.arrowsInEnd = arrowsInEnd;
         cellArray =  new TextView[arrowsInEnd];
@@ -55,7 +55,7 @@ public class End {
         emptyCells = arrowsInEnd;
 
 
-        indexTextV = view.findViewById(R.id.tv_index);
+        TextView indexTextV = view.findViewById(R.id.tv_index);
         if(indexTextV!=null)indexTextV.setText(String.valueOf(index+1));
 
         markTopLine = markLine.findViewById(R.id.ll_mark_top_line);
@@ -149,7 +149,7 @@ public class End {
     }
 
 
-    public void updateCells(){
+    private void updateCells(){
         for(int i = 0; i<arrowsInEnd-emptyCells; i++){
                 if(scoreArray[i]==-1){
                     cellArray[i].setText(null);

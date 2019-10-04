@@ -2,8 +2,6 @@ package com.example.quickscore;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,14 +15,12 @@ import scoresPackage.JsonFileUtility;
 
 public class LoadActivity extends BaseActivity {
 
-
-    Context context;
-    ListView list;
-    String[] filesNames;
-    LoadListAdapter loadListAdapter;
-    ArrayList<LoadRowData> arrayList;
-    int editedPosition;
-    boolean isLongClickAchieved = false;
+    private ListView list;
+    private String[] filesNames;
+    private LoadListAdapter loadListAdapter;
+    private ArrayList<LoadRowData> arrayList;
+    private int editedPosition;
+    private boolean isLongClickAchieved = false;
 
 
     @Override
@@ -46,9 +42,7 @@ public class LoadActivity extends BaseActivity {
             actionBar.show();
         }
 
-        context = this;
-
-        JsonFileUtility jFileUtil = new JsonFileUtility(context);
+        JsonFileUtility jFileUtil = new JsonFileUtility(this);
         filesNames = jFileUtil.getFilesNames();
         if(filesNames[0].equals("No files")){
             showNoFilesAlert();
@@ -128,7 +122,7 @@ public class LoadActivity extends BaseActivity {
                             loadListAdapter.notifyDataSetChanged();
                             showNoFilesAlert();
                         }else{
-                            loadListAdapter = new LoadListAdapter(context, arrayList);
+                            loadListAdapter = new LoadListAdapter(LoadActivity.this, arrayList);
                             list.setAdapter(loadListAdapter);
                         }
                         delete(fileName);

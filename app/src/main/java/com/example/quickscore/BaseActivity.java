@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
-    SharedPreferences pref;
+    static SharedPreferences pref;
     public static boolean COLORED_CELLS_FLAG;
     public static final String KEY_PREF_THEME = "theme";
     public static final String KEY_PREF_COLORED_CELLS = "colored_cells";
@@ -69,5 +69,8 @@ public class BaseActivity extends AppCompatActivity {
         prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, false);
         prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, false);
         prefEditor.apply();
+    }
+    public static   SharedPreferences getPref(){
+        return pref;
     }
 }

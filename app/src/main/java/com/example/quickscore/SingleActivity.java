@@ -42,15 +42,15 @@ public class SingleActivity extends BaseActivity {
     private static  int NUMBER_OF_ENDS;
     private int activeRow = 0;
     private static End[] end;
-    private ViewGroup endsDummy;
+//    private ViewGroup endsDummy;
     private TextView totalSum;
     private TextView record;
-    private ViewGroup insertDummy;
+//    private ViewGroup insertDummy;
     private int scoringStatus = 0; // 0 przed rozpoczęciem, 1 w trakcie, 2 zakończone TODO: dorobić 0 do 1 i 1 do 0
     static boolean RECREATE_FLAG;
-    boolean isSaved = true;
+    private boolean isSaved = true;
     private JSONObject scoresJSON = null;
-    boolean isRefilled = true;
+
 
     private static final String TEMP_JSON_FILENAME = "Single_tempJSON";
     private static final String KEY_LOADED_FILENAME = "loadedFileName";
@@ -136,9 +136,9 @@ public class SingleActivity extends BaseActivity {
         for (int i=0;i<NUMBER_OF_ENDS;i++) {
             String arrayKey = "endScores"+i;
             String emptyCellsKey = "emptyCells" +i;
-            int[] tempScoreArray = null;
+
             int emptyCells = 0;
-            tempScoreArray = new int[ARROWS_IN_END];
+            int[] tempScoreArray = new int[ARROWS_IN_END];
 
             try {
                 JSONArray jsonArray = scoresJSON.getJSONArray(arrayKey);
@@ -150,7 +150,7 @@ public class SingleActivity extends BaseActivity {
                 e.printStackTrace();
             }
 
-            if(end[i]!=null && tempScoreArray!=null) end[i].fillEnd(tempScoreArray, emptyCells);
+            if(end[i]!=null) end[i].fillEnd(tempScoreArray, emptyCells);
         }
     }
 
@@ -176,7 +176,7 @@ public class SingleActivity extends BaseActivity {
     }
 
     private void setInitialState(){
-        insertDummy=findViewById(R.id.cl_insert_dummy);
+        ViewGroup insertDummy=findViewById(R.id.cl_insert_dummy);
         insertDummy.removeAllViews();
         switch (eventType){
             case "indoor":
@@ -201,8 +201,8 @@ public class SingleActivity extends BaseActivity {
     }
 
 
-    void initEnds(){
-        endsDummy = findViewById(R.id.ends_dummy);
+    private void initEnds(){
+        ViewGroup endsDummy = findViewById(R.id.ends_dummy);
         end = new End[NUMBER_OF_ENDS+1];
 
         int endHorizontalLineId=0, endViewId=0;
@@ -287,7 +287,7 @@ public class SingleActivity extends BaseActivity {
     }
 
 
-    void initButtons(){
+    private void initButtons(){
 
         Button bX=findViewById(R.id.bX);
         Button bM=findViewById(R.id.bM);
@@ -534,7 +534,7 @@ public class SingleActivity extends BaseActivity {
     }
 
 
-    void makeJsonFile(String filename){
+    private void makeJsonFile(String filename){
 
         boolean saveToTempFolder = filename.equals(TEMP_JSON_FILENAME);
 //        if(filename.equals(TEMP_JSON_FILENAME)){

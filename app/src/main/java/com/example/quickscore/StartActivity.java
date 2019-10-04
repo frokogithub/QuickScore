@@ -1,6 +1,5 @@
 package com.example.quickscore;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,7 +53,7 @@ public class StartActivity extends BaseActivity {
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                ShowPopupWindow showPopupWindow = new ShowPopupWindow(arg0, StartActivity.this);
+                new ShowPopupWindow(arg0, StartActivity.this);
             }
         });
 

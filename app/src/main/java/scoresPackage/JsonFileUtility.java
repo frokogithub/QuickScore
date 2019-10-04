@@ -2,8 +2,6 @@ package scoresPackage;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
@@ -11,9 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
@@ -60,8 +55,8 @@ public class JsonFileUtility {
             outputStream.write(jsonString.getBytes());
             outputStream.close();
 
-        } catch (FileNotFoundException e) {
-            Log.e("ERROR", e.toString());
+//        } catch (FileNotFoundException e) {
+//            Log.e("ERROR", e.toString());
         } catch (IOException e) {
             Log.e("ERROR", e.toString());
         }

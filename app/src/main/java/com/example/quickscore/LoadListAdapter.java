@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 class LoadListAdapter extends BaseAdapter {
-    private ArrayList<LoadRowData> arrayList;
-    private Context context;
+    private final ArrayList<LoadRowData> arrayList;
+    private final Context context;
 
 
     public LoadListAdapter(Context context, ArrayList<LoadRowData> arrayList) {
