@@ -24,9 +24,9 @@ public class TimerActivity extends BaseActivity {
     private Timer timer;
     private int count;
 
-    private final int SETUP_TIME = 5; // (s)
-    private final int SHOOTING_TIME = 10; // (s)
-    private final int WARNING_TIME = 3; // (s)
+    private int PREPARE_TIME; // (s)
+    private int SHOOTING_TIME;
+    private int WARNING_TIME ; // (s)
 
     private SoundPool soundPool;
     private int sound1_id;
@@ -39,6 +39,14 @@ public class TimerActivity extends BaseActivity {
     private  String activityName;
     private final static String KEY_ACTIVITY_NAME = "activity_name";
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_timer);
+
+        PREPARE_TIME = pref.getInt(KEY_PREF_PREPARE_TIME, 10);
+        initTimer();
+    }
 
     @Override
     protected void onResume() {
@@ -53,13 +61,6 @@ public class TimerActivity extends BaseActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timer);
-
-        initTimer();
-    }
 
     @Override
     protected void onDestroy() {
@@ -128,14 +129,14 @@ public class TimerActivity extends BaseActivity {
                                 bReset.setVisibility(View.VISIBLE);
                                 tvCountdown.setVisibility(View.VISIBLE);
                                 tvTapScreen.setVisibility(View.INVISIBLE);
-                                soundPool.play(sound2_id, volume, volume, 1, 0, 1f);
-                                count = SETUP_TIME;
+//                                soundPool.play(sound2_id, volume, volume, 1, 0, 1f);
+                                count = PREPARE_TIME;
                                 countingState = 1;
                                 break;
                             case 1:
                                 if(count==0){
                                     timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_green));
-                                    soundPool.play(sound1_id, volume, volume, 1, 0, 1f);
+//                                    soundPool.play(sound1_id, volume, volume, 1, 0, 1f);
                                     count = SHOOTING_TIME;
                                     countingState = 2;
                                 }
@@ -151,7 +152,7 @@ public class TimerActivity extends BaseActivity {
                                     timerBackG.setBackgroundColor(getResources().getColor(R.color.timer_red));
                                     timer.cancel();
                                     tvCountdown.setText("");
-                                    soundPool.play(sound3_id, volume, volume, 1, 0, 1f);
+//                                    soundPool.play(sound3_id, volume, volume, 1, 0, 1f);
                                     bPause.setVisibility(View.INVISIBLE);
                                     bReset.setVisibility(View.INVISIBLE);
                                     countingState = 4;

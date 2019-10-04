@@ -74,6 +74,8 @@ public class MatchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
+        System.out.println("kkk division: " + pref.getString(KEY_PREF_DEFAULT_DIVISION, "pusty"));
+
         if(RECREATE_FLAG){
             RECREATE_FLAG = false;
             recreate();
@@ -95,10 +97,6 @@ public class MatchActivity extends BaseActivity {
         }else{
             jsonName = TEMP_JSON_FILENAME;
         }
-
-        System.out.println("kkk closedByUser:  "+wereClosedByUser);
-        System.out.println("kkk isLoaded:  "+isFileLoaded);
-        System.out.println("kkk jsonName:  "+jsonName);
 
         boolean loadFromTempFolder = jsonName.equals(TEMP_JSON_FILENAME);
         scoresJSON = new JsonFileUtility(getApplicationContext()).loadJson(jsonName, loadFromTempFolder);

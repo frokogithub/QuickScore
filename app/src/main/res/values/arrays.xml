@@ -3,11 +3,11 @@
         <item>Light</item>
         <item>Dark</item>
     </string-array>
-
     <string-array name="theme_values">
         <item>LIGHT</item>
         <item>DARK</item>
     </string-array>
+
 
 
     <string-array name="closeAction_entries">
@@ -19,5 +19,27 @@
         <item>Always</item>
         <item>Ask </item>
         <item>Don\'t</item>
+    </string-array>
+
+
+
+    <string-array name="default_event_type_entries">
+        <item>Indoor</item>
+        <item>Outdoor</item>
+    </string-array>
+    <string-array name="default_event_type_values">
+        <item>indoor</item>
+        <item>outdoor</item>
+    </string-array>
+
+
+
+    <string-array name="default_division_entries">
+        <item>Recurve</item>
+        <item>Compound</item>
+    </string-array>
+    <string-array name="default_division_values">
+        <item>recurve</item>
+        <item>compound</item>
     </string-array>
 </resources>

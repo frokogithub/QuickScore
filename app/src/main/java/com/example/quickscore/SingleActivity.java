@@ -80,6 +80,8 @@ public class SingleActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
+        System.out.println("kkk eventType: " + pref.getString(KEY_PREF_DEFAULT_EVENT_TYPE, "pusty"));
+
         if(RECREATE_FLAG){
             RECREATE_FLAG = false;
             recreate();

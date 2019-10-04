@@ -67,6 +67,26 @@ public class SettingsActivity extends BaseActivity {
                     return true;
                 }
             });
+
+
+            /*
+            ListPreference defaultEventTypeListPreference = findPreference(KEY_PREF_DEFAULT_EVENT_TYPE);
+            themeListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    return true;
+                }
+            });
+
+            ListPreference defaultDivisionListPreference = findPreference(KEY_PREF_DEFAULT_EVENT_TYPE);
+            themeListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    return true;
+                }
+            });
+
+             */
         }
 
 

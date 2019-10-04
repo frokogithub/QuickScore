@@ -27,6 +27,9 @@ public class BaseActivity extends AppCompatActivity {
     public static final String KEY_PREF_OUTDOOR_TIME = "outdoor_time";
     public static final String KEY_PREF_CLOSED_BY_USER_Single = "closed_by_user_single";
     public static final String KEY_PREF_CLOSED_BY_USER_Match = "closed_by_user_match";
+//    public static final String KEY_PREF_DEFAULTS = "defaults";
+    public static final String KEY_PREF_DEFAULT_EVENT_TYPE = "default_event_type";
+    public static final String KEY_PREF_DEFAULT_DIVISION = "default_division";
 
 
     @Override
@@ -68,6 +71,8 @@ public class BaseActivity extends AppCompatActivity {
         prefEditor.putInt(KEY_PREF_OUTDOOR_TIME, 240);
         prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Single, false);
         prefEditor.putBoolean(KEY_PREF_CLOSED_BY_USER_Match, false);
+        prefEditor.putString(KEY_PREF_DEFAULT_EVENT_TYPE, "outdoor");
+        prefEditor.putString(KEY_PREF_DEFAULT_DIVISION, "recurve");
         prefEditor.apply();
     }
     public static   SharedPreferences getPref(){

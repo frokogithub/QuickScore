@@ -40,22 +40,6 @@
             app:iconSpaceReserved="false"
             />
 
-        <!--
-        <EditTextPreference
-            app:layout="@layout/settings_row"
-            app:defaultValue="100"
-            app:key="prepare_time"
-            app:title="Prepare Time  (seconds)"
-            app:iconSpaceReserved="false"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
-            app:layout="@layout/settings_row"
-            app:defaultValue="100"
-            app:key="shooting_time"
-            app:title="Shooting Time  (seconds)"
-            app:iconSpaceReserved="false"
-            app:useSimpleSummaryProvider="true"/>
-        -->
         <CheckBoxPreference
             app:layout="@layout/settings_row"
             app:defaultValue="true"
@@ -79,6 +63,33 @@
             app:entryValues="@array/closeAction_values"
             app:key="closeAction"
             app:title="Close Action"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Defaults"
+        app:layout="@layout/settings_header"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            app:title="Default Event Type"
+            app:key="default_event_type"
+            app:layout="@layout/settings_row"
+            app:elevation="0dp"
+            app:entries="@array/default_event_type_entries"
+            app:entryValues="@array/default_event_type_values"
+            app:defaultValue="outdoor"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:title="Default division"
+            app:key="default_division"
+            app:layout="@layout/settings_row"
+            app:elevation="0dp"
+            app:entries="@array/default_division_entries"
+            app:entryValues="@array/default_division_values"
+            app:defaultValue="recurve"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
